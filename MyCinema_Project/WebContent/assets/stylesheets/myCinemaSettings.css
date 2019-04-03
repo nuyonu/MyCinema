@@ -1,0 +1,437 @@
+.container{  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    "settingsContainer settingsContainer settingsContainer settingsContainer settingsContainer";   
+    position: relative;
+    min-height: auto;
+    font-family: 'Source Sans Pro';
+}
+
+.settingsContainer{
+grid-area: settingsContainer;
+background-color: #F0F0F9;
+}
+
+.settings{
+    display: grid;
+    grid-template-rows: 10px 1fr 10px;
+    grid-template-columns: 1fr 2px 1fr;
+    grid-template-areas: ". . ." "left . right" ". . .";
+    grid-area: settings;
+    background-color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+}
+
+.Title{
+  margin-top:2%;
+  margin-bottom: 2%;
+  margin-left:5%;
+  font-size: 28px;
+}
+
+.settingsLeftSide{
+    padding-top: 3%;
+    padding-bottom: 3%;
+    grid-area: left;
+    background-color: #ffffff;
+    border-right: 3px solid rgba(59, 134, 255, 0.616);
+    display: block;
+    display: grid;
+    grid-template-rows: 30% 70%;
+    grid-template-areas: "image-details" "details-part";
+
+}
+.image-details{
+  grid-area:image-details;
+  margin-top:5%;
+  margin-left: 7%;
+  display: flex;
+  flex-direction: left;
+  margin-bottom: 5%;
+  display:grid;
+  grid-template-columns: 35% 5% 1fr 30%;
+  grid-template-areas: "image . name editPenName";
+}
+
+.editPenName {
+  grid-area: editPenName;
+}
+.editPenName .editName{
+  margin-top:10%;
+}
+img.profile, img.editProfile {
+  position: absolute;
+}
+.profile {
+  position: relative;
+}
+.editProfile {
+  position: absolute;
+  right: 35px;
+  bottom: 10px;
+  height: 20px;
+}
+
+.image-part{
+  position: relative;
+}
+
+.image-part .profile{
+  grid-area: image;
+  position: relative;
+}
+
+.image-part img.profile{
+height: 140px;
+border-radius: 27%;
+}
+
+.name{
+  grid-area: name;
+  margin-top:8%;
+  color: rgb(99, 98, 98);
+}
+
+.name h3{
+  margin-bottom: 0px;
+  font-size: 28px;
+}
+
+.name p{
+  margin-top:0px;
+  font-size: 18px;
+}
+
+.details-part{
+ margin-left: 7%;
+ margin-top:10%; 
+ grid-area:details-part;
+}
+
+.details-part h5{
+  font-size: 18px;
+}
+
+.details-part p{
+  font-size: 15px;
+}
+
+
+
+.settingsRightSide{
+    grid-area: right;
+    background-color: #ffffff;
+}
+
+form.settingsForm {
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+
+
+  /**
+  * Make the field a flex-container, reverse the order so label is on top.
+  */
+
+.field {
+    display: flex;
+    flex-flow: column-reverse;
+    margin-bottom: 4%;
+  }
+
+  /**
+  * Add a transition to the label and input.
+  */
+
+  label, input.formField {
+    transition: all 0.2s;
+    touch-action: manipulation;
+  }
+  
+  input.formField {
+    font-size: 18px;
+    border: 0;
+    border-bottom: 3px solid  rgb(180, 176, 176);
+    -webkit-appearance: none;
+    border-radius: 0;
+    padding-bottom: 2%;
+    cursor: text;
+    caret-color: #3B86FF;
+  }
+  
+  input.formField:hover{
+    outline: 0;
+    border-bottom: 3px solid gray ;
+    cursor: pointer;
+  }
+
+  input.formField:focus {
+    outline: 0;
+    border-bottom: 3px solid #3B86FF;
+  }
+
+  input.formFiled:invalid{
+    outline: 0;
+    border-bottom: 3px solid red; 
+  }
+
+  input.formFiled:disabled{
+    outline: 0;
+    border-bottom: 3px dotted gray;
+  }
+  
+  label {
+    letter-spacing: 0.05em;
+    margin-top: 0.5em;
+  }
+
+  /**
+  * Translate down and scale the label up to cover the placeholder,
+  * when following an input (with placeholder-shown support).
+  * Also make sure the label is only on one row, at max 2/3rds of the
+  * field—to make sure it scales properly and doesn't wrap.
+  */
+
+  input.formField:placeholder-shown + label {
+    cursor: text;
+    max-width: 66.66%; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform-origin: left bottom;
+    transform: translate(0, 2.125rem) scale(1.5);
+    font-size: 15x;
+  }
+
+  /**
+  * By default, the placeholder should be transparent. Also, it should 
+  * inherit the transition.
+  */
+  .formField::-webkit-input-placeholder {
+    opacity: 0;
+    transition: inherit;
+  }
+
+  /**
+  * Show the placeholder when the input is focused.
+  */
+  input.formField:focus::-webkit-input-placeholder {
+    opacity: 1;
+  }
+
+  /**
+  * When the element is focused, remove the label transform.
+  * Also, do this when the placeholder is _not_ shown, i.e. when 
+  * there's something in the input at all.
+  */
+  input.formField:not(:placeholder-shown) + label,
+  input.formField:focus + label {
+    transform: translate(0, 0) scale(1);
+    cursor: pointer;
+    color: #3B86FF; 
+  }
+
+  input.formField:not(:focus):not(:placeholder-shown) + label{
+    color:gray;
+  }
+
+
+.form-buttons-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-areas: ". . . discardBtn saveBtn ";
+  border:none;
+}
+
+.discardBtn {
+  grid-area: discardBtn;
+  background-color: #3B86FF;
+  border:none;
+  padding: 5%;
+  border-radius: 6%;
+  color: white;
+  margin-left: 15%;
+  margin-right: 7%;
+}
+
+.saveBtn{
+  grid-area: saveBtn;
+  background-color: #3B86FF;
+  border:none;
+  padding: 5%;
+  border-radius: 6%;
+  color: white;
+  margin-left: 7%;
+  margin-right: 15%;
+}
+
+.saveBtn:hover, .discardBtn:hover{
+  background-color: rgba(59, 134, 255, 0.856);
+}
+
+.saveBtn:active, .discardBtn:active{
+  background-color: #0F62E4;
+}
+
+.saveBtn:disabled{
+  background-color:  rgba(59, 134, 255, 0.507);
+}
+
+
+
+
+
+@media(max-width: 420px) {
+  
+  .settings{
+    display: block;
+    grid-area: settings;
+    background-color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+}
+
+  .settingsLeftSide{
+    display: block;
+    border-right: none;
+  }
+  .image-details{
+    display: block;
+  }
+
+  div.image-part > div > img {
+    right: 195px;
+  }
+
+  .editPenName .editName{
+    margin-top:0%;
+  }
+}
+
+
+@media (max-width: 412px){
+  .settings{
+    display: block;
+    grid-area: settings;
+    background-color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+}
+
+  .settingsLeftSide{
+    display: block;
+    border-right: none;
+  }
+  .image-details{
+    display: block;
+  }
+
+  div.image-part > div > img {
+    right: 190px;
+  }
+
+  .editPenName .editName{
+    margin-top:0%;
+  }
+  }
+
+
+@media(max-width: 375px) {
+
+  .container{
+   
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+    "settingsContainer settingsContainer settingsContainer settingsContainer settingsContainer";
+    position: relative;
+    min-height: auto;
+}
+
+  .settings{
+    display: block;
+    grid-area: settings;
+    background-color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+}
+
+  .settingsLeftSide{
+    display: block;
+    border-right: none;
+  }
+  .image-details{
+    display: block;
+  }
+
+  div.image-part > div > img {
+    right: 160px;
+  }
+  .editPenName .editName{
+    margin-top:0%;
+  }
+
+}
+
+@media (max-width: 360px){
+
+  .settings{
+      display: block;
+      grid-area: settings;
+      background-color: white;
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-bottom: 2%;
+  }
+  
+    .settingsLeftSide{
+      display: block;
+      border-right: none;
+    }
+    .image-details{
+      display: block;
+    }
+  
+    div.image-part > div > img {
+      right: 145px;
+    }
+  
+    .editPenName .editName{
+      margin-top:0%;
+    }
+}
+
+@media(max-width: 320px) {  
+  .settings{
+  display: block;
+  grid-area: settings;
+  background-color: white;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2%;
+}
+
+.settingsLeftSide{
+  display: block;
+  border-right: none;
+}
+.image-details{
+  display: block;
+}
+
+div.image-part > div > img {
+  right: 115px;
+}
+
+.editPenName .editName{
+  margin-top:0%;
+}
+  }
+
+  

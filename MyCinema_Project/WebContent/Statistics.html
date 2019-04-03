@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="assets/stylesheets/Statistics/style.css">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawAgeDistributionChart);
+        google.charts.setOnLoadCallback(drawMovieDistributionChart);
+
+        // Draw the chart and set the chart values
+        function drawAgeDistributionChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Age', 'Number of People'],
+                ['under 7', 4260],
+                ['7-14', 3970],
+                ['14-18', 3454],
+                ['18+', 2390],
+            ]);
+
+            // Optional; add a title and set the width and height of the chart
+            var options = {
+                'title': 'Age Distribution', titleTextStyle: {fontSize: 15, fontName: 'Source Sans Pro', regular: true},
+                pieHole: 0.58, 'width': 400, 'height': 250,
+                colors: ['#55D9FD', '#FE8575', '#FFD983', '#A49DFF'], backgroundColor: '#FEFCFF',
+                legend: {
+                    position: 'right',
+                    alignment: 'center',
+                    textStyle: {fontSize: 11, fontName: 'Source Sans Pro', regular: true}
+                }, pieSliceText: 'none'
+            };
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('Age_chart_div'));
+            chart.draw(data, options);
+        }
+
+        // Draw the chart and set the chart values
+        function drawMovieDistributionChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Gender', 'Number of Movies'],
+                ['Action', 4260],
+                ['Comedy', 3970],
+                ['Drama', 3454],
+                ['Animation', 2390],
+            ]);
+
+            // Optional; add a title and set the width and height of the chart
+            var options = {
+                'title': 'Movie Distribution',
+                titleTextStyle: {fontSize: 15, fontName: 'Source Sans Pro', regular: true},
+                pieHole: 0.58,
+                'width': 400,
+                'height': 250,
+                colors: ['#55D9FD', '#FE8575', '#FFD983', '#A49DFF'],
+                backgroundColor: '#FEFCFF',
+                legend: {
+                    position: 'right',
+                    alignment: 'center',
+                    textStyle: {fontSize: 11, fontName: 'Source Sans Pro', regular: true}
+                },
+                pieSliceText: 'none'
+            };
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('Movie_chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+    <title>MyCinema | Statistics</title>
+</head>
+<body>
+<div class="layout">
+    <div class="l-left">
+        <a href="#" class="toggle-menu topm1"><i class="material-icons">menu</i></a>
+        <a href="Home.html" class="logo-menu">My Cinema</a>
+        <div class="menu">
+            <a href="Home.html" class="menu-item active">
+                <img src="assets/icons/icon_home-1.svg" alt="" class="ico">
+                Home
+            </a>
+            <a href="Statistics.html" class="menu-item">
+                <img src="assets/icons/icon_dashboard-1.svg" alt="" class="ico">
+                Statistics
+            </a>
+            <a href="Movies.html" class="menu-item">
+                <img src="assets/icons/icon_products-1.svg" alt="" class="ico">
+                Movies
+            </a>
+            <a href="Cinema-rooms.html" class="menu-item">
+                <img src="assets/icons/icon_Invoices-1.svg" alt="" class="ico">
+                Cinema Rooms
+            </a>
+            <a href="Program.html" class="menu-item">
+                <img src="assets/icons/icon_calendar-1.svg" alt="" class="ico">
+                Program
+            </a>
+            <a href="Settings.html" class="menu-item">
+                <img src="assets/icons/icon_setting.svg" alt="" class="ico">
+                Settings
+            </a>
+        </div>
+    </div>
+    <div class="l-right">
+        <div class="top-bar">
+            <form action="" class="left">
+                <a href="#" class="toggle-menu topm2"><i class="material-icons">menu</i></a>
+                <img src="assets/icons/icon_search.svg" alt="" class="icon">
+                <input type="text" id="input_search" placeholder="Search">
+            </form>
+            <div class="right">
+                <img src="assets/icons/icon_notification.svg" alt="" class="notif-ico">
+                <a href="#" class="user-menu">
+                    John Doe
+                    <img src="assets/icons/icon_down-arrow-small.svg" alt="" class="arrow">
+
+                </a>
+            </div>
+        </div>
+        <div class="main">
+            <h1>Statistics</h1>
+
+            <div class="row">
+                <div class="column">
+                    <div class="tickets">
+                        <h6>Total Tickets</h6>
+                        <h3>246k</h3>
+                        <h4><i class="arrow down"></i> 13,8%</h4>
+                    </div>
+                    <div class="tickets1">
+                        <p class="sparklist">
+                        <span class="sparkline">
+                        <span class="index"><span class="count1"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                       </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="movies">
+                        <h6>Movies played</h6>
+                        <h3>2453</h3>
+                        <h4><i class="arrow up"></i> 13,8%</h4></div>
+                    <div class="movies1">
+                        <p class="sparklist">
+                     <span class="sparkline">
+                      <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                      <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
+                      <span class="index"><span class="count2" style="height: 39%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                      <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
+                      <span class="index"><span class="count2" style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
+                      <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
+                      <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span> 
+                      <span class="index"><span class="count2" style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                      <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
+                      <span class="index"><span class="count2" style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
+                      <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                      <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
+                      <span class="index"><span class="count2" style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                     </span>
+                        <p>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="earnings">
+                        <h6>Total Earnings</h6>
+                        <h3>$39k</h3>
+                        <h4><i class="arrow down"></i> 13,8%</h4></div>
+                    <div class="earnings1"><p class="sparklist">
+                      <span class="sparkline">
+                        <span class="index"><span class="count3"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                      </span>
+                        <p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="chart">
+
+            <table class="columns">
+                <tr>
+                    <td>
+                        <div class="selectdiv "><label>
+                            <select name="roomlist">
+                                <option value="room1" class="input-lg">Room1</option>
+                                <option value="room2" class="input-lg">Room2</option>
+                                <option value="room3" class="input-lg">Room3</option>
+                                <option value="room4" class="input-lg">Room4</option>
+                            </select></label></div>
+                        <div id="Age_chart_div" style="border: 1px solid #ccc"></div>
+                    </td>
+
+                    <td>
+                        <div class="selectdiv"><select name="roomlist">
+                            <option value="room1">Room1</option>
+                            <option value="room2">Room2</option>
+                            <option value="room3">Room3</option>
+                            <option value="room4">Room4</option>
+                        </select></div>
+                        <div id="Movie_chart_div" style="border: 1px solid #ccc"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

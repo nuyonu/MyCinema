@@ -1,0 +1,503 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  --color-prim: #43425d;
+  /* --color-sec: #3c3b54; */
+  --color-sec: #a3a0fb;
+  --color-bg1: #f0f0f7;
+
+  --darken-1: rgba(0, 0, 0, 0.2);
+}
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.layout {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  min-height: 100vh;
+}
+.layout .l-left {
+  flex-basis: 220px;
+  background: var(--color-prim);
+  color: #333;
+  position: relative;
+}
+.layout .l-right {
+  flex: 1;
+  background: var(--color-bg1);
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout .toggle-menu {
+  display: none;
+}
+.l-left .toggle-menu.topm1 {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 14px;
+  color: white;
+  z-index: 5;
+}
+.l-right .toggle-menu.topm2 {
+  display: none;
+  color: #aaa;
+  margin-bottom: -8px;
+  vertical-align: top;
+  margin-top: 2px;
+  margin-right: 9px;
+}
+
+@media(max-width: 600px) {
+  .layout .l-left {
+      display: block;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: -100%;
+      z-index: 2;
+      min-height: 100vh;
+      transition: .3s all;
+  
+  }
+  .l-left.on {
+      left: 0;
+  }
+  .toggle-menu {
+      display: inline-block!important;
+  }
+}
+
+.l-left .logo-menu {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 3px;
+  padding: 0 20px;
+  position: relative;
+  height: 55px;
+  line-height: 55px;
+  font-size: 15px;
+  font-weight: bold;
+  background: var(--darken-1);
+}
+.l-left .menu {
+  display: block;
+}
+.l-left .menu .menu-item {
+  display: block;
+  text-decoration: none;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-left: 5px solid transparent;
+  margin-top: 2px;
+}
+/*
+.l-left .menu .menu-item:hover,
+.l-left .menu .menu-item.active {
+  background: var(--darken-1);
+  border-left-color: var(--color-sec);
+}*/
+
+.l-left .menu .menu-item img.ico {
+  height: 14px;
+  vertical-align: baseline;
+  margin-bottom: -2px;
+  margin-right: 6px;
+}
+
+.l-right .top-bar {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  background: white;
+  flex-basis: 55px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  box-shadow: 0 0 2px 1px rgba(150, 150, 150, 0.2);
+}
+
+.l-right .top-bar form.left {
+  display: block;
+  padding: 14px;
+  flex: 1;
+}
+
+.l-right .top-bar form.left #input_search {
+  display: inline-block;
+  border: none;
+  outline: none;
+  height: calc(55px - 2*14px);
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 7px;
+  width: 80%;
+}
+
+.l-right .top-bar .right {
+  padding: 15px;
+}
+
+.l-right .top-bar .right .notif-ico {
+  vertical-align: bottom;
+  height: 22px;
+  margin-bottom: 2px;
+}
+
+.l-right .top-bar .right .user-menu {
+  vertical-align: bottom;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 10px;
+  padding-left: 15px;
+  margin-left: 10px;
+  border-left: 1px solid #ddd;
+}
+.l-right .top-bar .right .user-menu .arrow {
+  margin: 0 5px;
+  margin-left: 12px;
+}
+/*
+
+.l-right .main {
+  padding: 20px 50px;
+  overflow-y: auto;
+}
+*/
+.main{
+  padding-top:20px;
+  padding-left:50px;
+  padding-right:50px;
+
+}
+
+.card {
+  box-shadow: 0 0 3px 0 rgba(150, 150, 150, 0.2);
+  border-radius: 0;
+  border: none;
+}
+
+
+html, body {
+height: 100%;
+}
+
+/*terminare cod Ioana */
+
+.sparklist {
+overflow: visible;
+width: 100%;
+margin-top: 60px;
+
+}
+.sparklist p {
+list-style: none;
+margin-right: 35px;
+}
+/*
+.sparklist li:hover .sparkline, .sparklist li:focus .sparkline {
+-webkit-transform: translate(200px) scale(6);
+        transform: translate(200px) scale(6);
+}
+.sparklist li:hover .index .count, .sparklist li:focus .index .count {
+background-color: #0074d9;
+}
+*/
+.sparkline {
+display: inline-block;
+height: auto;
+
+
+}
+
+.sparkline .index {
+position: relative;
+float: left;
+width: 8px;
+height: 40px;
+
+}
+
+
+.sparkline .index .count1 {
+display: block;
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 0;
+font: 0/0 a;
+text-shadow: none;
+background:rgb(119, 191, 233);
+color: transparent;
+
+}
+.sparkline .index .count2 {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  font: 0/0 a;
+  text-shadow: none;
+  background:rgb(107, 73, 107);
+  color: transparent;
+  }
+  .sparkline .index .count3 {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    font: 0/0 a;
+    text-shadow: none;
+    background:rgb(143, 218, 183);
+    color: transparent;
+    }
+
+
+i {
+border: solid black;
+border-width: 0 3px 3px 0;
+display: inline-block;
+padding: 3px;
+}
+
+
+.up {
+  color: rgb(0, 0, 255);
+  transform: rotate(-135deg);
+  }
+  
+  .down {
+  color: red;
+  transform: rotate(45deg);
+  }
+
+.column {
+float: left;
+width: 30%;
+background-color:white;
+padding:5px;
+margin-right:20px;
+
+}
+
+.row:after {
+content: "";
+display: table;
+clear: both;
+}
+.column h6{
+font-size: 12px;
+margin-top: 10px;
+margin-left:10px;
+margin-bottom: 20px;
+color:grey;
+
+}
+.column h3{
+  font-size: 26px;
+margin-top: 10px;
+margin-left:10px;
+font-weight: bold;
+color:rgb(0, 0, 0);
+}
+
+.column h4{
+  color:#a03030;
+font-size: 16px;
+margin-top: 10px;
+margin-bottom: 20px;
+font-weight: bold;
+margin-left:10px;
+} 
+.column .movies h4{
+  color:rgb(26, 158, 147);
+}
+.main h1{
+color:#43425d;
+font-size: 36px;
+margin-top: 10px;
+margin-bottom: 20px;
+
+}
+
+.row {
+
+    background-clip: padding-box;
+    width:100%;    
+    text-align:left;      
+    margin-left:50px;
+    margin-top:50px;
+}
+
+.tickets, .earnings, .movies{
+  float: left;
+  width: 40%;
+  background-color:white;
+}
+.tickets1, .earnings1, .movies1{
+ 
+    float: left;
+    width: 60%;
+    background-color:white;
+  
+}
+.chart
+{
+  margin-left:350px;
+  margin-top:150px;
+}
+
+/*pentru diagramele de tip pie*/
+.selectdiv {
+  position: relative;
+  /*Don't really need this just for demo styling*/
+  
+  float: left;
+  min-width: 200px;
+  margin: 50px 33%;
+}
+
+.selectdiv:after {
+    content: '\f078';
+    font: normal normal normal 17px/1 FontAwesome;
+    color: #0ebeff;
+    right: 11px;
+    top: 6px;
+    height: 34px;
+    padding: 15px 0px 0px 8px;
+    border-left: 1px solid #0ebeff;
+    position: absolute;
+    pointer-events: none;
+}
+
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+display: none;
+}
+
+.selectdiv select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+  
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+  float: right;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #0ebeff;
+  -ms-word-break: normal;
+  word-break: normal;
+}
+
+ 
+
+@media screen and (max-width: 1700px) and (min-width:1201px)
+{
+  .chart
+  {
+    margin-left:100px;
+    margin-top:100px;
+  }
+  .column {
+    width: 30%;
+    margin-top: 10px;
+  }
+
+  .row 
+  {
+    margin-left: 30px;
+    margin-top:15px;
+  }
+  
+}
+@media screen and (max-width: 1200px) and (min-width:601px)
+{
+ 
+  .chart
+  {
+    margin-left:80px;
+    margin-top:150px;
+  }
+  .column {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .chart table,tr,td { 
+    display: block;
+  }
+  .row 
+  {
+    margin-left: 0px;
+    margin-top:15px;
+  }
+  
+} 
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 80%;
+    margin-top: 10px;
+  }
+
+
+  .chart
+{
+  margin-left:0px;
+  margin-top:50px;
+}
+.chart td { 
+  display: block;  
+}
+.l-right .top-bar form.left #input_search {
+  margin-left: 75px;
+  font-size: 14pt;
+  font-weight: 600;
+
+  
+}
+.l-right .top-bar form.left {
+  display: block;
+  padding: 0px;
+  flex: 1;
+}
+
+.row 
+{
+  margin-left: 0;
+  margin-top:15px;
+}
+
+}
+
