@@ -1,0 +1,52 @@
+.room-view {
+    text-align: left;
+}
+.room-view .room-view-table {
+    margin: auto;
+}
+.room-view-table .chair {
+    width: 33px;
+    height: 33px;
+    margin: 4px;
+    background: #3c85fd;
+    border-radius: 5px;
+}
+.room-view-table .chair.free {
+    background: #3c85fd;
+    cursor: pointer;
+}
+.room-view-table .chair.booked {
+    background: #968c8d;
+}
+.room-view-table .chair.sold {
+    background: #ff6567;
+}
+.room-view-table .screen-row {
+    /* padding-top: 10px; */
+    padding-bottom: 20px;
+    text-align: center;
+}
+.room-view-table .screen-row .screen-el {
+    background: #e2e2e2;
+    color: #333;
+    font-weight: bold;
+    padding: 3px;
+}
+.room-view-legend .chair {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin: 3px;
+    border-radius: 5px;
+    margin-top: 1px;
+}
+.room-view-legend .chair.free {
+    background: #3c85fd;
+}
+.room-view-legend .chair.booked {
+    background: #968c8d;
+}
+.room-view-legend .chair.sold {
+    background: #ff6567;
+}

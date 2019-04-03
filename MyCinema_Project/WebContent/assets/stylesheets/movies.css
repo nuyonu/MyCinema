@@ -1,0 +1,81 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.body-main{
+    background-color: #f0f0f7;
+}
+
+#movies-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 25px;
+    margin: 0 0 0 50px;
+    text-align: left;
+    padding: 25px 0 0 0;
+}
+
+.movies-body {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+}
+
+.movies-data-show {
+    background-color: #43425d;
+    margin: 15px;
+    padding: 50px 50px 15px 50px;
+    font-family: 'Source Sans Pro', sans-serif;
+    text-align: center;
+}
+
+.movie-name {
+    color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.movie-price {
+    color: white;
+    font-size: 18px;
+}
+
+.movie-name p {
+    margin-top: 125%;
+    margin-bottom: 0;
+}
+
+.movie-price p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.movie-name p, .movie-price p {
+    padding: 5px;
+}
+
+.movie-book-now {
+
+}
+
+.movie-button-book-now {
+    color: white;
+    background-color: #3381ff;
+    border-radius: 5px;
+    padding: 10px 40px;
+    border: none;
+    font-size: 13px;
+}
+
+.movie-button-book-now:disabled {
+    background-color: #5C9AFF;
+}
+
+.movie-button-book-now:active {
+    background-color: #0062ff;
+}

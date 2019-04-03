@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="icon_circle-remove" transform="translate(-327 -195)">
+    <path id="circle-remove" d="M8,0a8,8,0,1,0,8,8A8.024,8.024,0,0,0,8,0Zm3.5,10.1-1.4,1.4L8,9.4,5.9,11.5,4.5,10.1,6.6,8,4.5,5.9,5.9,4.5,8,6.6l2.1-2.1,1.4,1.4L9.4,8Z" transform="translate(327 195)" fill="#ff6565"/>
+  </g>
+</svg>

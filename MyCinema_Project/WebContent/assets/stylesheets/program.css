@@ -1,0 +1,235 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f7;
+}
+
+.body-main
+{
+
+}
+
+#program-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 25px;
+    margin: 40px 0 20px 50px;
+}
+
+.programs {
+    box-shadow: 0 0 3px 0 rgba(150, 150, 150, 0.2);
+    background-color: white;
+    margin: 0 50px 0 50px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.buttons-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 0 0 0;
+}
+
+.button-day {
+    color: white;
+    background-color: #3381ff;
+    border-radius: 5px;
+    padding: 10px 35px;
+    border: none;
+    font-size: 13px;
+    margin: 3px 6px 0 6px;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.button-day:disabled {
+    background-color: #5C9AFF;
+}
+
+.button-day:active {
+    background-color: #0062ff;
+}
+
+.headers-table, .table-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95%;
+}
+
+.headers-table p {
+    font-family: 'SansPro-Regular', sans-serif;
+}
+
+#header-movie {
+    width: 24%;
+    text-align: center;
+    border-right: 1px solid cornflowerblue;
+    border-top: 1px solid cornflowerblue;
+    padding: 10px 0;
+    margin: 15px 0 0 0;
+}
+
+#header-hours {
+    width: 75%;
+    text-align: center;
+    border-top: 1px solid cornflowerblue;
+    padding: 10px 0;
+    margin: 15px 0 0 0;
+}
+
+/*.table-row {*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*flex-wrap: wrap;*/
+    /*justify-content: center;*/
+    /*width: 95%;*/
+/*}*/
+
+.column-left {
+    width: 24%;
+    text-align: center;
+    border-right: 1px solid cornflowerblue;
+    border-top: 1px solid cornflowerblue;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: left;
+}
+
+@media (max-width: 850px) {
+    .column-left {
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid cornflowerblue;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid cornflowerblue;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .headers-table
+    {
+        display: none;
+    }
+
+    .buttons-top
+    {
+        margin-bottom: 15px;
+    }
+}
+
+/*.information-play*/
+/*{*/
+    /*height: 50px;*/
+    /*width: 50px;*/
+/*}*/
+
+.information-play:before {
+    content: url("../icons/play.png");
+}
+
+.column-left p {
+    margin: 5px 10px 5px 15px;
+}
+
+.column-right {
+    width: 75%;
+    text-align: center;
+    border-top: 1px solid cornflowerblue;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+@media (max-width: 850px) {
+    .column-right {
+        width: 100%;
+        text-align: center;
+        border: 0;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: left;
+    }
+}
+
+.static-image
+{
+    height: 50px;
+    width: 50px;
+}
+
+.button-hour {
+    border-radius: 5px;
+    background-color: white;
+    font-size: 15px;
+    color: #3381ff;
+    padding: 5px 13px 5px 13px;
+    border: 1px solid #3381ff;
+    margin: 2px 0 2px 20px;
+    height: 30px;
+}
+
+/*.table-rows {*/
+/*width: 90%;*/
+/*margin-bottom: 15px;*/
+/*}*/
+
+/*.table-row {*/
+/*border-top: 1px solid #3381ff;*/
+/*display: flex;*/
+/*flex-direction: column;*/
+/*justify-content: center;*/
+/*}*/
+
+/*.row:after {*/
+/*content: "";*/
+/*display: table;*/
+/*clear: both;*/
+/*}*/
+
+/*.column-left {*/
+/*width: 24%;*/
+/*float: left;*/
+/*text-align: center;*/
+/*display: flex;*/
+/*flex-direction: row;*/
+/*flex-wrap: wrap;*/
+/*justify-content: flex-start;*/
+/*}*/
+
+/*.column-left p*/
+/*{*/
+/*margin-left: 10px;*/
+/*}*/
+
+/*.column-right {*/
+/*width: 75%;*/
+/*float: right;*/
+/*text-align: center;*/
+/*border-left: 1px solid #3381ff;*/
+/*padding-top: 10px;*/
+/*padding-bottom: 10px;*/
+/*}*/
+
+/*.button-hour*/
+/*{*/
+/*border-radius: 5px;*/
+/*background-color: white;*/
+/*font-size: 15px;*/
+/*color: #3381ff;*/
+/*padding: 5px 10px 5px 10px;*/
+/*border: 1px solid #3381ff;*/
+/*}*/
