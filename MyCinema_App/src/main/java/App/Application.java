@@ -30,6 +30,8 @@ public class Application implements CommandLineRunner {
         System.out.println(repository.movieFindByDurationBetween(40, 2000));
         System.out.println(repository.movieFindByDurationLessThan(300));
         System.out.println(repository.movieFindByDurationLessThan(300));
+        System.out.println(repository.movieFindByDurationLessThan(300));
+
     }
 
 }
