@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>MyCinema</title>
+    <link rel="stylesheet" th:href="@{/stylesheets/Login.css}">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+
+
+<body>
+
+
+<div class="image-container"></div>
+
+<div class="flex-white-container"></div>
+<div class="white-contanier">
+
+
+    <div class="title-container"> My Cinema</div>
+    <div class="subtitle-container">Welcome back! Please login to your account.</div>
+    <div class="login-container">
+
+        <form action="/authenticate">
+
+            <input id="username" placeholder="Username" type="text">
+            <input id="password" placeholder="Password" type="text">
+
+            <div class="checkbox-forgpass-container">
+                <div class="checkbox-container">
+                    <input id="RememberMe" type="checkbox">
+                    <label for="RememberMe"> Remember Me</label>
+
+                </div>
+
+                <div class="forgot-password-container" onclick="location.href='ForgotPassword.html'"> Forgot Password
+                </div>
+
+
+            </div>
+
+            <div class="button-container">
+                <div class="button">Login</div>
+                <div class="button">Sign Up</div>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+<div class="flex-white-container"></div>
+</body>
