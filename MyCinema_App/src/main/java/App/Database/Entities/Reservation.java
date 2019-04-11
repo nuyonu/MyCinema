@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 @EntityScan
-@Document(collection = "Rezervetion")
-public class Rezervetion {
+@Document(collection = "Reservation")
+public class Reservation {
     @Id
     private String id;
 
@@ -29,7 +29,7 @@ public class Rezervetion {
     private LocalTime time;
 
 
-    public Rezervetion(@NotNull String userId, @NotNull String movieId, @NotNull String roomId, @NotNull Integer day, @NotNull LocalTime time) {
+    public Reservation(@NotNull String userId, @NotNull String movieId, @NotNull String roomId, @NotNull Integer day, @NotNull LocalTime time) {
         this.userId = userId;
         this.movieId = movieId;
         this.roomId = roomId;
@@ -37,7 +37,7 @@ public class Rezervetion {
         this.time = time;
     }
 
-    public Rezervetion() {
+    public Reservation() {
     }
 
     public String getId() {
@@ -67,7 +67,7 @@ public class Rezervetion {
 
     @Override
     public String toString() {
-        return "Rezervetion{" +
+        return "Reservation{" +
                 "id='" + id + '\'' +
                 ", userId='" + userId + '\'' +
                 ", movieId='" + movieId + '\'' +

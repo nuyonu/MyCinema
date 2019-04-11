@@ -18,6 +18,9 @@ public class Room {
     private int noRows;
     private int noColumns;
 
+    //0 liber
+    // 1
+    //2 ocupat
     private List<Integer> places;
 
     public Room(int noRows, int noColumns) {

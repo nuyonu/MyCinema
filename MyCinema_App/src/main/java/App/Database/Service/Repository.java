@@ -105,39 +105,39 @@ public class Repository implements IRepository {
 
     @Override
     @Transactional
-    public void addRezervation(Rezervetion rezervetion) throws NullParameterPassed {
-        if (rezervetion == null) throw new NullParameterPassed();
-        this.rezervation.save(rezervetion);
+    public void addRezervation(Reservation reservation) throws NullParameterPassed {
+        if (reservation == null) throw new NullParameterPassed();
+        this.rezervation.save(reservation);
     }
 
     @Override
-    public Rezervetion rezervationFindByMovieId(String movieId) throws NullParameterPassed {
+    public Reservation rezervationFindByMovieId(String movieId) throws NullParameterPassed {
         if (movieId == null) throw new NullParameterPassed();
-        Rezervetion rezervetion = this.rezervation.findByMovieId(movieId);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+        Reservation reservation = this.rezervation.findByMovieId(movieId);
+        return reservation != null ? reservation : new Reservation();
 
     }
 
 
     @Override
-    public Rezervetion rezervationFindByRoomId(String roomId) throws NullParameterPassed {
+    public Reservation rezervationFindByRoomId(String roomId) throws NullParameterPassed {
         if (roomId == null) throw new NullParameterPassed();
-        Rezervetion rezervetion = this.rezervation.findByRoomId(roomId);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+        Reservation reservation = this.rezervation.findByRoomId(roomId);
+        return reservation != null ? reservation : new Reservation();
 
     }
 
     @Override
-    public Rezervetion rezervationFindByDay(Integer day) {
-        Rezervetion rezervetion = this.rezervation.findByDay(day);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+    public Reservation rezervationFindByDay(Integer day) {
+        Reservation reservation = this.rezervation.findByDay(day);
+        return reservation != null ? reservation : new Reservation();
 
     }
 
     @Override
-    public Rezervetion rezervationFindByTime(LocalTime time) {
-        Rezervetion rezervetion = this.rezervation.findByTime(time);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+    public Reservation rezervationFindByTime(LocalTime time) {
+        Reservation reservation = this.rezervation.findByTime(time);
+        return reservation != null ? reservation : new Reservation();
     }
 
     @Override

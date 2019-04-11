@@ -34,15 +34,15 @@ public interface IRepository {
 
 
     //rezervation
-    void addRezervation(Rezervetion rezervetion) throws NullParameterPassed, DuplicateData;
+    void addRezervation(Reservation reservation) throws NullParameterPassed, DuplicateData;
 
-    Rezervetion rezervationFindByMovieId(String movieId) throws NullParameterPassed;
+    Reservation rezervationFindByMovieId(String movieId) throws NullParameterPassed;
 
-    Rezervetion rezervationFindByRoomId(String roomId) throws NullParameterPassed;
+    Reservation rezervationFindByRoomId(String roomId) throws NullParameterPassed;
 
-    Rezervetion rezervationFindByDay(Integer day);
+    Reservation rezervationFindByDay(Integer day);
 
-    Rezervetion rezervationFindByTime(LocalTime time);
+    Reservation rezervationFindByTime(LocalTime time);
 
     //Room
     Room roomFindById(String id) throws NullParameterPassed;

@@ -1,29 +1,30 @@
 package App.Contoller;
 
+import App.Contoller.UtilClass.LoginClass;
+import App.Contoller.UtilClass.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
 
+
     @GetMapping("/Login")
-    public String greeting(@RequestParam(name = "name", required = true, defaultValue = "World") String name, Model model) {
-        model.addAttribute("name", name);
-        if (name.equals("filo"))
-            return "Home";
+    public String start(Model model) {
+        model.addAttribute("student", new Student());
         return "Login";
     }
 
-    @GetMapping("/Login")
-    @RequestMapping(value = "/authenticate", method = RequestMethod.GET)
-    public String connect(@RequestParam(name = "name", required = true) String name, @RequestParam(name = "password", required = true) String password, Model model) {
-//        model.addAttribute("name", name);
-        System.out.println(name + " " + password);
-        if (name.equals("filo"))
+
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public String connect(@ModelAttribute LoginClass user, BindingResult errors, Model model) {
+        System.out.println(user);
+        if (user.getUsername() == "filo")
             return "Home";
         return "Login";
     }

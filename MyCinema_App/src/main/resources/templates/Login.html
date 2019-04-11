@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"/>
 
 <head>
     <title>MyCinema</title>
@@ -11,7 +11,6 @@
 
 <body>
 
-
 <div class="image-container"></div>
 
 <div class="flex-white-container"></div>
@@ -22,14 +21,15 @@
     <div class="subtitle-container">Welcome back! Please login to your account.</div>
     <div class="login-container">
 
-        <form action="/authenticate">
+        <!--/*@thymesVar id="LoginClass" type="App.Contoller.UtilClass.LoginClass"*/-->
+        <form th:action="@{/auth}" th:object="${LoginClass}" method="post">
 
-            <input id="username" placeholder="Username" type="text">
-            <input id="password" placeholder="Password" type="text">
+            <input type="text" id="username" placeholder="Username">
+            <input type="text" id="password" placeholder="Password">
 
             <div class="checkbox-forgpass-container">
                 <div class="checkbox-container">
-                    <input id="RememberMe" type="checkbox">
+                    <input type="checkbox" id="RememberMe">
                     <label for="RememberMe"> Remember Me</label>
 
                 </div>
@@ -41,8 +41,9 @@
             </div>
 
             <div class="button-container">
+
                 <div class="button">Login</div>
-                <div class="button">Sign Up</div>
+                <div class="button" onclick="location.href='SignUp.html'">Sign Up</div>
             </div>
 
         </form>
