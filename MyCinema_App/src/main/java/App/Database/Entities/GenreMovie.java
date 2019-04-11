@@ -13,11 +13,11 @@ public class GenreMovie {
     private String id;
 
     //    @NotNull
-    private String movieId;
+    private final String movieId;
 
     //    @NotNull
 //    @Size(min = 3)
-    private String genre;
+    private final String genre;
 
     public GenreMovie(String movieId, String genre) {
         this.movieId = movieId;

@@ -3,8 +3,8 @@ package App.Database.Utils;
 import java.time.LocalTime;
 
 public class ScreeningRoom {
-    private int room;
-    private LocalTime time;
+    private final int room;
+    private final LocalTime time;
 
     public ScreeningRoom(int room, LocalTime time) {
         this.room = room;

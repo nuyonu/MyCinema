@@ -21,7 +21,7 @@ public class Movie {
 
     @Positive
     @Min(0)
-    private int duration;
+    private final int duration;
 
 
     public Movie(@NotNull String title, @Positive @Min(0) Integer duration) {

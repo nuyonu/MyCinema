@@ -1,17 +1,17 @@
 package App.Database.Infrastructure;
 
-import App.Database.Entities.Rezervetion;
+import App.Database.Entities.Reservation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalTime;
 
-public interface IRepositoryRezervation extends MongoRepository<Rezervetion, String> {
+public interface IRepositoryRezervation extends MongoRepository<Reservation, String> {
 
-    Rezervetion findByMovieId(String movieId);
+    Reservation findByMovieId(String movieId);
 
-    Rezervetion findByRoomId(String roomId);
+    Reservation findByRoomId(String roomId);
 
-    Rezervetion findByDay(Integer day);
+    Reservation findByDay(Integer day);
 
-    Rezervetion findByTime(LocalTime time);
+    Reservation findByTime(LocalTime time);
 }

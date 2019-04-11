@@ -15,22 +15,29 @@ public class Room {
     @Id
     private String id;
 
+    private String name;
+
     private int noRows;
     private int noColumns;
 
-    private List<Integer> places;
+    //0 liber
+    // 1
+    //2 ocupat
+    private List<List <Integer>> places;
 
-    public Room(int noRows, int noColumns) {
+    public Room(String name, int noRows, int noColumns) {
         this.noRows = noRows;
+        this.name=name;
         this.noColumns = noColumns;
-        places = new ArrayList<>(Collections.nCopies(noColumns * noRows, 0));
+//        places = new ArrayList<>(Collections.nCopies(noColumns * noRows, 0));
+    places=new ArrayList<>(Collections.nCopies(noRows,new ArrayList<>(Collections.nCopies(noColumns,0))));
     }
 
-    public Room(int noColumns, int noRows, List<Integer> places) {
-        this.places = places;
-        this.noColumns = noColumns;
+    public Room(String name, int noRows, int noColumns, List<List<Integer>> places) {
+        this.name = name;
         this.noRows = noRows;
-
+        this.noColumns = noColumns;
+        this.places = places;
     }
 
     public Room() {
@@ -48,8 +55,14 @@ public class Room {
         return noColumns;
     }
 
-    public List<Integer> getPlaces() {
+    public List<List<Integer>> getPlaces() {
         return places;
+    }
+
+    public  String getType(int number){
+        if(number==0) return "chair free";
+        if(number==1) return  "chair booked";
+        return  "chair sold";
     }
 
     @Override

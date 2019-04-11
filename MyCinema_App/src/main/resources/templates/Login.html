@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>MyCinema</title>
@@ -11,7 +11,6 @@
 
 <body>
 
-
 <div class="image-container"></div>
 
 <div class="flex-white-container"></div>
@@ -22,33 +21,37 @@
     <div class="subtitle-container">Welcome back! Please login to your account.</div>
     <div class="login-container">
 
-        <form action="/authenticate">
+        <form action="#" id="myform" method="post" th:action="@{/home}" th:object="${LoginClass}">
 
-            <input id="username" placeholder="Username" type="text">
-            <input id="password" placeholder="Password" type="text">
+            <input id="username" placeholder="Username" required th:field="*{username}" type="text"/>
+            <input id="password" placeholder="Password" required th:field="*{password}" type="password">
 
             <div class="checkbox-forgpass-container">
                 <div class="checkbox-container">
-                    <input id="RememberMe" type="checkbox">
+                    <input form="myform" id="RememberMe" th:field="*{remainConnected}" type="checkbox">
                     <label for="RememberMe"> Remember Me</label>
 
                 </div>
 
-                <div class="forgot-password-container" onclick="location.href='ForgotPassword.html'"> Forgot Password
-                </div>
+                <a class="forgot-password-container" href="/ForgotPassword"> Forgot Password</a>
 
 
             </div>
 
             <div class="button-container">
-                <div class="button">Login</div>
-                <div class="button">Sign Up</div>
+                <input class="button" type="submit" value="Login">
+                <input class="button" type="submit" value="SignUp">
+
             </div>
+            <!-- onclick="location.th:href='SignUp.html'"-->
 
         </form>
+
+
     </div>
 
 
 </div>
 <div class="flex-white-container"></div>
 </body>
+</html>
