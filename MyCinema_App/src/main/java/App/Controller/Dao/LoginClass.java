@@ -1,4 +1,4 @@
-package App.Contoller.Dao;
+package App.Controller.Dao;
 
 import java.io.Serializable;
 

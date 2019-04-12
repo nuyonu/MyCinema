@@ -1,4 +1,4 @@
-package App.Contoller.Dao;
+package App.Controller.Dao;
 
 public class Reset {
     private String email;

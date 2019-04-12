@@ -21,7 +21,7 @@ public class Repository implements IRepository {
     @Autowired
     IRepositoryGenreMovie genreMovie;
     @Autowired
-    IRepositoryRezervation rezervation;
+    IRepositoryReservation rezervation;
     @Autowired
     IRepositoryRoom room;
     @Autowired

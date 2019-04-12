@@ -1,6 +1,6 @@
-package App.Contoller;
+package App.Controller;
 
-import App.Contoller.Dao.SelectedRoom;
+import App.Controller.Dao.SelectedRoom;
 import App.Database.Service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

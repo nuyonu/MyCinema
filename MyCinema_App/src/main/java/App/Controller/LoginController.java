@@ -1,6 +1,6 @@
-package App.Contoller;
+package App.Controller;
 
-import App.Contoller.Dao.LoginClass;
+import App.Controller.Dao.LoginClass;
 import App.Database.Entities.User;
 import App.Database.Service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;

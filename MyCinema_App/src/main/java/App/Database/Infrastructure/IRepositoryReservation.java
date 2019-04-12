@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalTime;
 
-public interface IRepositoryRezervation extends MongoRepository<Reservation, String> {
+public interface IRepositoryReservation extends MongoRepository<Reservation, String> {
 
     Reservation findByMovieId(String movieId);
 
