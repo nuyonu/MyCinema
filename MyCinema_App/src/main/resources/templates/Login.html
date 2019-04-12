@@ -21,7 +21,7 @@
     <div class="subtitle-container">Welcome back! Please login to your account.</div>
     <div class="login-container">
 
-        <form action="#" id="myform" method="post" th:action="@{/home}" th:object="${LoginClass}">
+        <form action="#" id="myform" method="post" th:action="@{/home}" th:object="${LoginInput}">
 
             <input id="username" placeholder="Username" required th:field="*{username}" type="text"/>
             <input id="password" placeholder="Password" required th:field="*{password}" type="password">

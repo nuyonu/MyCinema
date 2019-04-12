@@ -1,6 +1,6 @@
 package App.Controller;
 
-import App.Controller.Dao.LoginClass;
+import App.Controller.Dao.LoginInput;
 import App.Database.Entities.User;
 import App.Database.Service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ public class LoginController {
 
     @GetMapping("/Login")
     public String start(Model model) {
-        model.addAttribute("LoginClass", new LoginClass());
+        model.addAttribute("LoginInput", new LoginInput());
         return "Login";
     }
 
 
     @RequestMapping(value = "/home", method = RequestMethod.POST)
-        public String auth(@ModelAttribute LoginClass user) {
+    public String auth(@ModelAttribute LoginInput user) {
             User userDatabase=service.userFindByUsername(user.getUsername());
             System.out.println(userDatabase);
             System.out.println(user);

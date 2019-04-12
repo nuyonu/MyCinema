@@ -1,5 +1,6 @@
 package App.Controller;
 
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @Profile("prod")
-public class ErrorController implements ErrorController {
+public class ErrorsController implements ErrorController {
 
 
     @Override

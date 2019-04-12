@@ -2,12 +2,12 @@ package App.Controller.Dao;
 
 import java.io.Serializable;
 
-public class LoginClass implements Serializable {
+public class LoginInput implements Serializable {
     private String username;
     private String password;
     private boolean remainConnected;
 
-    public LoginClass() {
+    public LoginInput() {
         this.username = "";
         this.password = "";
         this.remainConnected = false;
