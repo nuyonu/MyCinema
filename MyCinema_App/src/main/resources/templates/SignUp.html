@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="">
 
 <head>
     <title>MyCinema</title>
-    <link href="../static/stylesheets/SignUp.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/stylesheets/SignUp.css}">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
 
-
 <body>
-
 
 <div class="image-container"></div>
 
@@ -21,37 +19,53 @@
     <div class="title-container"> My Cinema</div>
     <div class="subtitle-container">Please complete to create your account.</div>
     <div class="signup-container">
-
-        <form>
-
+        <!--/*@thymesVar id="registerModel" type="App.Controller.Dao.RegisterModel"*/-->
+        <form th:action="@{/SignUp}" th:object="${registerModel}" method="post">
             <div class="firstname-lastname-container">
-                <div class="firstname"><input id="firstname" placeholder="First Name" type="text"></div>
-                <div class="lastname"><input id="lastname" placeholder="Last Name" type="text"></div>
-
+                <div class="firstname">
+                    <input id="firstname" placeholder="First Name" type="text" required th:value="firstname"
+                           th:field="*{firstName}">
+                </div>
+                <div class="lastname">
+                    <input id="lastname" placeholder="Last Name" type="text" required th:value="lastname"
+                           th:field="*{lastName}">
+                </div>
             </div>
 
-            <input id="username" placeholder="Username" type="text">
-            <input id="email" placeholder="E-mail" type="text">
-            <input id="password" placeholder="Password" type="text">
-            <input id="confirmpassword" placeholder="Confirm Password" type="text">
+            <span class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            <span class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
 
+            <input id="username" placeholder="Username" type="text" required th:value="username" th:field="*{username}">
+            <span class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+
+            <input id="email" placeholder="E-mail" type="email" required th:value="email" th:field="*{eMail}">
+            <span class="text-danger" th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}"></span>
+
+            <input id="password" placeholder="Password" type="password" onkeyup='check();' th:value="password"
+                   th:field="*{password}"/>
+            <ul class="text-dangerUL" th:each="error: ${#fields.errors('password')}">
+                <li th:each="message : ${error.split(',')}">
+                    <p class="error-message" th:text="${message}"></p>
+                </li>
+            </ul>
+
+            <input id="confirm_password" name="confirm_password" placeholder="Confirm Password" type="password" onkeyup='check();'
+                   th:value="confirm_password" th:field="*{confirmPassword}"/>
+            <span class="matching-passwords" id='message'></span>
             <div class="checkbox-container">
-                <input id="Terms" type="checkbox">
+                <input id="Terms" type="checkbox" required>
                 <label for="Terms">I agree with terms and conditions</label>
 
             </div>
-
+            <p class="info-message">If the registration is successful, you will automatically be redirected to the Login page.</p>
             <div class="button-container">
 
-
-                <div class="button">Sign Up</div>
+                <button class="button" type="submit" id="submit">Sign Up</button>
             </div>
 
-
             <div class="button-container">
 
-                <div class="return-signin" onclick="location.href='Login.html'"> Already have an account? Sign In.</div>
-
+                <div class="return-signin" onclick="location.href='Login'"> Already have an account? Sign In.</div>
 
             </div>
 
@@ -62,3 +76,19 @@
 </div>
 <div class="flex-white-container"></div>
 </body>
+<script>
+    var check = function() {
+        document.getElementById('message').style.fontSize = '13px';
+        if (document.getElementById('password').value ===
+            document.getElementById('confirm_password').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Password and Confirm passowrd matching';
+            document.getElementById('submit').disabled = false;
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Password and Confirm Password doesn\'t match';
+            document.getElementById('submit').disabled = true;
+        }
+    }
+</script>
+</html>

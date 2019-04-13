@@ -260,5 +260,11 @@ public class Repository implements IRepository {
         return iRepositoryMovie.findAll();
     }
 
+    @Override
+    public boolean isUsernameAlreadyInUse(String username) throws NullParameterPassed{
+        if(username == null)
+            throw new NullParameterPassed();
+        return this.user.findByUsername(username) != null;
+    }
 }
 
