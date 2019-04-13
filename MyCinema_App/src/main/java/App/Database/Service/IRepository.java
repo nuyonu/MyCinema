@@ -74,4 +74,6 @@ public interface IRepository {
     Room findRoomByName(String id);
 
     List<Movie> getAllMovie();
+
+    boolean isUsernameAlreadyInUse(String username) throws NullParameterPassed;
 }

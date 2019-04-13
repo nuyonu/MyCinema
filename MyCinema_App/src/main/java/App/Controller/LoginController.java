@@ -39,7 +39,7 @@ public class LoginController {
         if (userDatabase.getUsername().equals(user.getUsername()) || userDatabase.getPassword().equals(user.getPassword())) {
             CookieHandler cookieHandler = new CookieHandler(request, response);
             cookieHandler.setCookie(user.getUsername(), user.isRemainConnected());
-            return "Home";
+            return "redirect:/Home";
         }
         return "redirect:/Login";
     }
