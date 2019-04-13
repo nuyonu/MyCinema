@@ -21,4 +21,5 @@ public interface IRepositoryMovie extends MongoRepository<Movie, String> {
 
     List<Movie> findByDurationBetween(Integer from, Integer to);
 
+
 }

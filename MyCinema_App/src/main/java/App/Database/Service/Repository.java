@@ -31,7 +31,7 @@ public class Repository implements IRepository {
     @Override
     public Movie movieFindByTitle(String Title) {
         Movie movie = iRepositoryMovie.findByTitle(Title);
-        return movie != null ? movie : new Movie("", 100);
+        return movie != null ? movie : new Movie();
     }
 
     @Override
@@ -105,46 +105,50 @@ public class Repository implements IRepository {
 
     @Override
     @Transactional
-    public void addRezervation(Rezervetion rezervetion) throws NullParameterPassed {
-        if (rezervetion == null) throw new NullParameterPassed();
-        this.rezervation.save(rezervetion);
+    public void addRezervation(Reservation reservation) throws NullParameterPassed, DuplicateData {
+        if (reservation == null) throw new NullParameterPassed();
+        try {
+            this.rezervation.save(reservation);
+        } catch (DuplicateKeyException e) {
+            throw new DuplicateData();
+        }
     }
 
     @Override
-    public Rezervetion rezervationFindByMovieId(String movieId) throws NullParameterPassed {
+    public Reservation rezervationFindByMovieId(String movieId) throws NullParameterPassed {
         if (movieId == null) throw new NullParameterPassed();
-        Rezervetion rezervetion = this.rezervation.findByMovieId(movieId);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+        Reservation reservation = this.rezervation.findByMovieId(movieId);
+        return reservation != null ? reservation : new Reservation();
 
     }
 
 
     @Override
-    public Rezervetion rezervationFindByRoomId(String roomId) throws NullParameterPassed {
+    public Reservation rezervationFindByRoomId(String roomId) throws NullParameterPassed {
         if (roomId == null) throw new NullParameterPassed();
-        Rezervetion rezervetion = this.rezervation.findByRoomId(roomId);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+        Reservation reservation = this.rezervation.findByRoomId(roomId);
+        return reservation != null ? reservation : new Reservation();
 
     }
 
     @Override
-    public Rezervetion rezervationFindByDay(Integer day) {
-        Rezervetion rezervetion = this.rezervation.findByDay(day);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+    public Reservation rezervationFindByDay(Integer day) {
+        Reservation reservation = this.rezervation.findByDay(day);
+        return reservation != null ? reservation : new Reservation();
 
     }
 
     @Override
-    public Rezervetion rezervationFindByTime(LocalTime time) {
-        Rezervetion rezervetion = this.rezervation.findByTime(time);
-        return rezervetion != null ? rezervetion : new Rezervetion();
+    public Reservation rezervationFindByTime(LocalTime time) {
+        Reservation reservation = this.rezervation.findByTime(time);
+        return reservation != null ? reservation : new Reservation();
     }
 
     @Override
     public Room roomFindById(String id) throws NullParameterPassed {
         if (id == null) throw new NullParameterPassed();
         Room room = this.room.findById(id).get();
-        return room != null ? room : new Room();
+        return room;
     }
 
     @Override
@@ -234,5 +238,27 @@ public class Repository implements IRepository {
         }
 
     }
+
+    @Override
+    public User userFindByUsername(String username) {
+        User user= this.user.findByUsername(username);
+        return  user!=null?user:new User();
+    }
+    @Override
+    public void deleteRoom()
+    {
+        room.deleteAll();
+    }
+
+    @Override
+    public Room findRoomByName(String name){
+        return this.room.findByName(name);
+    }
+
+    @Override
+    public List<Movie> getAllMovie() {
+        return iRepositoryMovie.findAll();
+    }
+
 }
 

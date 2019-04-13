@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>MyCinema</title>
+    <link rel="stylesheet" th:href="@{/stylesheets/Login.css}">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+
+
+<body>
+
+<div class="image-container"></div>
+
+<div class="flex-white-container"></div>
+<div class="white-contanier">
+
+
+    <div class="title-container"> My Cinema</div>
+    <div class="subtitle-container">Welcome back! Please login to your account.</div>
+    <div class="login-container">
+
+        <form action="#" id="myform" method="post" th:action="@{/home}" th:object="${LoginInput}">
+
+            <input id="username" placeholder="Username" required th:field="*{username}" type="text"/>
+            <input id="password" placeholder="Password" required th:field="*{password}" type="password">
+
+            <div class="checkbox-forgpass-container">
+                <div class="checkbox-container">
+                    <input form="myform" id="RememberMe" th:field="*{remainConnected}" type="checkbox">
+                    <label for="RememberMe"> Remember Me</label>
+
+                </div>
+
+                <a class="forgot-password-container" href="/ForgotPassword"> Forgot Password</a>
+
+
+            </div>
+
+            <div class="button-container">
+                <input class="button" type="submit" value="Login">
+                <input class="button" type="submit" value="SignUp">
+
+            </div>
+            <!-- onclick="location.th:href='SignUp.html'"-->
+
+        </form>
+
+
+    </div>
+
+
+</div>
+<div class="flex-white-container"></div>
+</body>
+</html>

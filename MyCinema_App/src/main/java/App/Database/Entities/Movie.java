@@ -24,8 +24,43 @@ public class Movie {
     private int duration;
 
 
-    public Movie(@NotNull String title, @Positive @Min(0) Integer duration) {
+    @Positive
+    @Min(0)
+    private int price;
+
+    private String path;
+
+    public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path) {
         this.title = title;
+        this.duration = duration;
+        this.price = price;
+        this.path = path;
+    }
+
+    public Movie() {
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -51,6 +86,8 @@ public class Movie {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", duration=" + duration +
+                ", price=" + price +
+                ", path='" + path + '\'' +
                 '}';
     }
 }

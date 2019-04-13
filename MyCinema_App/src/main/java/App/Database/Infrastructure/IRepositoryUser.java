@@ -15,5 +15,7 @@ public interface IRepositoryUser extends MongoRepository<User, String> {
 
     Optional<User> findById(String id);
 
+    User findByUsername(String username);
+
 
 }
