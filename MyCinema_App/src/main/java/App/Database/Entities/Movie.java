@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.util.ArrayList;
+import java.util.List;
 
 @EntityScan
 @Document(collection = "Movies")
@@ -30,11 +32,22 @@ public class Movie {
 
     private String path;
 
-    public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path) {
+    private List<List<String>> scren;
+
+    public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path, List<List<String>> scren) {
         this.title = title;
         this.duration = duration;
         this.price = price;
         this.path = path;
+        this.scren = scren;
+    }
+
+    public List<List<String>> getScren() {
+        return scren;
+    }
+
+    public void setScren(List<List<String>> scren) {
+        this.scren = scren;
     }
 
     public Movie() {
@@ -89,5 +102,11 @@ public class Movie {
                 ", price=" + price +
                 ", path='" + path + '\'' +
                 '}';
+    }
+
+    public void setDay(int day) {
+        List<String> times = scren.get(day);
+        scren = new ArrayList<>();
+        scren.add(times);
     }
 }

@@ -15,7 +15,13 @@ public class Room {
     @Id
     private String id;
 
+    private String idMovie;
+
+    private String time;
+
     private String name;
+
+    private int day;
 
     private int noRows;
     private int noColumns;
@@ -33,11 +39,18 @@ public class Room {
     places=new ArrayList<>(Collections.nCopies(noRows,new ArrayList<>(Collections.nCopies(noColumns,0))));
     }
 
-    public Room(String name, int noRows, int noColumns, List<List<Integer>> places) {
+    public Room(String idMovie, String time, int day, String name, int noRows, int noColumns) {
+        this.idMovie = idMovie;
+        this.day = day;
+        this.time = time;
         this.name = name;
         this.noRows = noRows;
         this.noColumns = noColumns;
-        this.places = places;
+        this.places = new ArrayList<>(Collections.nCopies(noRows, new ArrayList<>(Collections.nCopies(noColumns, 0))));
+    }
+
+    public int getDay() {
+        return day;
     }
 
     public Room() {
@@ -64,6 +77,19 @@ public class Room {
         if(number==1) return  "chair booked";
         return  "chair sold";
     }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
 
     @Override
     public String toString() {
