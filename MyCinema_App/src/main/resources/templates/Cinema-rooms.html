@@ -73,7 +73,7 @@
             <div class="cinema-rooms-grid-container">
                 <div class="column">
                     <div class="cinema-room">
-                        <h5><a href="/1/Room">Room name</a></h5>
+                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
                         <div class="slider-container w3-content w3-display-container">
                             <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
                             <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="cinema-room">
-                        <h5><a href="/2/Room">Room name</a></h5>
+                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
                         <div class="slider-container w3-content w3-display-container">
                             <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
                             <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
@@ -109,7 +109,7 @@
 
                 <div class="column">
                     <div class="cinema-room">
-                        <h5><a href="/3/Room">Room name</a></h5>
+                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
                         <div class="slider-container w3-content w3-display-container">
                             <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
                             <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
@@ -126,7 +126,8 @@
                     </div>
 
                     <div class="cinema-room">
-                        <h5 class="title"><a href="/4/Room">Room name</a></h5>
+                        <h5 class="title"><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room
+                            name</a></h5>
                         <div class="slider-container w3-content w3-display-container">
                             <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
                             <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
@@ -144,7 +145,7 @@
                 </div>
                 <div class="column">
                     <div class="cinema-room">
-                        <h5><a href="/5/Room">Room name</a></h5>
+                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
                         <div class="slider-container w3-content w3-display-container">
                             <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
                             <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
@@ -161,7 +162,7 @@
                     </div>
 
                     <div class="cinema-room">
-                        <h5><a href="/6/Room">Room name</a></h5>
+                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
                         <div class="slider-container w3-content w3-display-container">
                             <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
                             <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">

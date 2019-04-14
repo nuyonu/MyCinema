@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -9,8 +9,8 @@
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../static/stylesheets/style.css" rel="stylesheet" type="text/css">
-    <link href="../static/stylesheets/program.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/stylesheets/program.css}" type="text/css">
 
     <title>MyCinema | Program</title>
 </head>
@@ -66,111 +66,56 @@
             <h1 id="program-title">Program</h1>
             <div class="programs">
                 <div class="buttons-top">
-                    <button class="button-day">Monday</button>
-                    <button class="button-day">Tuesday</button>
-                    <button class="button-day">Wednesday</button>
-                    <button class="button-day">Thursday</button>
-                    <button class="button-day">Friday</button>
-                    <button class="button-day">Saturday</button>
-                    <button class="button-day">Sunday</button>
+                    <form action="#" method="post" th:action="@{/program(day=0)}">
+                        <button class="button-day" type="submit">Monday</button>
+                    </form>
+                    <form action="#" method="post" th:action="@{/program(day=1)}">
+
+                        <button class="button-day" type="submit">Tuesday</button>
+                    </form>
+
+                    <form action="#" method="post" th:action="@{/program(day=2)}">
+                        <button class="button-day" type="submit">Wednesday</button>
+                    </form>
+
+                    <form action="#" method="post" th:action="@{/program(day=3)}">
+                        <button class="button-day" type="submit">Thursday</button>
+                    </form>
+                    <form action="#" method="post" th:action="@{/program(day=4)}">
+                        <button class="button-day" type="submit">Friday</button>
+                    </form>
+
+                    <form action="#" method="post" th:action="@{/program(day=5)}">
+                        <button class="button-day" type="submit">Saturday</button>
+                    </form>
+
+                    <form action="#" method="post" th:action="@{/program(day=6)}">
+                        <button class="button-day" type="submit">Sunday</button>
+                    </form>
+
                 </div>
                 <div class="headers-table">
                     <p id="header-movie">Movie</p>
                     <p id="header-hours">Screening Hours</p>
                 </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>Movie Name</p>
+                <th:block th:each="movie:${listProgram}">
+                    <div class="table-row">
+                        <div class="column-left">
+                            <div class="information-play"></div>
+                            <p th:text="${movie.getTitle()}">Movie</p>
+                        </div>
+                        <div class="column-right">
+                            <th:block th:each="hour:${movie.getScren().get(0)}">
+                                <form action="#" method="post"
+                                      th:action="@{/reservationPlace(idMovie=${movie.id},day=${day},time=${hour})}">
+                                    <button class="button-hour" th:text="${hour}" type="submit">hour</button>
+                                </form>
+                            </th:block>
+
+                        </div>
                     </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>Movie Long Long Long Long Name</p>
-                    </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>Movie Long Name And Only One Hour</p>
-                    </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>Movie Long Name And Only One Hour</p>
-                    </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>Movie Long Name And Only One Hour</p>
-                    </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>Movie Long Name And Only One Hour</p>
-                    </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="column-left">
-                        <div class="information-play"></div>
-                        <p>MovieMovieMovieMovie LongLongLongLong Name And Only One Hour</p>
-                    </div>
-                    <div class="column-right">
-                        <button class="button-hour">20:00</button>
-                    </div>
-                </div>
+
+                </th:block>
             </div>
         </div>
     </div>

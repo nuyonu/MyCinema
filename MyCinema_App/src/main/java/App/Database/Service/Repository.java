@@ -266,5 +266,17 @@ public class Repository implements IRepository {
             throw new NullParameterPassed();
         return this.user.findByUsername(username) != null;
     }
+
+    @Override
+    public Room findRoomReservation(String id, String time, Integer day) {
+        return room.findByIdMovieAndTimeAndDay(id, time, day);
+
+//
+//    return new Room();
+    }
+
+
+
+
 }
 

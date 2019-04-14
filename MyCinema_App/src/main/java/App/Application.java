@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 @SpringBootApplication
 public class Application {
+
+
     //    for html
 //    https://www.mkyong.com/spring-boot/spring-boot-hello-world-example-thymeleaf/
     public static void main(String[] args) {

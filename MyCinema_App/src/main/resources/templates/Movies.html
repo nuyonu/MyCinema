@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -9,8 +10,8 @@
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../static/stylesheets/style.css" rel="stylesheet" type="text/css">
-    <link href="../static/stylesheets/movies.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/stylesheets/movies.css}" type="text/css">
 
     <title>MyCinema | Movies</title>
 
@@ -68,100 +69,21 @@
         <div class="body-main">
             <p id="movies-title">Movies</p>
             <div class="movies-body">
-                <!--<th:block th:each="movies:${movies}">-->
-                <!--<div class="movies-data-show">-->
-                <!--<div class="movie-name">-->
-                <!--<p>"${movie.}"</p>-->
-                <!--</div>-->
-                <!--<div class="movie-price">-->
-                <!--<p>Price</p>-->
-                <!--</div>-->
-                <!--<div class="movie-book-now">-->
-                <!--<button class="movie-button-book-now">Book now</button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</th:block>-->
-
-
-
-
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
-                <div class="movies-data-show">
-                    <div class="movie-name">
-                        <p>Movie Name</p>
-                    </div>
-                    <div class="movie-price">
-                        <p>Price</p>
-                    </div>
-                    <div class="movie-book-now">
-                        <button class="movie-button-book-now">Book now</button>
-                    </div>
-                </div>
+                <th:block th:each="movie:${movies}">
+                    <form action="#" method="post" th:action="@{/room/{path}(idMovie=${movie.id})}">
+                        <div class="movies-data-show">
+                            <div class="movie-name">
+                                <p th:text="${movie.title}"> Title</p>
+                            </div>
+                            <div class="movie-price">
+                                <p th:text="${movie.price}">Price</p>
+                            </div>
+                            <div class="movie-book-now">
+                                <button class="movie-button-book-now">Book now</button>
+                            </div>
+                        </div>
+                    </form>
+                </th:block>
             </div>
         </div>
     </div>

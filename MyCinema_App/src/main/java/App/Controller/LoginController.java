@@ -24,6 +24,9 @@ public class LoginController {
     @GetMapping("/Login")
     public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
+
+//        DatabasePop pop = new DatabasePop(service);
+//        pop.pop();
         if (cookieHandler.isCoonected()) return "redirect:/Home";
         cookieHandler.createCookie();
         model.addAttribute("LoginInput", new LoginInput());
