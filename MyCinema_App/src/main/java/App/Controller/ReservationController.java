@@ -20,7 +20,7 @@ public class ReservationController {
     public String reservation(HttpServletRequest request, HttpServletResponse response, Model model) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         CookieHandler cookieHandler = new CookieHandler(request, response);
-        if (!cookieHandler.isCoonected()) return "redirect:/error403";
+        if (!cookieHandler.isConnected()) return "redirect:/error403";
         String idMovie = request.getParameter("idMovie");
         Integer day = Integer.valueOf(request.getParameter("day"));
         String time = request.getParameter("time");

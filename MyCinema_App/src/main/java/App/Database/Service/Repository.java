@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class Repository implements IRepository {
@@ -256,7 +257,7 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public List<Movie> getAllMovie() {
+    public List<Movie> getAllMovies() {
         return iRepositoryMovie.findAll();
     }
 
@@ -275,7 +276,10 @@ public class Repository implements IRepository {
 //    return new Room();
     }
 
-
+    @Override
+    public List<Movie> getAllMoviesById(String idMovie) {
+        return iRepositoryMovie.findById(idMovie).stream().collect(Collectors.toList());
+    }
 
 
 }

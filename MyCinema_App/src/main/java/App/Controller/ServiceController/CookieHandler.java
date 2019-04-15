@@ -40,7 +40,7 @@ public class CookieHandler {
         }
     }
 
-    public boolean isCoonected() {
+    public boolean isConnected() {
         if (conn == null) return false;
         return conn.getValue().equals("true");
     }

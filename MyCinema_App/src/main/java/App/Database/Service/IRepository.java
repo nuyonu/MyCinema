@@ -73,11 +73,12 @@ public interface IRepository {
 
     Room findRoomByName(String id);
 
-    List<Movie> getAllMovie();
+    List<Movie> getAllMovies();
 
     boolean isUsernameAlreadyInUse(String username) throws NullParameterPassed;
 
     Room findRoomReservation(String id, String time, Integer day);
 
+    List<Movie> getAllMoviesById(String idMovie);
 
 }

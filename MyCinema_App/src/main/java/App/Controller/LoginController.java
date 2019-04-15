@@ -27,14 +27,14 @@ public class LoginController {
 
 //        DatabasePop pop = new DatabasePop(service);
 //        pop.pop();
-        if (cookieHandler.isCoonected()) return "redirect:/Home";
+        if (cookieHandler.isConnected()) return "redirect:/home";
         cookieHandler.createCookie();
         model.addAttribute("LoginInput", new LoginInput());
         return "Login";
     }
 
 
-    @RequestMapping(value = "/home", method = RequestMethod.POST)
+    @RequestMapping(value = "/goToHome", method = RequestMethod.POST)
     public String auth(HttpServletRequest request, HttpServletResponse response, @ModelAttribute LoginInput user) {
 
 
@@ -42,7 +42,7 @@ public class LoginController {
         if (userDatabase.getUsername().equals(user.getUsername()) || userDatabase.getPassword().equals(user.getPassword())) {
             CookieHandler cookieHandler = new CookieHandler(request, response);
             cookieHandler.setCookie(user.getUsername(), user.isRemainConnected());
-            return "redirect:/Home";
+            return "redirect:/home";
         }
         return "redirect:/Login";
     }

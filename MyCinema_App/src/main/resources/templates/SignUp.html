@@ -20,7 +20,7 @@
     <div class="subtitle-container">Please complete to create your account.</div>
     <div class="signup-container">
         <!--/*@thymesVar id="registerModel" type="App.Controller.Dao.RegisterModel"*/-->
-        <form th:action="@{/SignUp}" th:object="${registerModel}" method="post">
+        <form th:action="@{/signUp}" th:object="${registerModel}" method="post">
             <div class="firstname-lastname-container">
                 <div class="firstname">
                     <input id="firstname" placeholder="First Name" type="text" required th:value="firstname"

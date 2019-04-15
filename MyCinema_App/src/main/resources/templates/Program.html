@@ -18,29 +18,29 @@
 <div class="layout">
     <div class="l-left">
         <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
-        <a class="logo-menu" href="Home.html">My Cinema</a>
+        <a class="logo-menu" href="home">My Cinema</a>
         <div class="menu">
-            <a class="menu-item" href="Home.html">
+            <a class="menu-item" href="home">
                 <img alt="" class="ico" src="../static/icons/icon_home-1.svg">
                 Home
             </a>
-            <a class="menu-item" href="Statistics.html">
+            <a class="menu-item" href="statistics">
                 <img alt="" class="ico" src="../static/icons/icon_dashboard-1.svg">
                 Statistics
             </a>
-            <a class="menu-item" href="Movies.html">
+            <a class="menu-item" href="movies">
                 <img alt="" class="ico" src="../static/icons/icon_products-1.svg">
                 Movies
             </a>
-            <a class="menu-item" href="Cinema-rooms.html">
+            <a class="menu-item" href="cinema-rooms" th:href="cinema-rooms">
                 <img alt="" class="ico" src="../static/icons/icon_Invoices-1.svg">
                 Cinema Rooms
             </a>
-            <a class="menu-item active" href="Program.html">
+            <a class="menu-item active" href="program">
                 <img alt="" class="ico" src="../static/icons/icon_calendar-1.svg">
                 Program
             </a>
-            <a class="menu-item" href="Settings.html">
+            <a class="menu-item" href="settings">
                 <img alt="" class="ico" src="../static/icons/icon_setting.svg">
                 Settings
             </a>
@@ -66,30 +66,30 @@
             <h1 id="program-title">Program</h1>
             <div class="programs">
                 <div class="buttons-top">
-                    <form action="#" method="post" th:action="@{/program(day=0)}">
+                    <form action="#" method="post" th:action="@{/program(day=0, idMovie=${param.idMovie})}">
                         <button class="button-day" type="submit">Monday</button>
                     </form>
-                    <form action="#" method="post" th:action="@{/program(day=1)}">
+                    <form action="#" method="post" th:action="@{/program(day=1, idMovie=${param.idMovie})}">
 
                         <button class="button-day" type="submit">Tuesday</button>
                     </form>
 
-                    <form action="#" method="post" th:action="@{/program(day=2)}">
+                    <form action="#" method="post" th:action="@{/program(day=2, idMovie=${param.idMovie})}">
                         <button class="button-day" type="submit">Wednesday</button>
                     </form>
 
-                    <form action="#" method="post" th:action="@{/program(day=3)}">
+                    <form action="#" method="post" th:action="@{/program(day=3, idMovie=${param.idMovie})}">
                         <button class="button-day" type="submit">Thursday</button>
                     </form>
-                    <form action="#" method="post" th:action="@{/program(day=4)}">
+                    <form action="#" method="post" th:action="@{/program(day=4, idMovie=${param.idMovie})}">
                         <button class="button-day" type="submit">Friday</button>
                     </form>
 
-                    <form action="#" method="post" th:action="@{/program(day=5)}">
+                    <form action="#" method="post" th:action="@{/program(day=5, idMovie=${param.idMovie})}">
                         <button class="button-day" type="submit">Saturday</button>
                     </form>
 
-                    <form action="#" method="post" th:action="@{/program(day=6)}">
+                    <form action="#" method="post" th:action="@{/program(day=6, idMovie=${param.idMovie})}">
                         <button class="button-day" type="submit">Sunday</button>
                     </form>
 
@@ -98,7 +98,7 @@
                     <p id="header-movie">Movie</p>
                     <p id="header-hours">Screening Hours</p>
                 </div>
-                <th:block th:each="movie:${listProgram}">
+                <th:block th:each="movie:${movieList}">
                     <div class="table-row">
                         <div class="column-left">
                             <div class="information-play"></div>

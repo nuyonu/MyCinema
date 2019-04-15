@@ -14,18 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-public class BookController {
+public class MoviesController {
 
     @Autowired
     IRepository repository;
 
-    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    @RequestMapping(value = "/movies", method = RequestMethod.GET)
     public String book(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
-        if (!cookieHandler.isCoonected()) return "error403";
-        List<Movie> listOfMovie = repository.getAllMovie();
-        model.addAttribute("movies", listOfMovie);
-        return "Movies";
+        if (!cookieHandler.isConnected()) return "error403";
+        List<Movie> listOfMovies = repository.getAllMovies();
+        model.addAttribute("listOfMovies", listOfMovies);
+        return "movies";
     }
 
 }

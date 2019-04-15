@@ -5,10 +5,13 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IRepositoryMovie extends MongoRepository<Movie, String> {
-    //    Movie findById(String id);
+
+    Optional<Movie> findById(String id);
+
     Movie findByTitle(String Title);
 
     List<Movie> findByDuration(Integer duration);
