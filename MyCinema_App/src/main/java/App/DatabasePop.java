@@ -33,7 +33,7 @@ public class DatabasePop {
             for (int i = 0; i <= 6; i++) {
                 repository.addRoom(new Room("nameRoom" + i, 13, 7));
             }
-            List<Movie> movie = repository.getAllMovie();
+            List<Movie> movie = repository.getAllMovies();
             for (Movie movie1 : movie) {
                 int day = 0;
                 for (List<String> time : movie1.getScren()) {

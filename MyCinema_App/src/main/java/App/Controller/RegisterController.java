@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/SignUp")
+@RequestMapping("/signUp")
 public class RegisterController {
 
     @Autowired
@@ -26,13 +26,13 @@ public class RegisterController {
 
     @GetMapping
     public String registerForm() {
-        return "/SignUp";
+        return "signUp";
     }
 
     @PostMapping
     public String PostRegisterForm(@Valid @ModelAttribute("registerModel") RegisterModel registerModel, BindingResult bindingResult) throws NullParameterPassed, DuplicateData {
         if (bindingResult.hasErrors())
-            return "/SignUp";
+            return "signUp";
 
         service.addUser(new User(registerModel.getUsername(), registerModel.getFirstName(), registerModel.getLastName(),
                 registerModel.geteMail(), registerModel.getPassword()));
