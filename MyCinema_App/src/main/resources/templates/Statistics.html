@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -9,7 +9,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../static/stylesheets/Statistics/style.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/stylesheets/Statistics/style.css}">
 
     <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
 
@@ -81,55 +81,11 @@
 </head>
 <body>
 <div class="layout">
-    <div class="l-left">
-        <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
-        <a class="logo-menu" href="Home.html">My Cinema</a>
-        <div class="menu">
-            <a class="menu-item active" href="Home.html">
-                <img alt="" class="ico" src="../static/icons/icon_home-1.svg">
-                Home
-            </a>
-            <a class="menu-item" href="Statistics.html">
-                <img alt="" class="ico" src="../static/icons/icon_dashboard-1.svg">
-                Statistics
-            </a>
-            <a class="menu-item" href="Movies.html">
-                <img alt="" class="ico" src="../static/icons/icon_products-1.svg">
-                Movies
-            </a>
-            <a class="menu-item" href="Cinema-rooms.html">
-                <img alt="" class="ico" src="../static/icons/icon_Invoices-1.svg">
-                Cinema Rooms
-            </a>
-            <a class="menu-item" href="Program.html">
-                <img alt="" class="ico" src="../static/icons/icon_calendar-1.svg">
-                Program
-            </a>
-            <a class="menu-item" href="Settings.html">
-                <img alt="" class="ico" src="../static/icons/icon_setting.svg">
-                Settings
-            </a>
-        </div>
-    </div>
+    <div th:replace="common.html :: div.l-left"></div>
     <div class="l-right">
-        <div class="top-bar">
-            <form action="" class="left">
-                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
-                <img alt="" class="icon" src="../static/icons/icon_search.svg">
-                <input id="input_search" placeholder="Search" type="text">
-            </form>
-            <div class="right">
-                <img alt="" class="notif-ico" src="../static/icons/icon_notification.svg">
-                <a class="user-menu" href="#">
-                    John Doe
-                    <img alt="" class="arrow" src="../static/icons/icon_down-arrow-small.svg">
-
-                </a>
-            </div>
-        </div>
+        <div th:replace="common.html :: div.top-bar"></div>
         <div class="main">
             <h1>Statistics</h1>
-
             <div class="row">
                 <div class="column">
                     <div class="tickets">
