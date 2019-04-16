@@ -15,7 +15,7 @@ public class ScreeningHours {
     @Id
     private String id;
 
-    @NotNull
+
     @Indexed(unique = true)
     private String movieId;
 

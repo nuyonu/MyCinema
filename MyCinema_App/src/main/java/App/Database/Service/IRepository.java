@@ -33,7 +33,7 @@ public interface IRepository {
     List<GenreMovie> genreMovieFindByGenre(String genre) throws NullParameterPassed;
 
 
-    //rezervation
+    //repositoryRezervation
     void addRezervation(Reservation reservation) throws NullParameterPassed, DuplicateData;
 
     Reservation rezervationFindByMovieId(String movieId) throws NullParameterPassed;

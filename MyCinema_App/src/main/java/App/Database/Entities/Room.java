@@ -35,7 +35,6 @@ public class Room {
         this.noRows = noRows;
         this.name=name;
         this.noColumns = noColumns;
-//        places = new ArrayList<>(Collections.nCopies(noColumns * noRows, 0));
     places=new ArrayList<>(Collections.nCopies(noRows,new ArrayList<>(Collections.nCopies(noColumns,0))));
     }
 
@@ -99,5 +98,13 @@ public class Room {
                 ", noColumns=" + noColumns +
                 ", places=" + places +
                 '}';
+    }
+
+    public String getIdMovie() {
+        return idMovie;
+    }
+
+    public String getName() {
+        return name;
     }
 }

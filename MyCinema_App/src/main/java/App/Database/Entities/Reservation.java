@@ -38,6 +38,11 @@ public class Reservation {
     }
 
     public Reservation() {
+        userId = " ";
+        movieId = " ";
+        roomId = " ";
+        day = 0;
+        time = LocalTime.now();
     }
 
     public String getId() {

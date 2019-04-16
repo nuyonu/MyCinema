@@ -22,7 +22,6 @@ public class GenreMovie {
     public GenreMovie(String movieId, String genre) {
         this.movieId = movieId;
         this.genre = genre;
-//        this.id = "n";
     }
 
     public GenreMovie() {

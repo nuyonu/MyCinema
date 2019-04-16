@@ -51,6 +51,7 @@ public class Movie {
     }
 
     public Movie() {
+        this.title = " ";
     }
 
     public int getPrice() {

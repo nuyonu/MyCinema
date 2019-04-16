@@ -12,14 +12,15 @@ public class CookieHandler {
     private Cookie auth;
     private Cookie user;
     private Cookie conn;
+    private final String FALSE_VALUE = "false";
+    private final String TRUE_VALUE = "true";
 
     public CookieHandler(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
-        Cookie[] cookies = request.getCookies();
-        auth = WebUtils.getCookie(request, "auth");
-        user = WebUtils.getCookie(request, "user");
-        conn = WebUtils.getCookie(request, "auth_con");
+        auth = WebUtils.getCookie(this.request, "auth");
+        user = WebUtils.getCookie(this.request, "user");
+        conn = WebUtils.getCookie(this.request, "auth_con");
     }
 
     private void addToResponse() {
@@ -33,23 +34,23 @@ public class CookieHandler {
 
     public void createCookie() {
         if (auth == null) {
-            auth = new Cookie("auth", "false");
+            auth = new Cookie("auth", FALSE_VALUE);
             user = new Cookie("user", "none");
-            conn = new Cookie("auth_con", "false");
+            conn = new Cookie("auth_con", FALSE_VALUE);
             addToResponse();
         }
     }
 
     public boolean isConnected() {
         if (conn == null) return false;
-        return conn.getValue().equals("true");
+        return conn.getValue().equals(TRUE_VALUE);
     }
 
     public void setCookie(String username, boolean remainConnected) {
         createCookie();
         auth.setValue("true");
-        if (remainConnected) conn.setValue("true");
-        else conn.setValue("false");
+        if (remainConnected) conn.setValue(TRUE_VALUE);
+        else conn.setValue(FALSE_VALUE);
         user.setValue(username);
         addToResponse();
     }

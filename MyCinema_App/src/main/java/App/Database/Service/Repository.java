@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,20 +18,20 @@ public class Repository implements IRepository {
     @Autowired
     IRepositoryMovie iRepositoryMovie;
     @Autowired
-    IRepositoryUser user;
+    IRepositoryUser repositoryUser;
     @Autowired
-    IRepositoryGenreMovie genreMovie;
+    IRepositoryGenreMovie repositoryGenreMovie;
     @Autowired
-    IRepositoryRezervation rezervation;
+    IRepositoryRezervation repositoryRezervation;
     @Autowired
-    IRepositoryRoom room;
+    IRepositoryRoom repositoryRoom;
     @Autowired
-    IRepositoryScreaningHours screaningHours;
+    IRepositoryScreaningHours repositoryScreaningHours;
 
 
     @Override
-    public Movie movieFindByTitle(String Title) {
-        Movie movie = iRepositoryMovie.findByTitle(Title);
+    public Movie movieFindByTitle(String title) {
+        Movie movie = iRepositoryMovie.findByTitle(title);
         return movie != null ? movie : new Movie();
     }
 
@@ -72,7 +72,6 @@ public class Repository implements IRepository {
         try {
             iRepositoryMovie.save(movie);
         } catch (DuplicateKeyException e) {
-            //todo throw ex
             throw new DuplicateData();
         }
 
@@ -83,9 +82,8 @@ public class Repository implements IRepository {
     public void addGenreToMovie(String movieId, String genre) throws NullParameterPassed, DuplicateData {
         if (movieId == null || genre == null) throw new NullParameterPassed();
         try {
-            genreMovie.save(new GenreMovie(movieId, genre));
+            repositoryGenreMovie.save(new GenreMovie(movieId, genre));
         } catch (DuplicateKeyException e) {
-            //todo throw ex
             throw new DuplicateData();
         }
 
@@ -94,14 +92,14 @@ public class Repository implements IRepository {
     @Override
     public GenreMovie genreMovieFindByMovieId(String movieId) throws NullParameterPassed {
         if (movieId == null) throw new NullParameterPassed();
-        GenreMovie genreMovie = this.genreMovie.findByMovieId(movieId);
+        GenreMovie genreMovie = this.repositoryGenreMovie.findByMovieId(movieId);
         return genreMovie != null ? genreMovie : new GenreMovie();
     }
 
     @Override
     public List<GenreMovie> genreMovieFindByGenre(String genre) throws NullParameterPassed {
         if (genre == null) throw new NullParameterPassed();
-        return genreMovie.findByGenre(genre);
+        return repositoryGenreMovie.findByGenre(genre);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class Repository implements IRepository {
     public void addRezervation(Reservation reservation) throws NullParameterPassed, DuplicateData {
         if (reservation == null) throw new NullParameterPassed();
         try {
-            this.rezervation.save(reservation);
+            this.repositoryRezervation.save(reservation);
         } catch (DuplicateKeyException e) {
             throw new DuplicateData();
         }
@@ -118,7 +116,7 @@ public class Repository implements IRepository {
     @Override
     public Reservation rezervationFindByMovieId(String movieId) throws NullParameterPassed {
         if (movieId == null) throw new NullParameterPassed();
-        Reservation reservation = this.rezervation.findByMovieId(movieId);
+        Reservation reservation = this.repositoryRezervation.findByMovieId(movieId);
         return reservation != null ? reservation : new Reservation();
 
     }
@@ -127,29 +125,30 @@ public class Repository implements IRepository {
     @Override
     public Reservation rezervationFindByRoomId(String roomId) throws NullParameterPassed {
         if (roomId == null) throw new NullParameterPassed();
-        Reservation reservation = this.rezervation.findByRoomId(roomId);
+        Reservation reservation = this.repositoryRezervation.findByRoomId(roomId);
         return reservation != null ? reservation : new Reservation();
 
     }
 
     @Override
     public Reservation rezervationFindByDay(Integer day) {
-        Reservation reservation = this.rezervation.findByDay(day);
+        Reservation reservation = this.repositoryRezervation.findByDay(day);
         return reservation != null ? reservation : new Reservation();
 
     }
 
     @Override
     public Reservation rezervationFindByTime(LocalTime time) {
-        Reservation reservation = this.rezervation.findByTime(time);
+        Reservation reservation = this.repositoryRezervation.findByTime(time);
         return reservation != null ? reservation : new Reservation();
     }
 
     @Override
     public Room roomFindById(String id) throws NullParameterPassed {
         if (id == null) throw new NullParameterPassed();
-        Room room = this.room.findById(id).get();
-        return room;
+        Optional<Room> room = this.repositoryRoom.findById(id);
+        if (!room.isPresent()) return new Room();
+        return room.get();
     }
 
     @Override
@@ -157,9 +156,8 @@ public class Repository implements IRepository {
     public void addRoom(Room room) throws DuplicateData, NullParameterPassed {
         if (room == null) throw new NullParameterPassed();
         try {
-            this.room.save(room);
+            this.repositoryRoom.save(room);
         } catch (DuplicateKeyException e) {
-            //todo throw ex
             throw new DuplicateData();
         }
     }
@@ -168,9 +166,8 @@ public class Repository implements IRepository {
     public void addScreening(ScreeningHours screeningHours) throws NullParameterPassed, DuplicateData {
         if (screeningHours == null) throw new NullParameterPassed();
         try {
-            this.screaningHours.save(screeningHours);
+            this.repositoryScreaningHours.save(screeningHours);
         } catch (DuplicateKeyException e) {
-            //todo throw ex
             throw new DuplicateData();
         }
     }
@@ -178,19 +175,15 @@ public class Repository implements IRepository {
     @Override
     public ScreeningHours screamingFindById(String id) throws NullParameterPassed {
         if (id == null) throw new NullParameterPassed();
-        try {
-            ScreeningHours screeningHours = this.screaningHours.findById(id).get();
-            return screeningHours;
-        } catch (NoSuchElementException e) {
-            return new ScreeningHours();
-        }
-
+        Optional<ScreeningHours> screeningHours = this.repositoryScreaningHours.findById(id);
+        if (screeningHours.isPresent()) return screeningHours.get();
+        else return new ScreeningHours();
     }
 
     @Override
     public ScreeningHours screeningFindByMovieId(String movieId) throws NullParameterPassed {
         if (movieId == null) throw new NullParameterPassed();
-        ScreeningHours screeningHours = this.screaningHours.findByMovieId(movieId);
+        ScreeningHours screeningHours = this.repositoryScreaningHours.findByMovieId(movieId);
         return screeningHours != null ? screeningHours : new ScreeningHours();
 
     }
@@ -200,9 +193,8 @@ public class Repository implements IRepository {
     public void addUser(User user) throws NullParameterPassed, DuplicateData {
         if (user == null) throw new NullParameterPassed();
         try {
-            this.user.save(user);
+            this.repositoryUser.save(user);
         } catch (DuplicateKeyException e) {
-            //todo throw ex
             throw new DuplicateData();
         }
     }
@@ -210,7 +202,7 @@ public class Repository implements IRepository {
     @Override
     public User userFindByFirstName(String firstName) throws NullParameterPassed {
         if (firstName == null) throw new NullParameterPassed();
-        User user = this.user.findByFirstName(firstName);
+        User user = this.repositoryUser.findByFirstName(firstName);
         return user != null ? user : new User();
 
     }
@@ -218,42 +210,39 @@ public class Repository implements IRepository {
     @Override
     public List<User> userFindAllByLastName(String lastName) throws NullParameterPassed {
         if (lastName == null) throw new NullParameterPassed();
-        return this.user.findAllByLastName(lastName);
+        return this.repositoryUser.findAllByLastName(lastName);
     }
 
     @Override
     public User userFindByEmail(String email) throws NullParameterPassed {
         if (email == null) throw new NullParameterPassed();
-        User user = this.user.findByEmail(email);
+        User user = this.repositoryUser.findByEmail(email);
         return user != null ? user : new User();
     }
 
     @Override
     public User userFindById(String id) throws NullParameterPassed {
         if (id == null) throw new NullParameterPassed();
-        try {
-            User user = this.user.findById(id).get();
-            return user;
-        } catch (NoSuchElementException e) {
-            return new User();
-        }
+        Optional<User> user = this.repositoryUser.findById(id);
+        if (!user.isPresent()) return new User();
+        return user.get();
 
     }
 
     @Override
     public User userFindByUsername(String username) {
-        User user= this.user.findByUsername(username);
-        return  user!=null?user:new User();
-    }
-    @Override
-    public void deleteRoom()
-    {
-        room.deleteAll();
+        User user = this.repositoryUser.findByUsername(username);
+        return user != null ? user : new User();
     }
 
     @Override
-    public Room findRoomByName(String name){
-        return this.room.findByName(name);
+    public void deleteRoom() {
+        repositoryRoom.deleteAll();
+    }
+
+    @Override
+    public Room findRoomByName(String name) {
+        return this.repositoryRoom.findByName(name);
     }
 
     @Override
@@ -262,18 +251,15 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public boolean isUsernameAlreadyInUse(String username) throws NullParameterPassed{
-        if(username == null)
+    public boolean isUsernameAlreadyInUse(String username) throws NullParameterPassed {
+        if (username == null)
             throw new NullParameterPassed();
-        return this.user.findByUsername(username) != null;
+        return this.repositoryUser.findByUsername(username) != null;
     }
 
     @Override
     public Room findRoomReservation(String id, String time, Integer day) {
-        return room.findByIdMovieAndTimeAndDay(id, time, day);
-
-//
-//    return new Room();
+        return repositoryRoom.findByIdMovieAndTimeAndDay(id, time, day);
     }
 
     @Override
