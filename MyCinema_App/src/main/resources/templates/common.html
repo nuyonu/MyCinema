@@ -5,31 +5,31 @@
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
 </head>
 <body>
-<div class="l-left">
+<div class="l-left" th:fragment="left(activ)">
     <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
     <a class="logo-menu" href="home">My Cinema</a>
     <div class="menu">
-        <a class="menu-item" href="home">
+        <a href="home" th:class="${activ}=='1'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
             Home
         </a>
-        <a class="menu-item" href="statistics">
+        <a href="statistics" th:class="${activ}=='2'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_dashboard-1.svg}">
             Statistics
         </a>
-        <a class="menu-item" href="movies">
+        <a href="movies" th:class="${activ}=='3'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_products-1.svg}">
             Movies
         </a>
-        <a class="menu-item" href="cinema-rooms">
+        <a href="cinema-rooms" th:class="${activ}=='4'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_Invoices-1.svg}">
             Cinema Rooms
         </a>
-        <a class="menu-item" href="program">
+        <a href="program" th:class="${activ}=='5'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_calendar-1.svg}">
             Program
         </a>
-        <a class="menu-item active" th:href="@{/settings}">
+        <a th:class="${activ}=='6'?'menu-item active':'menu-item'" th:href="@{/settings}">
             <img alt="" class="ico" th:src="@{/icons/icon_setting.svg}">
             Settings
         </a>
