@@ -19,7 +19,7 @@ public class CookieHandler {
         this.response = response;
         autentificate = WebUtils.getCookie(request1, "autentificate");
         user = WebUtils.getCookie(request1, "user");
-        remainConnected = WebUtils.getCookie(request1, "auth_con");
+        remainConnected = WebUtils.getCookie(request1, "remainConnected");
     }
 
     private void addToResponse() {
@@ -35,7 +35,7 @@ public class CookieHandler {
         if (autentificate == null) {
             autentificate = new Cookie("autentificate", FALSE_VALUE);
             user = new Cookie("user", "none");
-            remainConnected = new Cookie("auth_con", FALSE_VALUE);
+            remainConnected = new Cookie("remainConnected", FALSE_VALUE);
             addToResponse();
         }
     }
