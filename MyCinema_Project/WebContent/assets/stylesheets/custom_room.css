@@ -32,15 +32,25 @@
     font-weight: bold;
     padding: 3px;
 }
-.room-view-legend .chair {
+
+.chair {
     display: inline-block;
     width: 30px;
     height: 30px;
     vertical-align: middle;
-    margin: 3px;
+    margin: 1px 3px 3px 3px;
     border-radius: 5px;
-    margin-top: 1px;
 }
+
+.room-view-legend {
+    display: flex;
+    flex-direction: row;
+    float: left;
+    vertical-align: middle;
+    margin: 1px 3px 3px 3px;
+    border-radius: 5px;
+}
+
 .room-view-legend .chair.free {
     background: #3c85fd;
 }
@@ -49,4 +59,43 @@
 }
 .room-view-legend .chair.sold {
     background: #ff6567;
+}
+
+.information-text {
+    text-align: center;
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.buttons-right {
+    display: flex;
+    flex-direction: row;
+    float: right;
+}
+
+.book-now-button, .pay-now-button {
+    color: white;
+    background-color: #3381ff;
+    border-radius: 5px;
+    padding: 10px 40px;
+    border: none;
+    font-size: 13px;
+}
+
+.pay-now-button{
+    margin-left:2px;
+    margin-right: 50px;
+}
+
+.book-now-button:disabled, .pay-now-button:disabled {
+    background-color: #5C9AFF;
+}
+
+.book-now-button:active, .pay-now-button:active {
+    background-color: #0062ff;
+}
+
+.information-text
+{
+    color: red;
 }
