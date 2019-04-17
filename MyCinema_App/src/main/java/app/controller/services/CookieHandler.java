@@ -8,48 +8,48 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CookieHandler {
     private HttpServletResponse response;
-    private Cookie auth;
+    private static final String FALSE_VALUE = "false";
     private Cookie user;
-    private Cookie conn;
-    private final String FALSE_VALUE = "false";
-    private final String TRUE_VALUE = "true";
+    private static final String TRUE_VALUE = "true";
+    private Cookie autentificate;
+    private Cookie remainConnected;
 
     public CookieHandler(HttpServletRequest request, HttpServletResponse response) {
         HttpServletRequest request1 = request;
         this.response = response;
-        auth = WebUtils.getCookie(request1, "auth");
+        autentificate = WebUtils.getCookie(request1, "autentificate");
         user = WebUtils.getCookie(request1, "user");
-        conn = WebUtils.getCookie(request1, "auth_con");
+        remainConnected = WebUtils.getCookie(request1, "auth_con");
     }
 
     private void addToResponse() {
-        auth.setMaxAge(24 * 60 * 60);
+        autentificate.setMaxAge(24 * 60 * 60);
         user.setMaxAge(24 * 60 * 60);
-        conn.setMaxAge(24 * 60 * 60);
-        response.addCookie(auth);
+        remainConnected.setMaxAge(24 * 60 * 60);
+        response.addCookie(autentificate);
         response.addCookie(user);
-        response.addCookie(conn);
+        response.addCookie(remainConnected);
     }
 
     public void createCookie() {
-        if (auth == null) {
-            auth = new Cookie("auth", FALSE_VALUE);
+        if (autentificate == null) {
+            autentificate = new Cookie("autentificate", FALSE_VALUE);
             user = new Cookie("user", "none");
-            conn = new Cookie("auth_con", FALSE_VALUE);
+            remainConnected = new Cookie("auth_con", FALSE_VALUE);
             addToResponse();
         }
     }
 
     public boolean isConnected() {
-        if (auth == null) return false;
-        return conn.getValue().equals(TRUE_VALUE);
+        if (autentificate == null) return false;
+        return autentificate.getValue().equals(TRUE_VALUE);
     }
 
     public void setCookie(String username, boolean remainConnected) {
         createCookie();
-        auth.setValue("true");
-        if (remainConnected) conn.setValue(TRUE_VALUE);
-        else conn.setValue(FALSE_VALUE);
+        autentificate.setValue("true");
+        if (remainConnected) this.remainConnected.setValue(TRUE_VALUE);
+        else this.remainConnected.setValue(FALSE_VALUE);
         user.setValue(username);
         addToResponse();
     }

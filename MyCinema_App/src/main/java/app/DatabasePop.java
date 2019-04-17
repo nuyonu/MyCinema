@@ -45,10 +45,8 @@ public class DatabasePop {
                     }
                 }
 
-            } catch (DuplicateData duplicateData) {
-                duplicateData.printStackTrace();
-            } catch (NullParameterPassed nullParameterPassed) {
-                nullParameterPassed.printStackTrace();
+            } catch (DuplicateData | NullParameterPassed error) {
+                error.printStackTrace();
             }
         }
     }

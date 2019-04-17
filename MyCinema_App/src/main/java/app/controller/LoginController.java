@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 @Controller
 public class LoginController {
 
@@ -24,7 +23,6 @@ public class LoginController {
     @GetMapping("/Login")
     public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
-
         DatabasePop pop = new DatabasePop(service);
         pop.pop(false);
         if (cookieHandler.isConnected()) return "redirect:/home";

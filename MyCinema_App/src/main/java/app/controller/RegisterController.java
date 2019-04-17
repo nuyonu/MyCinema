@@ -33,7 +33,7 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String PostRegisterForm(@Valid @ModelAttribute("registerModel") RegisterModel registerModel, BindingResult bindingResult) throws NullParameterPassed, DuplicateData {
+    public String postRegisterForm(@Valid @ModelAttribute("registerModel") RegisterModel registerModel, BindingResult bindingResult) throws NullParameterPassed, DuplicateData {
         if (bindingResult.hasErrors())
             return "signUp";
 
