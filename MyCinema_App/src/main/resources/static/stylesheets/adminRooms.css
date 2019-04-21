@@ -382,6 +382,14 @@ body {
     padding: 5px;
 }
 
+.row-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 .buttons-top
 {
     display: flex;
@@ -436,7 +444,7 @@ body {
     margin: 5px;
 }
 
-.modal-form {
+.modal-form-add, .modal-form-edit {
     position: fixed;
     left: 0;
     top: 0;
@@ -498,4 +506,23 @@ body {
 .modal-form-inputs p
 {
     margin: 15px 0 0 0;
+}
+
+.main-container .old-image
+{
+    height: 250px;
+}
+
+.main-panel
+{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0px 15px 15px 15px;
+    width: 50%;
+}
+
+.main-panel p
+{
+    margin: 0;
 }

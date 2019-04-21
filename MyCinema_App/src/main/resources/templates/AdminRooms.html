@@ -9,7 +9,7 @@
         <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
         <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
         <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-        <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminpanel.css" th:href="@{/stylesheets/adminpanel.css}">
+        <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminRooms.css" th:href="@{/stylesheets/adminRooms.css}">
 
         <title>MyCinema Admin Panel | Rooms</title>
     </head>
@@ -21,7 +21,7 @@
                 <div class="main">
                     <h2 class="title">Rooms</h2>
                     <div class="main-container">
-                        <form th:action="@{/delete-rooms}" method="POST">
+                        <form th:action="@{/admin-delete-rooms}" method="POST">
                             <div class="buttons-top">
                                 <button class="buttons-room" id="button-add" type="button">Add Room</button>
                                 <button class="buttons-room" id="button-delete" type="submit">Delete Room</button>
@@ -40,13 +40,13 @@
                                         <td th:text="${room.getName()}">Name</td>
                                         <td><img th:src="@{'/images/' + ${room.getImagePath()}}"/></td>
                                         <td><input type="checkbox" class="check-for-delete" th:name="room-ids" th:value="${room.getId()}"/></td>
-                                        <td><a href="#">Edit</a></td>
+                                        <td><a class="button-edit" th:href="@{/admin-edit-room(id=${room.getId()})}">Edit</a></td>
                                     </tr>
                                 </th:block>
                             </table>
                         </form>
-                        <form th:action="@{/add-room}" method="POST">
-                            <div class="modal-form">
+                        <form th:action="@{/admin-add-room}" method="POST">
+                            <div class="modal-form-add">
                                 <div class="modal-form-content">
                                     <span class="close-button">&times;</span>
                                     <div class="modal-form-items">
@@ -72,6 +72,6 @@
         <script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
         <script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
         <script th:src="@{/scripts/script.js}"></script>
-        <script th:src="@{/scripts/adminpanel.js}"></script>
+        <script th:src="@{/scripts/adminRooms.js}"></script>
     </body>
 </html>

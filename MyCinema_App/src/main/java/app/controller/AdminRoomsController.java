@@ -8,14 +8,12 @@ import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminRoomsController
@@ -32,11 +30,10 @@ public class AdminRoomsController
             return "error403";
 
         model.addAttribute("rooms", repository.findAll());
-
         return "AdminRooms";
     }
 
-    @PostMapping(value = "/delete-rooms")
+    @PostMapping(value = "/admin-delete-rooms")
     public String deleteRoom(@RequestParam(name = "room-ids", required = false) List<String> roomIds)
     {
         if (roomIds != null)
@@ -46,12 +43,49 @@ public class AdminRoomsController
         return "redirect:/admin-rooms";
     }
 
-    @PostMapping(value = "/add-room")
-    public String deleteRoom(@RequestParam(name = "room-name", required = true) String roomName,
-                             @RequestParam(name = "room-image-path", required = true) String roomImagePath)
+    @PostMapping(value = "/admin-add-room")
+    public String addRoom(@RequestParam(name = "room-name", required = true) String roomName,
+                          @RequestParam(name = "room-image-path", required = true) String roomImagePath)
     {
-        if (roomName != null && roomImagePath != null)
+        if (!roomName.trim().isEmpty() && !roomImagePath.trim().isEmpty())
             repository.save(new CinemaRoom(roomName, roomImagePath));
+
+        return "redirect:/admin-rooms";
+    }
+
+    @GetMapping(value = "/admin-edit-room")
+    public String toEditRoomPage(@RequestParam(name = "id", required = true) String roomId, Model model)
+    {
+        Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
+
+        if (optionalRoom.isPresent())
+        {
+            model.addAttribute("room", optionalRoom.get());
+            return "AdminRoomsEdit";
+        }
+
+        return "redirect:/admin-rooms";
+    }
+
+    @PostMapping(value = "/admin-rooms-submit-edit")
+    public String saveRoom(@RequestParam(name = "new-room-name") String newRoomName,
+                           @RequestParam(name = "new-room-image-path") String newRoomImagePath,
+                           @RequestParam(name = "room-id") String roomId)
+    {
+        Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
+
+        if (optionalRoom.isPresent())
+        {
+            CinemaRoom room = optionalRoom.get();
+
+            if (!newRoomName.trim().isEmpty())
+                room.setName(newRoomName);
+
+            if (!newRoomImagePath.trim().isEmpty())
+                room.setImagePath(newRoomImagePath);
+
+            repository.save(room);
+        }
 
         return "redirect:/admin-rooms";
     }
