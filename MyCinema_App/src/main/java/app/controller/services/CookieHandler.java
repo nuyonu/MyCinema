@@ -42,7 +42,7 @@ public class CookieHandler {
 
     public boolean isConnected() {
         if (auth == null) return false;
-        return conn.getValue().equals(TRUE_VALUE);
+        return auth.getValue().equals(TRUE_VALUE);
     }
 
     public void setCookie(String username, boolean remainConnected) {
