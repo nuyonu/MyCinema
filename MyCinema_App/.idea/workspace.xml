@@ -13,13 +13,19 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/Room.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="252">
               <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+
             </state>
           </provider>
         </entry>
@@ -33,10 +39,12 @@
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
+
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+
         <entry file="file://$PROJECT_DIR$/src/main/java/app/database/constraints/PasswordConstraintValidator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
@@ -48,6 +56,7 @@
           </provider>
         </entry>
       </file>
+
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/app/controller/services/CookieHandler.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -60,15 +69,16 @@
                 <element signature="method#isConnected#0;class#CookieHandler#0" expanded="true" />
                 <element signature="method#setCookie#0;class#CookieHandler#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+
+        <entry file="file://$PROJECT_DIR$/src/main/java/app/controller/AdminRoomsController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="49" column="51" lean-forward="true" selection-start-line="49" selection-start-column="51" selection-end-line="49" selection-end-column="60" />
         <entry file="file://$PROJECT_DIR$/src/main/java/app/controller/constraints/UniqueUsernameValidator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
               <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -88,10 +98,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+
       <find>Se</find>
       <find>.html</find>
       <find>.active</find>
       <find>active</find>
+
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -129,6 +141,7 @@
         <option value="$PROJECT_DIR$/src/main/java/App/Controller/ReservationController.java" />
         <option value="$PROJECT_DIR$/src/main/java/App/Database/Service/Repository.java" />
         <option value="$PROJECT_DIR$/src/main/java/App/Database/Exception/NullTitle.java" />
+
         <option value="$PROJECT_DIR$/src/main/java/App/Controller/ServiceController/CookieHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/Controller/ServiceController/CookieHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/controller/ServiceController/CookieHandler.java" />
@@ -160,6 +173,7 @@
         <option value="$PROJECT_DIR$/src/main/java/app/controller/RegisterController.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/database/infrastructure/IRepositoryMovie.java" />
         <option value="$PROJECT_DIR$/src/main/java/app/controller/services/CookieHandler.java" />
+
       </list>
     </option>
   </component>
@@ -230,6 +244,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+
             </path>
             <path>
               <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
@@ -238,7 +253,9 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+
               <item name="controller" type="462c0819:PsiDirectoryNode" />
+
             </path>
             <path>
               <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
@@ -247,14 +264,17 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+
               <item name="controller" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
+
             </path>
             <path>
               <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
               <item name="MyCinema_App" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -264,6 +284,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
+
             </path>
             <path>
               <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
@@ -290,12 +311,40 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyCinema_App" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyCinema_App" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="stylesheets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="gs-accessing-data-mongodb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyCinema_App" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+
       <pane id="Scope">
         <subPane subId="Scope 'Default Changelist'; set:Default Changelist; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -307,6 +356,7 @@
           <select />
         </subPane>
       </pane>
+
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -321,11 +371,14 @@
     <property name="SONARLINT_PRECOMMIT_ANALYSIS" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555503062757" />
+
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
+
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.gutterIcons" />
   </component>
@@ -335,6 +388,7 @@
       <recent name="C:\github\MyCinema\MyCinema_App\src\main\resources" />
       <recent name="C:\github\MyCinema\MyCinema_App\src\main\resources\static" />
     </key>
+
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -350,7 +404,9 @@
   </component>
   <component name="RunManager">
     <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+
       <module name="MyCinema_App" />
+
       <option name="SPRING_BOOT_MAIN_CLASS" value="app.Application" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <method v="2">
@@ -373,6 +429,7 @@
       <workItem from="1555406190377" duration="4198000" />
       <workItem from="1555410641414" duration="3175000" />
       <workItem from="1555415412173" duration="122000" />
+
       <workItem from="1555415574338" duration="12083000" />
       <workItem from="1555437184526" duration="4757000" />
       <workItem from="1555497785203" duration="4114000" />
@@ -413,11 +470,13 @@
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
       <updated>1555499449817</updated>
+
     </task>
     <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
+
     <option name="totallyTimeSpent" value="32291000" />
   </component>
   <component name="TodoView">
@@ -430,10 +489,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28266665" />
+
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -538,6 +598,7 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/database/entities/Room.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -547,10 +608,12 @@
             <element signature="e#2357#2358#0" expanded="true" />
             <element signature="e#2388#2389#0" expanded="true" />
             <element signature="e#2415#2416#0" expanded="true" />
+
           </folding>
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/database/exception/NullTitle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -559,10 +622,12 @@
             <element signature="e#133#134#0" expanded="true" />
             <element signature="e#154#155#0" expanded="true" />
             <element signature="e#227#228#0" expanded="true" />
+
           </folding>
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/database/exception/NullParameterPassed.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -591,10 +656,12 @@
             <element signature="method#addUser#0;class#Repository#0" expanded="true" />
             <element signature="method#findRoomReservation#0;class#Repository#0" expanded="true" />
             <element signature="method#getAllMoviesById#0;class#Repository#0" expanded="true" />
+
           </folding>
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/controller/constraints/UniqueUsername.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -633,10 +700,12 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#rooms#0;class#CinemaRoomsController#0" expanded="true" />
+
           </folding>
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/controller/RoomController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -718,10 +787,12 @@
         <state>
           <folding>
             <element signature="e#30#574#0" expanded="true" />
+
           </folding>
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/resources/static/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="134">
@@ -876,6 +947,7 @@
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/DatabasePop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -942,12 +1014,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+
     <entry file="file://$PROJECT_DIR$/src/main/java/app/controller/services/CookieHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
@@ -990,4 +1064,3 @@
       </state>
     </states>
   </component>
-</project>

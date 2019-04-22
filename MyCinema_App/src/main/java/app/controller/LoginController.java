@@ -24,7 +24,8 @@ public class LoginController {
     public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         DatabasePop pop = new DatabasePop(service);
-        pop.pop(false);
+       // pop.pop(false);
+
         if (cookieHandler.isConnected()) return "redirect:/home";
         cookieHandler.createCookie();
         model.addAttribute("LoginInput", new LoginInput());
