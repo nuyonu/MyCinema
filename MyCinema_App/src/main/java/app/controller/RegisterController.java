@@ -2,9 +2,7 @@ package app.controller;
 
 import app.controller.dao.RegisterModel;
 import app.database.entities.User;
-import app.database.exception.DuplicateData;
-import app.database.exception.NullParameterPassed;
-import app.database.service.IRepository;
+import app.database.infrastructure.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,7 +18,7 @@ import javax.validation.Valid;
 public class RegisterController {
 
     @Autowired
-    IRepository service;
+    IRepositoryUser userRepository;
 
     @ModelAttribute("registerModel")
     public RegisterModel registerModel() {
@@ -33,11 +31,11 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String postRegisterForm(@Valid @ModelAttribute("registerModel") RegisterModel registerModel, BindingResult bindingResult) throws NullParameterPassed, DuplicateData {
+    public String postRegisterForm(@Valid @ModelAttribute("registerModel") RegisterModel registerModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "signUp";
 
-        service.addUser(new User(registerModel.getUsername(), registerModel.getFirstName(), registerModel.getLastName(),
+        userRepository.save(new User(registerModel.getUsername(), registerModel.getFirstName(), registerModel.getLastName(),
                 registerModel.geteMail(), registerModel.getPassword()));
 
         return "redirect:/Login";
