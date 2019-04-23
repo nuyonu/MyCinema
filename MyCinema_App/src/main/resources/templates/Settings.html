@@ -14,7 +14,7 @@
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/stylesheets/myCinemaSettings.css}" type="text/css">
 
-    <title>Settings</title>
+    <title>My Cinema | Settings</title>
 
 
 </head>
@@ -30,91 +30,90 @@
 
             <div class="settingsContainer">
                 <h1 class="Title">Settings</h1>
+                <p class="text-danger text-error-specifications" th:if="${message != null}" th:text="${message}"></p>
                 <div class="settings">
                     <div class="settingsLeftSide">
                         <div class="image-details">
                             <div class="image-part">
-                                <img alt="" class="profile" th:src="@{/images/john-doe.png}">
-                                <div class="bgPen"><img alt="" class="editProfile" th:src="@{/icons/icon_edit.svg}">
+                                <img src="" alt="" class="profile changeAvatar" th:src="@{${userInfo.getAvatarImagePath()}}">
+                                <div class="bgPen"><img src="" alt="" class="editProfile changeAvatar" th:src="@{/icons/icon_edit.svg}">
                                 </div>
+                                <form th:action="@{/changeAvatar}" enctype="multipart/form-data" method="post">
+                                    <input type="file" id="image-avatar" name="imageFile" accept="image/*" style="display: none;" onchange="this.form.submit()" />
+                                </form>
                             </div>
                             <div class="nameContainerProfile">
 
                             </div>
                             <div class="name">
-                                <h3 th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}" th:text="${u.getValue()}"></h3>
-                                <p>User type</p>
-                            </div>
-                            <div class="editPenName">
-                                <img alt="" class="editName" th:src="@{/icons/icon_edit.svg}">
+                                <h3 th:each="u: ${#httpServletRequest.getCookies()}"
+                                    th:if="${u.getName().equals('user')}" th:text="${u.getValue()}"></h3>
+                                <p th:text="${userInfo.getUserType()}"></p>
                             </div>
                         </div>
                         <div class="details-part">
                             <div class="details">
                                 <h5>First Name</h5>
-                                <p th:text="${details.get(2)}"></p>
+                                <p th:text="${userInfo.getFirstName()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>Last Name</h5>
-                                <p th:text="${details.get(1)}"></p>
+                                <p th:text="${userInfo.getLastName()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>E-Mail</h5>
-                                <p th:text="${details.get(3)}"></p>
+                                <p th:text="${userInfo.getEmail()}"></p>
                             </div>
 
                             <div class="details">
-                                <h5>Profile Data</h5>
-                                <p>Regular 18pt</p>
+                                <h5>Phone number</h5>
+                                <p th:text="${userInfo.getPhoneNumber()}"></p>
                             </div>
 
                         </div>
 
                     </div>
                     <div class="settingsRightSide">
-                        <form action="" class="settingsForm">
+                        <form class="settingsForm" th:action="@{/changeInformation}" th:object="${changeInformationModel}"
+                              method="post">
                             <div class="field">
-                                <input class="formField" name="FName" onsubmit="return checkforblank()"
-                                       placeholder="Enter your first name" required type="text">
-                                <label name="settings" th:text="${details.get(2)}"></label>
+                                <input class="formField" id="FName" placeholder="Enter your first name" required
+                                       type="text" th:value="FName" th:field="*{firstName}">
+                                <label th:text="${userInfo.getFirstName()}"></label>
                             </div>
 
                             <div class="field">
-                                <input class="formField" name="LName" placeholder="Enter your last name" required
-                                       type="text">
-                                <label name="settings" th:text="${details.get(1)}"></label>
+                                <input class="formField" id="LName" placeholder="Enter your last name" required
+                                       type="text" th:value="LName" th:field="*{lastName}">
+                                <span class="text-danger" th:if="${#fields.hasErrors('firstName')}"
+                                      th:errors="*{firstName}"></span>
+                                <label th:text="${userInfo.getLastName()}"></label>
                             </div>
 
                             <div class="field">
-                                <input class="formField" name="email" placeholder="Enter your email address"
-                                       required type="email">
-                                <label name="settings" th:text="${details.get(3)}"></label>
+                                <input class="formField" id="Email" placeholder="Enter your email address"
+                                       required type="email" th:value="Email" th:field="*{email}">
+                                <label th:text="${userInfo.getEmail()}"></label>
+                                <span class="text-danger" th:if="${#fields.hasErrors('lastName')}"
+                                      th:errors="*{lastName}"></span>
                             </div>
 
                             <div class="field">
-                                <input class="formField" name="phone" placeholder="Enter your phone number"
-                                       required type="text">
-                                <label name="settings">No Phone Number</label>
+                                <input class="formField" id="phone" placeholder="Enter your phone number"
+                                       required type="text" th:value="phone" th:field="*{phoneNumber}">
+                                <label th:text="${userInfo.getPhoneNumber()}"></label>
+                                <span class="text-danger" th:if="${#fields.hasErrors('email')}"
+                                      th:errors="*{email}"></span>
                             </div>
-
-                            <div class="field">
-                                <input class="formField" name="settings" placeholder="Placeholder" required
-                                       type="text">
-                                <label name="settings">Label</label>
-                            </div>
-
-                            <div class="field">
-                                <input class="formField" name="settings" placeholder="Placeholder" required
-                                       type="text">
-                                <label name="settings">Label</label>
+                            <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                                  th:errors="*{phoneNumber}"></span>
+                            <div class="form-buttons-container">
+                                <button class="discardBtn" type="button">Discard</button>
+                                <button class="saveBtn" type="submit" id="submit">Save</button>
                             </div>
                         </form>
-                        <div class="form-buttons-container">
-                            <button class="discardBtn" type="button">Discard</button>
-                            <button class="saveBtn" disabled type="submit">Save</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -133,6 +132,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script th:src="@{/scripts/scriptSettings.js}"></script>
+<script th:src="@{/scripts/settings.js}" async></script>
 </body>
 
 </html>
