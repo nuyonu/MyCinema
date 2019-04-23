@@ -22,14 +22,9 @@ public class CinemaRoom implements Serializable
     @Column(name = "Name")
     private String name;
 
-    @NotNull
-    @Column(name = "ImagePath")
-    private String imagePath;
-
-    public CinemaRoom(String name, String imagePath)
+    public CinemaRoom(String name)
     {
         this.name = name;
-        this.imagePath = imagePath;
     }
 
     public String getId() {
@@ -48,20 +43,11 @@ public class CinemaRoom implements Serializable
         this.name = name;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
     @Override
     public String toString() {
         return "CinemaRoom{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", imagePath='" + imagePath + '\'' +
                 '}';
     }
 }

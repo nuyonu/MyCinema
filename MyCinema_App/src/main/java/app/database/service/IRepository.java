@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IRepository {
     //Movie
-    Movie movieFindByTitle(String Title);
+    Movie movieFindByTitle(String title);
 
     List<Movie> movieFindByDuration(Integer duration) throws InvalidDurationMovie;
 
