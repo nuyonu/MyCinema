@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminUsers.css" th:href="@{/stylesheets/adminUsers.css}">
+
+    <title>MyCinema Admin Panel | Edit User</title>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="AdminCommon.html :: left(${3})"></div>
+    <div class="l-right">
+        <div th:replace="AdminCommon.html :: div.top-bar"></div>
+        <div class="main">
+            <h2 class="title" >User</h2>
+            <div class="main-container">
+                    <div class="buttons-top">
+                        <button class="buttons-user" type="submit">Save</button>
+                        <input class="buttons-user" type="button" onclick="location.href='admin-users'" value="Discard"/>
+                    </div>
+                    <div class="row-container">
+                        <div class="main-panel">
+                            <p>Current First Name:</p>
+                            <p>First Name</p>
+                            <p>Current Last Name:</p>
+                            <p>Last Name</p>
+                            <p>Current E-mail:</p>
+                            <p>E-mail</p>
+                            <p>Current Phone Number:</p>
+                            <p>Phone Number</p>
+                            <p>Current Password:</p>
+                            <p>Password</p>
+                            <p>User Type:</p>
+                            <select class="user-type-select">
+                              <option value="null"></option>
+                              <option value="user">User</option>
+                              <option value="Administrator">Administrator</option>
+                            </select>
+                        </div>
+                        <div class="main-panel">
+                            <p>New First Name:</p>
+                            <input type="text">
+                            <p>New Last Name:</p>
+                            <input type="text">
+                            <p>New E-mail:</p>
+                            <input type="text">
+                            <p>New Phone Number:</p>
+                            <input type="text">
+                            <p>New Password:</p>
+                            <input type="text">
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+</body>
+</html>
