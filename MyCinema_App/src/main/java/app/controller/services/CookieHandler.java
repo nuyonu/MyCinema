@@ -15,7 +15,12 @@ public class CookieHandler {
         conn = WebUtils.getCookie(request1, "auth_con");
     }
 
-
+    public void disconnect() {
+        auth.setValue(FALSE_VALUE);
+        conn.setValue(FALSE_VALUE);
+        user.setValue("none");
+        addToResponse();
+    }
 
     public void createCookie() {
         if (auth == null) {
@@ -40,13 +45,6 @@ public class CookieHandler {
         addToResponse();
     }
 
-    private HttpServletResponse response;
-    private Cookie auth;
-    private Cookie user;
-    private Cookie conn;
-    private final String FALSE_VALUE = "false";
-    private final String TRUE_VALUE = "true";
-
     private void addToResponse() {
         auth.setMaxAge(24 * 60 * 60);
         user.setMaxAge(24 * 60 * 60);
@@ -55,4 +53,12 @@ public class CookieHandler {
         response.addCookie(user);
         response.addCookie(conn);
     }
+
+    private HttpServletResponse response;
+    private Cookie auth;
+    private Cookie user;
+    private Cookie conn;
+    private static final String FALSE_VALUE = "false";
+
+    private static final String TRUE_VALUE = "true";
 }

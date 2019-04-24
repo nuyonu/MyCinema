@@ -1,5 +1,7 @@
 package app.database.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @EntityScan
 @Document(collection = "Movies")
+@Getter
+@Setter
 public class Movie {
     @Id
     private String id;
@@ -42,57 +46,12 @@ public class Movie {
         this.scren = scren;
     }
 
-    public List<List<String>> getScren() {
-        return scren;
-    }
-
-    public void setScren(List<List<String>> scren) {
-        this.scren = scren;
-    }
 
     public Movie() {
         this.title = " ";
     }
 
-    public int getPrice() {
-        return price;
-    }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public String getId() {
-        return id;
-    }
 
     @Override
     public String toString() {

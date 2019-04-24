@@ -1,7 +1,13 @@
 package app.database.exception;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DuplicateData extends Exception {
+    private  final    String error;
     public DuplicateData() {
-        System.out.println("Null parameter passed");
+        error ="Null parameter passed";
     }
 }

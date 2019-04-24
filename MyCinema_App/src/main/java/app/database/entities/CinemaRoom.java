@@ -1,5 +1,7 @@
 package app.database.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,6 +12,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @EntityScan
+@Getter
+@Setter
 @Document(collection = "CinemaRooms")
 public class CinemaRoom implements Serializable
 {
@@ -27,21 +31,6 @@ public class CinemaRoom implements Serializable
         this.name = name;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public String toString() {
