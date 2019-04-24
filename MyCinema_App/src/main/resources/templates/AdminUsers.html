@@ -9,57 +9,69 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminUsers.css" th:href="@{/stylesheets/adminUsers.css}">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminUsers.css"
+          th:href="@{/stylesheets/adminUsers.css}">
 
     <title>MyCinema Admin Panel | Users</title>
 </head>
 <body>
 <div class="layout">
-    <div th:replace="AdminCommon.html :: left(${3})"></div>
+    <div th:replace="AdminCommon.html :: left(${5})"></div>
     <div class="l-right">
         <div th:replace="AdminCommon.html :: div.top-bar"></div>
         <div class="main">
             <h2 class="title">Users</h2>
+            <p class="text-danger" th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+            <p class="text-succesful" th:if="${succesfulMessage != null}" th:text="${succesfulMessage}"></p>
             <div class="main-container">
-                <div class="buttons-top">
-                    <button class="buttons-user" id="button-delete" type="submit">Sterge Utilizatori Selectati</button>
-                    <button class="buttons-user" id="button-deleteByName" type="button">Elimina dupa nume</button>
-                </div>
-                <table class="table-of-users">
-                    <tr>
-                        <th>Number</th>
-                        <th>UserName</th>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>E-mail</th>
-                        <th>Phone Number</th>
-                        <th>Delete</th>
-                        <th>Modify</th>
-                    </tr>
-                    <tr th:each="">
-                        <td>Number</td>
-                        <td>Username</td>
-                        <td>FirstName</td>
-                        <td>LastName</td>
-                        <td>E-mail</td>
-                        <td>PhoneNumber</td>
-                        <td><input type="checkbox" class="check-for-delete"/></td>
-                        <td><a onclick="window.location.href ='../templates/AdminUsersEdit.html';" class="button-edit">Edit</a></td>
-                    </tr>
-                </table>
-                <div class="modal">
-                    <div class="modal-form-content">
-                        <span class="close-button">&times;</span>
-                        <div class="modal-form-items">
-                            <h1>Sterge Utilizator dupa nume</h1>
-                            <div class="modal-form-inputs">
-                                <p>Nume Utilizator:</p>
-                                <input type="text" required th:name="user-FirstName">
+                <form th:action="@{/delete-selected-users}" method="post">
+                    <div class="buttons-top">
+                        <button disabled class="buttons-user" id="button-delete" type="submit">Delete user</button>
+                        <button class="buttons-user" id="button-delete-by-username" type="button">Delete by username
+                        </button>
+                    </div>
+                    <table class="table-of-users">
+                        <tr>
+                            <th>Number</th>
+                            <th>UserName</th>
+                            <th>Profile Image</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>E-mail</th>
+                            <th>Phone Number</th>
+                            <th>Delete</th>
+                            <th>Modify</th>
+                        </tr>
+                        <tr th:each="user, iterator : ${users}">
+                            <td th:text="${iterator.count}"></td>
+                            <td th:text="${user.getUsername()}"></td>
+                            <td><img th:src="${user.getAvatarImagePath()}"/></td>
+                            <td th:text="${user.getFirstName()}"></td>
+                            <td th:text="${user.getLastName()}"></td>
+                            <td th:text="${user.getEmail()}"></td>
+                            <td th:text="${user.getPhoneNumber()}"></td>
+                            <td><input type="checkbox" class="check-for-delete" th:name="usersForDelete"
+                                       th:value="${user.getId()}"/></td>
+                            <td><a class="button-edit" th:href="@{/admin-edit-user(userId=${user.getId()})}">Edit</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <form th:action="@{/delete-by-username}" method="post">
+                    <div class="modal-form-delete-by-username">
+                        <div class="modal-form-content">
+                            <span class="close-button">&times;</span>
+                            <div class="modal-form-items">
+                                <h1>Delete user by username</h1>
+                                <div class="modal-form-inputs">
+                                    <p>Username:</p>
+                                    <input type="text" th:name="usernameForDelete">
+                                </div>
+                                <button class="buttons-user" id="modal-button-add" type="submit">Delete</button>
                             </div>
-                            <button class="buttons-user" id="modal-button-add" type="submit">Delete</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

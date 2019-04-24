@@ -151,15 +151,13 @@ body {
     color: #333;
     font-size: 14px;
     font-weight: 500;
-    padding: 0 10px;
-    padding-left: 15px;
+    padding: 0 15px 0 10px;
     margin-left: 10px;
     border-left: 1px solid #ddd;
 }
 
 .l-right .top-bar .right .user-menu .arrow {
-    margin: 0 5px;
-    margin-left: 12px;
+    magin: 0 5px 0 12px;
 }
 
 
@@ -429,6 +427,12 @@ body {
     background-color: #f0f0f7;
 }
 
+.table-of-users img
+{
+    width: 50px;
+    height: 50px;
+}
+
 .table-of-users tr:nth-child(2n+1)
 {
     background-color: lavender;
@@ -439,7 +443,7 @@ body {
     font-weight: bold;
 }
 
-.modal, .modal-form-edit {
+.modal-form-delete-by-username, .modal-form-edit {
     position: fixed;
     left: 0;
     top: 0;
@@ -521,4 +525,28 @@ body {
 .main-panel p
 {
     margin: 0;
+}
+
+.text-danger
+{
+    color:red;
+    margin: 0 0 5px 0;
+}
+
+.information-text{
+    font-weight: bold;
+}
+
+p.information-text{
+    margin: 0 0 5px 0;
+}
+
+.text-succesful{
+    color: green;
+}
+
+.actual-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
 }

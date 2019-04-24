@@ -1,22 +1,59 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-    var modalAdd = document.querySelector(".modal");
+    var modalDeleteByUsername = document.querySelector(".modal-form-delete-by-username");
 
-    var closeAddModalButton = document.querySelector(".modal .close-button");
-    var deleteButton = document.querySelector("#button-deleteByName");
+    var deleteButton = document.querySelector("#button-delete");
+    var deleteByUsernameButton = document.querySelector("#button-delete-by-username");
+    var closeAddModalButton = document.querySelector(".modal-form-delete-by-username .close-button");
 
-    function toggleModalAdd() {
-        modalAdd.classList.toggle("show-modal");
-        modalAdd.parentElement.reset();
+    var checkboxes = document.querySelectorAll(".check-for-delete");
+
+    function toggleModalDeleteByUsername() {
+        modalDeleteByUsername.classList.toggle("show-modal");
+        modalDeleteByUsername.parentElement.reset();
     }
 
     function windowOnClick(event) {
-        if (event.target === modalAdd) {
-            toggleModalAdd();
+        if (event.target === modalDeleteByUsername) {
+            toggleModalDeleteByUsername();
         }
     }
 
-    deleteButton.addEventListener("click", toggleModalAdd);
-    window.addEventListener("click", windowOnClick);
-    closeAddModalButton.addEventListener("click", toggleModalAdd);
+    function totalChecks() {
+        var total = 0;
 
+        for (var i = 0; i < checkboxes.length; ++i)
+            if (checkboxes[i].checked)
+                total++;
+
+        return total;
+    }
+
+    function renameButton()
+    {
+        var checks = totalChecks();
+
+        if (checks > 1) {
+            deleteButton.innerHTML = "Delete " + checks + " users";
+            deleteButton.disabled = false;
+        }
+        else if (checks == 1) {
+            deleteButton.innerHTML = "Delete user";
+            deleteButton.disabled = false;
+        }
+        else {
+            deleteButton.innerHTML = "Delete user";
+            deleteButton.disabled = true;
+        }
+    }
+
+    deleteByUsernameButton.addEventListener("click", toggleModalDeleteByUsername);
+    closeAddModalButton.addEventListener("click", toggleModalDeleteByUsername);
+    window.addEventListener("click", windowOnClick);
+
+    deleteButton.disabled = true;
+
+    checkboxes.forEach(function(elem) {
+        elem.checked = false;
+        elem.addEventListener("click", renameButton);
+    });
 });
