@@ -10,7 +10,7 @@ import static java.lang.annotation.ElementType.*;
 
 @Constraint(validatedBy = PhoneNumberValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-@Target({TYPE, FIELD, ANNOTATION_TYPE})
+@Target({TYPE, FIELD, ANNOTATION_TYPE, PARAMETER})
 public @interface PhoneNumber {
 
     String message() default "This is not valid phone number!";

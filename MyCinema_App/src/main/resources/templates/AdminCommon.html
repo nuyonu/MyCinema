@@ -8,21 +8,25 @@
             <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
             <a class="logo-menu" href="admin-movies">Admin Panel</a>
             <div class="menu">
-                <a href="home" th:class="${activ}=='1'?'menu-item active':'menu-item'">
+                <a href="/home" th:class="${activ}=='1'?'menu-item active':'menu-item'">
                     <img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
                     Home
                 </a>
-                <a href="admin-movies" th:class="${activ}=='2'?'menu-item active':'menu-item'">
+                <a href="/admin-movies" th:class="${activ}=='2'?'menu-item active':'menu-item'">
                     <img alt="" class="ico" th:src="@{/icons/icon_products-1.svg}">
                     Movies
                 </a>
-                <a href="admin-rooms" th:class="${activ}=='3'?'menu-item active':'menu-item'">
+                <a href="/admin-rooms" th:class="${activ}=='3'?'menu-item active':'menu-item'">
                     <img alt="" class="ico" th:src="@{/icons/icon_Invoices-1.svg}">
                     Cinema Rooms
                 </a>
-                <a href="admin-program" th:class="${activ}=='4'?'menu-item active':'menu-item'">
+                <a href="/admin-program" th:class="${activ}=='4'?'menu-item active':'menu-item'">
                     <img alt="" class="ico" th:src="@{/icons/icon_calendar-1.svg}">
                     Program
+                </a>
+                <a href="/admin-users" th:class="${activ}=='5'?'menu-item active':'menu-item'">
+                    <img alt="" class="ico" th:src="@{/icons/icon_customers-1.svg}">
+                    Users
                 </a>
             </div>
         </div>
