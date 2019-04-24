@@ -1,6 +1,13 @@
 package app.controller.dao;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
+
+
+@Getter
+@Setter
 
 public class LoginInput implements Serializable {
     private String username;
@@ -14,29 +21,6 @@ public class LoginInput implements Serializable {
     }
 
 
-    public boolean isRemainConnected() {
-        return remainConnected;
-    }
-
-    public void setRemainConnected(boolean remainConnected) {
-        this.remainConnected = remainConnected;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public String toString() {

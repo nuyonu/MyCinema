@@ -1,7 +1,12 @@
 package app.database.exception;
 
+import lombok.Getter;
+
+@Getter
 public class NullParameterPassed extends Exception {
+    private final String error;
     public NullParameterPassed() {
-        System.out.println("Null parameter passed");
+        error ="Null parameter passed";
     }
+
 }

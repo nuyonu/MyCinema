@@ -1,16 +1,15 @@
 package app.database.exception;
 
-public class InvalidDurationBetween extends Exception {
-    private final int from;
-    private final int to;
+import lombok.Getter;
 
+@Getter
+public class InvalidDurationBetween extends Exception {
     public InvalidDurationBetween(int from, int to) {
         this.from = from;
         this.to = to;
     }
 
-    @Override
-    public void printStackTrace() {
-        System.out.println("your value:" + from + " " + to);
-    }
+    private final int from;
+    private final int to;
+
 }
