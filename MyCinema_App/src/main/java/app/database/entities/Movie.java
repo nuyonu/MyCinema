@@ -34,6 +34,13 @@ public class Movie {
 
     private List<List<String>> scren;
 
+    public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path) {
+        this.title = title;
+        this.duration = duration;
+        this.price = price;
+        this.path = path;
+    }
+
     public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path, List<List<String>> scren) {
         this.title = title;
         this.duration = duration;
