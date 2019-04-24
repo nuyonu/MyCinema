@@ -1,5 +1,7 @@
 package app.database.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,6 +11,8 @@ import java.time.LocalTime;
 
 @EntityScan
 @Document(collection = "Reservation")
+@Getter
+@Setter
 public class Reservation {
     @Id
     private String id;
@@ -45,29 +49,7 @@ public class Reservation {
         time = LocalTime.now();
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public Integer getDay() {
-        return day;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
 
 
     @Override

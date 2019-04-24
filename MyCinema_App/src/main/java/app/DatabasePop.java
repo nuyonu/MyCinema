@@ -6,6 +6,8 @@ import app.database.entities.User;
 import app.database.exception.DuplicateData;
 import app.database.exception.NullParameterPassed;
 import app.database.service.IRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
@@ -46,7 +48,7 @@ public class DatabasePop {
                 }
 
             } catch (DuplicateData | NullParameterPassed error) {
-                error.printStackTrace();
+                logger.warn("Eroare la adaugare");
             }
         }
     }
@@ -73,5 +75,7 @@ public class DatabasePop {
         }
         return lists;
     }
+    private static final Logger logger = LoggerFactory.getLogger(DatabasePop.class);
+
 
 }

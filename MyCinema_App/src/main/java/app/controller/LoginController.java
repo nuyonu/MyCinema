@@ -24,7 +24,7 @@ public class LoginController {
     public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         DatabasePop pop = new DatabasePop(service);
-       // pop.pop(false);
+        pop.pop(false);
 
         if (cookieHandler.isConnected()) return "redirect:/home";
         cookieHandler.createCookie();
@@ -46,5 +46,11 @@ public class LoginController {
         return "redirect:/Login";
     }
 
+    @GetMapping("disconnect")
+    public String disconnect(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(name = "input") LoginInput user){
+        CookieHandler cookieHandler=new CookieHandler(request,response);
+        cookieHandler.disconnect();
+        return "redirect:/Login";
+    }
 
 }

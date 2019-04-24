@@ -1,21 +1,17 @@
 package app.controller.dao;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
 public class SelectedRoom {
     private  String name;
-
-    public SelectedRoom(String name) {
-        this.name = name;
-    }
 
     public SelectedRoom() {
     name=" ";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

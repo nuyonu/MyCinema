@@ -3,12 +3,15 @@ package app.controller.dao;
 
 
 import app.controller.constraints.PhoneNumber;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-//@Getter @Setter
+@Getter
+@Setter
 public class ChangeInformationModel implements Serializable {
     @Size(min = 4, max = 30, message = "First Name must contain at least 3 characters and a maximum of 30 characters")
     private String firstName;
@@ -19,35 +22,4 @@ public class ChangeInformationModel implements Serializable {
     @PhoneNumber
     private String phoneNumber;
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 }
