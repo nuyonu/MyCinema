@@ -37,7 +37,6 @@
     grid-area: left;
     background-color: #ffffff;
     border-right: 3px solid rgba(59, 134, 255, 0.616);
-    display: block;
     display: grid;
     grid-template-rows: 30% 70%;
     grid-template-areas: "image-details" "details-part";
@@ -48,8 +47,7 @@
     grid-area: image-details;
     margin-top: 5%;
     margin-left: 7%;
-    display: flex;
-    flex-direction: left;
+    flex-direction: row;
     margin-bottom: 5%;
     display: grid;
     grid-template-columns: 35% 5% 1fr 30%;
@@ -90,6 +88,7 @@ img.profile, img.editProfile {
 
 .image-part img.profile {
     height: 140px;
+    width: 140px;
     border-radius: 27%;
 }
 
@@ -100,12 +99,12 @@ img.profile, img.editProfile {
 }
 
 .name h3 {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     font-size: 28px;
 }
 
 .name p {
-    margin-top: 0px;
+    margin-top: 0;
     font-size: 18px;
 }
 
@@ -206,7 +205,7 @@ input.formField:placeholder-shown + label {
     text-overflow: ellipsis;
     transform-origin: left bottom;
     transform: translate(0, 2.125rem) scale(1.5);
-    font-size: 15x;
+    font-size: 15px;
 }
 
 /**
@@ -309,7 +308,7 @@ input.formField:not(:focus):not(:placeholder-shown) + label {
     }
 
     .editPenName .editName {
-        margin-top: 0%;
+        margin-top: 0;
     }
 }
 
@@ -338,7 +337,7 @@ input.formField:not(:focus):not(:placeholder-shown) + label {
     }
 
     .editPenName .editName {
-        margin-top: 0%;
+        margin-top: 0;
     }
 }
 
@@ -377,7 +376,7 @@ input.formField:not(:focus):not(:placeholder-shown) + label {
     }
 
     .editPenName .editName {
-        margin-top: 0%;
+        margin-top: 0;
     }
 
 }
@@ -407,7 +406,7 @@ input.formField:not(:focus):not(:placeholder-shown) + label {
     }
 
     .editPenName .editName {
-        margin-top: 0%;
+        margin-top: 0;
     }
 }
 
@@ -435,8 +434,15 @@ input.formField:not(:focus):not(:placeholder-shown) + label {
     }
 
     .editPenName .editName {
-        margin-top: 0%;
+        margin-top: 0;
     }
 }
 
-  
+.text-danger
+{
+    color: red;
+}
+
+.text-error-specifications{
+    margin-left: 5%;
+}

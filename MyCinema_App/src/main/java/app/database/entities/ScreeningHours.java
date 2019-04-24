@@ -1,5 +1,7 @@
 package app.database.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,6 +12,8 @@ import java.util.List;
 
 @EntityScan
 @Document(collection = "Screening")
+@Getter
+@Setter
 public class ScreeningHours {
 
     @Id
@@ -29,17 +33,6 @@ public class ScreeningHours {
     public ScreeningHours() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public List<List<ScreeningHours>> getScreeaningHours() {
-        return screeaningHours;
-    }
 
     @Override
     public String toString() {

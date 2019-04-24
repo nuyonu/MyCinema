@@ -1,5 +1,7 @@
 package app.database.entities;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,6 +9,8 @@ import javax.persistence.Id;
 
 @EntityScan
 @Document(collection = "Genre")
+@Getter
+@Setter
 public class GenreMovie {
 
     @Id
@@ -37,17 +41,5 @@ public class GenreMovie {
                 ", movieId='" + movieId + '\'' +
                 ", genre='" + genre + '\'' +
                 '}';
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getMovieId() {
-        return movieId;
-    }
-
-    public String getGenre() {
-        return genre;
     }
 }

@@ -7,13 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CookieHandler {
-    private HttpServletResponse response;
-    private Cookie auth;
-    private Cookie user;
-    private Cookie conn;
-    private final String FALSE_VALUE = "false";
-    private final String TRUE_VALUE = "true";
-
     public CookieHandler(HttpServletRequest request, HttpServletResponse response) {
         HttpServletRequest request1 = request;
         this.response = response;
@@ -22,13 +15,11 @@ public class CookieHandler {
         conn = WebUtils.getCookie(request1, "auth_con");
     }
 
-    private void addToResponse() {
-        auth.setMaxAge(24 * 60 * 60);
-        user.setMaxAge(24 * 60 * 60);
-        conn.setMaxAge(24 * 60 * 60);
-        response.addCookie(auth);
-        response.addCookie(user);
-        response.addCookie(conn);
+    public void disconnect() {
+        auth.setValue(FALSE_VALUE);
+        conn.setValue(FALSE_VALUE);
+        user.setValue("none");
+        addToResponse();
     }
 
     public void createCookie() {
@@ -53,4 +44,21 @@ public class CookieHandler {
         user.setValue(username);
         addToResponse();
     }
+
+    private void addToResponse() {
+        auth.setMaxAge(24 * 60 * 60);
+        user.setMaxAge(24 * 60 * 60);
+        conn.setMaxAge(24 * 60 * 60);
+        response.addCookie(auth);
+        response.addCookie(user);
+        response.addCookie(conn);
+    }
+
+    private HttpServletResponse response;
+    private Cookie auth;
+    private Cookie user;
+    private Cookie conn;
+    private static final String FALSE_VALUE = "false";
+
+    private static final String TRUE_VALUE = "true";
 }
