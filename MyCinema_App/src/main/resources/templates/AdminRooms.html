@@ -38,14 +38,14 @@
                                     <tr>
                                         <td th:text="${iterStat.count}">Number</td>
                                         <td th:text="${room.getName()}">Name</td>
-                                        <td><img th:src="@{'/images/' + ${room.getImagePath()}}"/></td>
+                                        <td><img th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '.jpg'}"/></td>
                                         <td><input type="checkbox" class="check-for-delete" th:name="room-ids" th:value="${room.getId()}"/></td>
                                         <td><a class="button-edit" th:href="@{/admin-edit-room(id=${room.getId()})}">Edit</a></td>
                                     </tr>
                                 </th:block>
                             </table>
                         </form>
-                        <form th:action="@{/admin-add-room}" method="POST">
+                        <form th:action="@{/admin-add-room}" method="POST" enctype="multipart/form-data">
                             <div class="modal-form-add">
                                 <div class="modal-form-content">
                                     <span class="close-button">&times;</span>
@@ -55,7 +55,7 @@
                                             <p>Room Name:</p>
                                             <input type="text" required th:name="room-name">
                                             <p>Room Image:</p>
-                                            <input type="file" required th:name="room-image-path">
+                                            <input type="file" required th:name="room-image">
                                         </div>
                                         <button class="buttons-room" id="modal-button-add" type="submit">Add Room</button>
                                     </div>
