@@ -11,6 +11,8 @@ public interface IRepositoryUser extends MongoRepository<User, String> {
 
     List<User> findAllByLastName(String lastName);
 
+    List<User> findAllByUsernameContainingOrderByUsernameAsc(String username);
+
     User findByEmail(String email);
 
     Optional<User> findById(String id);

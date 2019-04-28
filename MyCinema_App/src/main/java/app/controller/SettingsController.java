@@ -4,6 +4,7 @@ import app.controller.dao.ChangeInformationModel;
 import app.controller.services.CookieHandler;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
+import app.database.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,16 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 @Controller
-public class SettingController {
+public class SettingsController {
+
+    private static final String REDIRECT_TO_SETTINGS = "redirect:/settings";
+
+    @Autowired
+    private IRepositoryUser userRepository;
+
+    @Autowired
+    private UserService userService;
+
     @ModelAttribute("changeInformationModel")
     public ChangeInformationModel changeInformationModel() {
         return new ChangeInformationModel();
@@ -60,11 +70,9 @@ public class SettingController {
     }
 
     @PostMapping("/changeAvatar")
-    public String changeAvatar(@RequestParam("imageFile") MultipartFile imageFile, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-
-        final String path = "/images/userAvatarImages/";
-        final String jpg = ".jpg";
-
+    public String changeAvatar(@RequestParam("imageFile") MultipartFile imageFile,
+                               HttpServletRequest request,
+                               RedirectAttributes redirectAttributes) {
         if (imageFile.getContentType().equals("image/gif") ||
                 imageFile.getContentType().equals("image/jpeg") ||
                 imageFile.getContentType().equals("image/png")) {
@@ -73,9 +81,9 @@ public class SettingController {
             User user = userRepository.findByUsername(usernameFromRequest);
 
 
-            saveAvatarImage(imageFile, user);
+            userService.saveAvatarImage(imageFile, user);
 
-            user.setAvatarImagePath(path + user.getId() + jpg);
+            user.setAvatarImagePath("/images/userAvatarImages/" + user.getId() + ".jpg");
             userRepository.save(user);
 
             return REDIRECT_TO_SETTINGS;
@@ -85,9 +93,9 @@ public class SettingController {
         }
     }
 
-    @RequestMapping(value = "/images/userAvatarImages/{imageId}")
+    @GetMapping("/images/userAvatarImages/{imageId}")
     @ResponseBody
-    public byte[] getImage(@PathVariable String imageId, HttpServletRequest request) {
+    public byte[] getImage(@PathVariable String imageId) {
         Path path = Paths.get("src/main/resources/static/images/userAvatarImages/" + imageId);
 
         try {
@@ -98,11 +106,6 @@ public class SettingController {
 
         return new byte[0];
     }
-
-    @Autowired
-    private IRepositoryUser userRepository;
-
-    private static final String REDIRECT_TO_SETTINGS = "redirect:/settings";
 
     private String getUsernameFromCookie(HttpServletRequest request) {
         return Arrays.stream(request.getCookies())
@@ -120,18 +123,4 @@ public class SettingController {
 
         return null;
     }
-
-    private void saveAvatarImage(MultipartFile imageFile, User user) {
-        final String currentDir = System.getProperty("user.dir");
-        final String folder = currentDir + "/src/main/resources/static/images/userAvatarImages/";
-
-        try {
-            byte[] bytes = imageFile.getBytes();
-            Path path = Paths.get(folder + user.getId() + ".jpg");
-            Files.write(path, bytes);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-    }
-
 }
