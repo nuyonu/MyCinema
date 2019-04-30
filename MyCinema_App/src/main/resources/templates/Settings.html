@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/stylesheets/myCinemaSettings.css}" type="text/css">
-    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
     <title>My Cinema | Settings</title>
 
@@ -31,16 +31,20 @@
 
             <div class="settingsContainer">
                 <h1 class="Title">Settings</h1>
-                <p class="text-danger text-error-specifications" th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+                <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
+                <div class="alert alert-success" th:each="message : ${successfulMessages}" th:text="${message}"></div>
                 <div class="settings">
                     <div class="settingsLeftSide">
                         <div class="image-details">
                             <div class="image-part">
-                                <img src="" alt="" class="profile changeAvatar" th:src="@{${userInfo.getAvatarImagePath()}}">
-                                <div class="bgPen"><img src="" alt="" class="editProfile changeAvatar" th:src="@{/icons/icon_edit.svg}">
+                                <img src="" alt="" class="profile changeAvatar"
+                                     th:src="@{${userInfo.getAvatarImagePath()}}">
+                                <div class="bgPen"><img src="" alt="" class="editProfile changeAvatar"
+                                                        th:src="@{/icons/icon_edit.svg}">
                                 </div>
                                 <form th:action="@{/changeAvatar}" enctype="multipart/form-data" method="post">
-                                    <input type="file" id="image-avatar" name="imageFile" accept="image/*" style="display: none;" onchange="this.form.submit()" />
+                                    <input type="file" id="image-avatar" name="imageFile" accept="image/*"
+                                           style="display: none;" onchange="this.form.submit()"/>
                                 </form>
                             </div>
                             <div class="nameContainerProfile">
@@ -77,39 +81,31 @@
 
                     </div>
                     <div class="settingsRightSide">
-                        <form class="settingsForm" th:action="@{/changeInformation}" th:object="${changeInformationModel}"
+                        <form class="settingsForm" th:action="@{/changeInformation}"
                               method="post">
                             <div class="field">
-                                <input class="formField" id="FName" placeholder="Enter your first name" required
-                                       type="text" th:value="FName" th:field="*{firstName}">
+                                <input class="formField" id="FName" placeholder="Enter your first name"
+                                       type="text" th:name="firstName">
                                 <label th:text="${userInfo.getFirstName()}"></label>
                             </div>
 
                             <div class="field">
-                                <input class="formField" id="LName" placeholder="Enter your last name" required
-                                       type="text" th:value="LName" th:field="*{lastName}">
-                                <span class="text-danger" th:if="${#fields.hasErrors('firstName')}"
-                                      th:errors="*{firstName}"></span>
+                                <input class="formField" id="LName" placeholder="Enter your last name"
+                                       type="text" th:name="lastName">
                                 <label th:text="${userInfo.getLastName()}"></label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="Email" placeholder="Enter your email address"
-                                       required type="email" th:value="Email" th:field="*{email}">
+                                       type="email" th:name="email">
                                 <label th:text="${userInfo.getEmail()}"></label>
-                                <span class="text-danger" th:if="${#fields.hasErrors('lastName')}"
-                                      th:errors="*{lastName}"></span>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="phone" placeholder="Enter your phone number"
-                                       required type="text" th:value="phone" th:field="*{phoneNumber}">
+                                       type="text" th:name="phoneNumber">
                                 <label th:text="${userInfo.getPhoneNumber()}"></label>
-                                <span class="text-danger" th:if="${#fields.hasErrors('email')}"
-                                      th:errors="*{email}"></span>
                             </div>
-                            <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"
-                                  th:errors="*{phoneNumber}"></span>
                             <div class="form-buttons-container">
                                 <button class="discardBtn" type="button">Discard</button>
                                 <button class="saveBtn" type="submit" id="submit">Save</button>
@@ -135,6 +131,7 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script th:src="@{/scripts/scriptSettings.js}"></script>
 <script th:src="@{/scripts/settings.js}" async></script>
+<script th:src="@{/scripts/alert.js}"></script>
 </body>
 
 </html>

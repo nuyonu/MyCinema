@@ -8,9 +8,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(MultipartException.class)
-    public String handleErrorMaxUploadSizeExceededException(MultipartException e, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("errorMessage", "Poți încărca doar imagini mai mici sau egale cu 5MB.");
-
+    public String handleErrorMaxUploadSizeExceededException(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message", "Poți încărca doar imagini mai mici sau egale cu 5MB.");
         return "redirect:/settings";
     }
 }

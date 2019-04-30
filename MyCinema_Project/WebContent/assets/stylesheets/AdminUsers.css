@@ -556,7 +556,6 @@ p.information-text{
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 5px;
 }
 
 .pages a {
@@ -569,17 +568,4 @@ p.information-text{
 
 .pages a.active {
     background-color: #5C9AFF;
-}
-
-.page-elements{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-.page-elements input{
-    width: 270px;
-    text-align: center;
 }
