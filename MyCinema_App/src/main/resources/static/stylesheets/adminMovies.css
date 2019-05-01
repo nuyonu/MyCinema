@@ -396,7 +396,7 @@ body {
     flex-direction: row;
 }
 
-.buttons-room
+.buttons-movie
 {
     color: white;
     background-color: #3381ff;
@@ -407,37 +407,37 @@ body {
     margin: 10px;
 }
 
-.buttons-room:disabled {
+.buttons-movie:disabled {
     background-color: #5C9AFF;
 }
 
-.buttons-room:active {
+.buttons-movie:active {
     background-color: #0062ff;
 }
 
-.table-of-rooms
+.table-of-movies
 {
     width: 100%;
     text-align: center;
 }
 
-.table-of-rooms th
+.table-of-movies th
 {
     font-size: 16px;
     background-color: #f0f0f7;
 }
 
-.table-of-rooms tr:nth-child(2n+1)
+.table-of-movies tr:nth-child(2n+1)
 {
     background-color: lavender;
 }
 
-.table-of-rooms td:first-child
+.table-of-movies td:first-child
 {
     font-weight: bold;
 }
 
-.table-of-rooms img
+.table-of-movies img
 {
     width: 90px;
     height: 90px;
@@ -510,8 +510,7 @@ body {
 
 .main-container .old-image
 {
-    height: 150px;
-    width: 150px;
+    height: 250px;
 }
 
 .main-panel

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class RoomController {
 
-    @Autowired
-    IRepository repository;
+//    @Autowired
+//    IRepository repository;
 
     @GetMapping(value = "reservation")
     public String room(HttpServletRequest request, HttpServletResponse response, Model model)

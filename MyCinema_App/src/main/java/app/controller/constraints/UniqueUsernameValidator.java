@@ -26,6 +26,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
         return value != null && isUsernameInUse;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(IRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(UniqueUsernameValidator.class);
 
 }

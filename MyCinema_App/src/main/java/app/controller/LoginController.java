@@ -4,6 +4,7 @@ import app.controller.dao.AjaxResponseBody;
 import app.controller.dao.LoginInput;
 import app.controller.services.CookieHandler;
 import app.database.entities.User;
+import app.database.infrastructure.IRepositoryUser;
 import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Autowired
-    IRepository service;
+    IRepositoryUser service;
 
     @GetMapping("disconnect")
     public String disconnect(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(name = "input") LoginInput user) {
@@ -42,7 +43,8 @@ public class LoginController {
     public String auth(HttpServletRequest request, HttpServletResponse response, @ModelAttribute LoginInput user) {
 
 
-        User userDatabase = service.userFindByUsername(user.getUsername());
+        User userDatabase = service.findByUsername(user.getUsername());
+        if (userDatabase == null) return "redirect:/Login";
         if (userDatabase.getUsername().equals(user.getUsername()) && userDatabase.getPassword().equals(user.getPassword())) {
             CookieHandler cookieHandler = new CookieHandler(request, response);
             cookieHandler.setCookie(user.getUsername(), user.isRemainConnected());
@@ -53,12 +55,14 @@ public class LoginController {
 
     @PostMapping("/api/login")
     @ResponseBody
-    public ResponseEntity<?> getMessage(@RequestBody LoginInput user ){
-        AjaxResponseBody result=new AjaxResponseBody();
-        User userDatabase = service.userFindByUsername(user.getUsername());
-        if (userDatabase.getUsername().equals(user.getUsername()) || userDatabase.getPassword().equals(user.getPassword())) {
+    public ResponseEntity<?> getMessage(@RequestBody LoginInput user) {
+        AjaxResponseBody result = new AjaxResponseBody();
+        User userDatabase = service.findByUsername(user.getUsername());
+        if (userDatabase != null) {
+            if (userDatabase.getUsername().equals(user.getUsername()) || userDatabase.getPassword().equals(user.getPassword())) {
                 result.setMsg("Corect");
-            return ResponseEntity.ok(result);
+                return ResponseEntity.ok(result);
+            }
         }
         result.setMsg("Your password or email is wrong!");
         return ResponseEntity.ok(result);

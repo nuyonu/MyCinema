@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminMovies.css" th:href="@{/stylesheets/adminMovies.css}">
+
+    <title>MyCinema Admin Panel | Movies</title>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="AdminCommon.html :: left(${3})"></div>
+    <div class="l-right">
+        <div th:replace="AdminCommon.html :: div.top-bar"></div>
+        <div class="main">
+            <h2 class="title">Movies</h2>
+            <div class="main-container">
+                <form th:action="@{/admin-delete-movies}" method="POST">
+                    <div class="buttons-top">
+                        <button class="buttons-movie" id="button-add" type="button">Add Movie</button>
+                        <button class="buttons-movie" id="button-delete" type="submit">Delete Movie</button>
+                    </div>
+                    <table class="table-of-movies">
+                        <tr>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Duration</th>
+                            <th>Delete</th>
+                            <th>Modify</th>
+                        </tr>
+                        <th:block th:each="movie, iterStat :${movies}">
+                            <tr>
+                                <td th:text="${iterStat.count}">Number</td>
+                                <td th:text="${movie.getTitle()}">Name</td>
+                                <td th:text="${movie.getPrice()}">Price</td>
+                                <td th:text="${movie.getDuration()}">Duration</td>
+                                <td><img th:src="@{'/images/movieImages/' + ${movie.getPath()}}"/></td>
+                                <td><input type="checkbox" class="check-for-delete" th:name="movie-ids" th:value="${movie.getId()}"/></td>
+                                <td><a class="button-edit" th:href="@{/admin-edit-movie(id=${movie.getId()})}">Edit</a></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                </form>
+                <form th:action="@{/admin-add-movie}" method="POST">
+                    <div class="modal-form-add">
+                        <div class="modal-form-content">
+                            <span class="close-button">&times;</span>
+                            <div class="modal-form-items">
+                                <h1>Add Movie</h1>
+                                <div class="modal-form-inputs">
+                                    <p>Movie Name:</p>
+                                    <input type="text" required th:name="movie-name">
+                                    <p>Movie Price:</p>
+                                    <input type="text" required th:name="movie-price">
+                                    <p>Movie Duration:</p>
+                                    <input type="text" required th:name="movie-duration">
+                                    <p>Movie Image:</p>
+                                    <input type="file" required th:name="movie-image-path">
+                                </div>
+                                <button class="buttons-movie" id="modal-button-add" type="submit">Add Movie</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/adminMovies.js}"></script>
+</body>
+</html>

@@ -38,14 +38,14 @@
                                     <tr>
                                         <td th:text="${iterStat.count}">Number</td>
                                         <td th:text="${room.getName()}">Name</td>
-                                        <td><img th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '.jpg'}"/></td>
+                                        <td><img th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '/1.jpg'}"/></td>
                                         <td><input type="checkbox" class="check-for-delete" th:name="room-ids" th:value="${room.getId()}"/></td>
                                         <td><a class="button-edit" th:href="@{/admin-edit-room(id=${room.getId()})}">Edit</a></td>
                                     </tr>
                                 </th:block>
                             </table>
                         </form>
-                        <form th:action="@{/admin-add-room}" method="POST" enctype="multipart/form-data">
+                        <form action="#" th:action="@{/admin-add-room}" th:object="${cinemaRoom}" method="POST" enctype="multipart/form-data">
                             <div class="modal-form-add">
                                 <div class="modal-form-content">
                                     <span class="close-button">&times;</span>
@@ -53,7 +53,8 @@
                                         <h1>Add Room</h1>
                                         <div class="modal-form-inputs">
                                             <p>Room Name:</p>
-                                            <input type="text" required th:name="room-name">
+                                            <input type="text" th:field="*{name}" required placeholder="Between 2 and 30 characters" th:name="name" />
+                                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
                                             <p>Room Image:</p>
                                             <input type="file" required th:name="room-image">
                                         </div>
