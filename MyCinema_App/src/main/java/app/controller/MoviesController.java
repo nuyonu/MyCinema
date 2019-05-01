@@ -22,6 +22,7 @@ public class MoviesController {
     public String book(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         if (!cookieHandler.isConnected()) return "error403";
+        model.addAttribute("user",cookieHandler.getUser());
         List<Movie> listOfMovies = repository.getAllMovies();
         model.addAttribute("listOfMovies", listOfMovies);
         return "movies";

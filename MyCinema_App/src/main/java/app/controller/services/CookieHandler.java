@@ -1,5 +1,6 @@
 package app.controller.services;
 
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -8,57 +9,64 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CookieHandler {
     public CookieHandler(HttpServletRequest request, HttpServletResponse response) {
+        encryptor.setPassword("some-random-passwprd");
+        encryptor.setAlgorithm("PBEWithMD5AndTripleDES");
         HttpServletRequest request1 = request;
         this.response = response;
-        auth = WebUtils.getCookie(request1, "auth");
         user = WebUtils.getCookie(request1, "user");
-        conn = WebUtils.getCookie(request1, "auth_con");
+        secureConn = WebUtils.getCookie(request1, "myCinema");
     }
 
+    public String getUser() {
+        if (secureConn == null)
+            return null;
+        return encryptor.decrypt(secureConn.getValue()).substring(4);
+    }
+
+
     public void disconnect() {
-        auth.setValue(FALSE_VALUE);
-        conn.setValue(FALSE_VALUE);
+        secureConn.setValue("none");
         user.setValue("none");
         addToResponse();
     }
 
     public void createCookie() {
-        if (auth == null) {
-            auth = new Cookie("auth", FALSE_VALUE);
+        if (secureConn == null) {
             user = new Cookie("user", "none");
-            conn = new Cookie("auth_con", FALSE_VALUE);
+            secureConn = new Cookie("myCinema", "none");
             addToResponse();
         }
     }
 
     public boolean isConnected() {
-        if (auth == null) return false;
-        return auth.getValue().equals(TRUE_VALUE);
+        if (secureConn.getValue().equals("none"))
+            return false;
+        String conn = encryptor.decrypt(secureConn.getValue());
+
+        conn = conn.substring(0, 3);
+        return conn.equals("YES");
     }
 
     public void setCookie(String username, boolean remainConnected) {
         createCookie();
-        auth.setValue("true");
-        if (remainConnected) conn.setValue(TRUE_VALUE);
-        else conn.setValue(FALSE_VALUE);
+        if (remainConnected) secureConn.setValue(encryptor.encrypt("YESY" + username));
+        else secureConn.setValue(encryptor.encrypt("YESN " + username));
         user.setValue(username);
         addToResponse();
     }
 
     private void addToResponse() {
-        auth.setMaxAge(24 * 60 * 60);
         user.setMaxAge(24 * 60 * 60);
-        conn.setMaxAge(24 * 60 * 60);
-        response.addCookie(auth);
         response.addCookie(user);
-        response.addCookie(conn);
+        secureConn.setMaxAge(24 * 60 * 60);
+        response.addCookie(secureConn);
     }
 
-    private HttpServletResponse response;
-    private Cookie auth;
-    private Cookie user;
-    private Cookie conn;
-    private static final String FALSE_VALUE = "false";
 
-    private static final String TRUE_VALUE = "true";
+    private HttpServletResponse response;
+    private Cookie user;
+    private Cookie secureConn;
+    private StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+
+
 }

@@ -1,6 +1,5 @@
 package app.controller.constraints;
 
-import app.DatabasePop;
 import app.database.exception.NullParameterPassed;
 import app.database.service.IRepository;
 import org.slf4j.Logger;
@@ -27,6 +26,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
         return value != null && isUsernameInUse;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(DatabasePop.class);
+    private static final Logger logger = LoggerFactory.getLogger(IRepository.class);
 
 }

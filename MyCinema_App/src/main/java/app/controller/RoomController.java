@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.controller.services.CookieHandler;
 import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,10 @@ public class RoomController {
 
     @GetMapping(value = "reservation")
     public String room(HttpServletRequest request, HttpServletResponse response, Model model)
+
     {
+        CookieHandler cookieHandler=new CookieHandler(request,response);
+        model.addAttribute("user",cookieHandler.getUser());
         return "Room";
     }
 

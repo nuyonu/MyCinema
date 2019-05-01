@@ -33,6 +33,7 @@ public class SettingController {
     public String getSettings(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         if (!cookieHandler.isConnected()) return "error403";
+        model.addAttribute("user",cookieHandler.getUser());
 
         model.addAttribute("userInfo", getUserInformation(request));
 
