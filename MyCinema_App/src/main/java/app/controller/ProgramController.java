@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -27,7 +28,8 @@ public class ProgramController {
         model.addAttribute("movieList", getMovieList(idMovie, day));
         model.addAttribute("day", day);
 
-        return checkForAcces(request, response);
+
+        return checkForAcces(model ,request, response);
     }
 
     @PostMapping("/program")
@@ -38,15 +40,18 @@ public class ProgramController {
         model.addAttribute("movieList", getMovieList(idMovie, day));
         model.addAttribute("day", day);
 
-        return checkForAcces(request, response);
+        return checkForAcces(model, request, response);
     }
 
-    private String checkForAcces(HttpServletRequest request, HttpServletResponse response)
+    private String checkForAcces(Model model, HttpServletRequest request, HttpServletResponse response)
     {
-        if (!new CookieHandler(request, response).isConnected())
+        CookieHandler cookieHandler=new CookieHandler(request, response);
+        if (!cookieHandler.isConnected())
             return "redirect:/error403";
-        else
+        else {
+            model.addAttribute("user", cookieHandler.getUser());
             return "program";
+        }
     }
 
     private List<Movie> getMovieList(String idMovie, String day)

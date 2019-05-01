@@ -2,6 +2,7 @@ package app.controller;
 
 import app.controller.services.CookieHandler;
 import app.database.entities.Movie;
+import app.database.infrastructure.IRepositoryMovie;
 import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +17,14 @@ import java.util.List;
 public class MoviesController {
 
     @Autowired
-    IRepository repository;
+    IRepositoryMovie repository;
 
     @GetMapping(value = "/movies")
     public String book(HttpServletRequest request, HttpServletResponse response, Model model) {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         if (!cookieHandler.isConnected()) return "error403";
-        List<Movie> listOfMovies = repository.getAllMovies();
+        model.addAttribute("user",cookieHandler.getUser());
+        List<Movie> listOfMovies = repository.findAll();
         model.addAttribute("listOfMovies", listOfMovies);
         return "movies";
     }

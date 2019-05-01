@@ -7,9 +7,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, String> {
-
-    @Autowired
-    IRepository service;
+//
+//    @Autowired
+//    IRepository service;
 
     @Override
     public boolean isValid(String contactField, ConstraintValidatorContext cxt) {
