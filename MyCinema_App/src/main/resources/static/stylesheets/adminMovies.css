@@ -425,6 +425,7 @@ body {
 {
     font-size: 16px;
     background-color: #f0f0f7;
+    text-align: center;
 }
 
 .table-of-movies tr:nth-child(2n+1)
@@ -464,7 +465,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 1rem 1.5rem;
-    width: 24rem;
+    width: 33rem;
     border-radius: 0.5rem;
 }
 
@@ -510,7 +511,7 @@ body {
 
 .main-container .old-image
 {
-    height: 250px;
+    height: 500px;
 }
 
 .main-panel
@@ -525,4 +526,45 @@ body {
 .main-panel p
 {
     margin: 0;
+}
+
+.bdp-input {
+    border-radius: 2px;
+    padding: 0 3px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    cursor: pointer;
+}
+
+.bdp-input.disabled {
+    color: #AAA;
+    cursor: default;
+}
+
+.bdp-popover {
+    min-width: 110px;
+}
+
+.bdp-popover input {
+    display: inline;
+    margin-bottom: 3px;
+    width: 60px;
+}
+
+.bdp-block {
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    padding: 5px 3px;
+}
+
+.bdp-label {
+    font-size: 70%;
+}
+
+.container {
+    padding-top: 80px;
+}
+
+p.go-down {
+    margin-top: 50px;
 }
