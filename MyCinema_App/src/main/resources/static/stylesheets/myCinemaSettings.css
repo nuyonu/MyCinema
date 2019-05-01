@@ -446,3 +446,8 @@ input.formField:not(:focus):not(:placeholder-shown) + label {
 .text-error-specifications{
     margin-left: 5%;
 }
+
+.alert{
+    margin-left: 5%;
+    margin-right: 5%;
+}
