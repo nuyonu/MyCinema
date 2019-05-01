@@ -21,7 +21,7 @@ public class CinemaRoomsController {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         if (!cookieHandler.isConnected())
             return "error403";
-
+        model.addAttribute("user",cookieHandler.getUser());
         model.addAttribute("rooms", cinemaRoomRepository.findAll());
 
         return "Cinema-rooms";

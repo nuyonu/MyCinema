@@ -3,6 +3,8 @@
 
 <head>
     <title>MyCinema</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/stylesheets/Login.css}">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -21,8 +23,14 @@
     <div class="subtitle-container">Welcome back! Please login to your account.</div>
     <div class="login-container">
 
-        <form action="#" id="myform" method="post" th:action="@{/goToHome}" th:object="${LoginInput}">
+        <form action="#" id="myform" name="myform" th:object="${LoginInput}" method="post" th:action="@{/goToHome}">
+            <div id="feedback" style="display: none">
 
+                <h4 style="color: red">
+                    <i class="fas fa-times" style="color: red;text-shadow: 1px 1px 1px #ccc;font-size: 1.5em;"></i>
+                    Your password or email is wrong
+                </h4>
+            </div>
             <input id="username" placeholder="Username" required th:field="*{username}" type="text"/>
             <input id="password" placeholder="Password" required th:field="*{password}" type="password">
 
@@ -39,18 +47,110 @@
             </div>
 
             <div class="button-container">
-                <input class="button" type="submit" value="Login">
+                <input class="button" id="btn-login" type="submit" value="Login">
                 <input class="button" type="button" value="SignUp" onclick="location.href='signUp'">
 
             </div>
 
         </form>
 
-
     </div>
 
 
 </div>
 <div class="flex-white-container"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+<script>
+    var input = document.getElementById('username');
+    input.onclick = function deleteInput() {
+        // var inputPass=document.getElementById("username");
+        // var inputPass=document.getElementById("password");
+        var feedback = $('#feedback');
+        feedback.textContent = "";
+    }
+</script>
+
+<script>
+    $("#myform").submit(function (event) {
+
+
+        //stop submit the form event.
+        event.preventDefault();
+
+        var loginForm = {}
+        loginForm["username"] = $("#username").val();
+        loginForm["password"] = $("#password").val();
+
+        $("#btn-login").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/api/login",
+            data: JSON.stringify(loginForm),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                console.log(data);
+                if (data.msg == 'Corect') {
+                    $("#myform").unbind('submit');
+                    document.myform.submit();
+
+                } else {
+                    // var json = "<h4>Your password or email is wrong."+data+"</h4>";
+                    // $('#feedback').html(json);
+                    var x = document.getElementById("feedback");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    }
+
+
+                }
+                // JSON.stringify(data, null, 4);
+
+
+                $("#btn-login").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                var json = "<h4>Ajax Response Error</h4><pre>"
+                    + e.responseText + "</pre>";
+                $('#feedback').html(json);
+
+                console.log("ERROR : ", e);
+                $("#btn-login").prop("disabled", false);
+
+            }
+        });
+
+    });
+
+
+    $("#password").click(function () {
+        if ($("#feedback").css('display') == 'block') {
+            $("#feedback").css('display', 'none');
+        }
+    });
+    $("#username").click(function () {
+        if ($("#feedback").css('display') == 'block') {
+            $("#feedback").css('display', 'none');
+        }
+    });
+
+</script>
+<!--<script>-->
+
+<!--    $(document).ready(function() {-->
+<!--        $.ajax({-->
+<!--            url: "/messageEmail"-->
+<!--        }).then(function(data) {-->
+<!--            $('.messageEmail').append(data);-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 </html>

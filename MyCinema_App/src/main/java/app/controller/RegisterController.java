@@ -34,10 +34,8 @@ public class RegisterController {
     public String postRegisterForm(@Valid @ModelAttribute("registerModel") RegisterModel registerModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "signUp";
-
         userRepository.save(new User(registerModel.getUsername(), registerModel.getFirstName(), registerModel.getLastName(),
                 registerModel.geteMail(), registerModel.getPassword()));
-
         return "redirect:/Login";
     }
 }

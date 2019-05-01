@@ -21,7 +21,8 @@
         <div class="main">
             <h2 class="title" th:text="|Room |+ ${room.getName()}">Room</h2>
             <div class="main-container">
-                <form action="#" th:action="@{/admin-rooms-submit-edit}" method="POST">
+                <form action="#" th:action="@{/admin-rooms-edit-submit}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" th:name="room-id" th:value="${room.getId()}"/>
                     <div class="buttons-top">
                         <button class="buttons-room" type="submit">Save</button>
                         <input class="buttons-room" type="button" onclick="location.href='admin-rooms'" value="Discard"/>
@@ -30,17 +31,34 @@
                         <div class="main-panel">
                             <p>Current Name:</p>
                             <input type="text" disabled th:name="old-room-name" th:value="${room.getName()}">
-                            <p>Current Image:</p>
-                            <img class="old-image" th:src="@{'/images/' + ${room.getImagePath()}}" />
                         </div>
                         <div class="main-panel">
                             <p>New Name:</p>
                             <input type="text" th:name="new-room-name">
-                            <p>New Image:</p>
-                            <input type="file" th:name="new-room-image-path">
-                            <input type="hidden" th:name="room-id" th:value="${room.getId()}"/>
                         </div>
                     </div>
+                    <table class="table-of-rooms">
+                        <tr>
+                            <th>Number</th>
+                            <th>Image</th>
+                            <th>Change</th>
+                            <th>Delete</th>
+                        </tr>
+                        <th:block th:each="image, iterStat :${images}">
+                            <tr>
+                                <td th:text="${iterStat.count}">Number</td>
+                                <td><img class="old-image" th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '/' + ${iterStat.count} + '.jpg'}" /></td>
+                                <td><input type="file" th:name="image-file"></td>
+                                <td><input class="check-for-delete" type="checkbox" th:name="image-checked" th:value="${iterStat.count} + '.jpg'" /></td>
+                                <input type="hidden" th:name="image-id" th:value="${iterStat.count}"/>
+                            </tr>
+                        </th:block>
+                    </table>
+                </form>
+                <form action="#" th:action="@{/admin-rooms-edit-add-image}" method="POST" enctype="multipart/form-data">
+                    <button class="buttons-room" type="submit">Add Image</button>
+                    <input type="file" required th:name="room-image" />
+                    <input type="hidden" th:name="room-id" th:value="${room.getId()}"/>
                 </form>
             </div>
         </div>

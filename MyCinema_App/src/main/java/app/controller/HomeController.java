@@ -16,6 +16,7 @@ public class HomeController
     {
         CookieHandler cookieHandler = new CookieHandler(request, response);
         if (!cookieHandler.isConnected()) return "error403";
+        model.addAttribute("user",cookieHandler.getUser());
         return "Home";
     }
 }
