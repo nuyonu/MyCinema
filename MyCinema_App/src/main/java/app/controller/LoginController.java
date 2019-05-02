@@ -2,10 +2,9 @@ package app.controller;
 
 import app.controller.dao.AjaxResponseBody;
 import app.controller.dao.LoginInput;
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
-import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,17 +22,16 @@ public class LoginController {
 
     @GetMapping("disconnect")
     public String disconnect(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(name = "input") LoginInput user) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-        cookieHandler.disconnect();
-        return "redirect:/Login";
+        cookieService.setConfig(request, response);
+        cookieService.disconnect();
+        return REDIRECT_LOGIN;
     }
 
     @GetMapping("/Login")
     public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-
-        if (cookieHandler.isConnected()) return "redirect:/home";
-        cookieHandler.createCookie();
+        cookieService.setConfig(request, response);
+        if (cookieService.isConnected()) return "redirect:/home";
+        cookieService.createCookie();
         model.addAttribute("LoginInput", new LoginInput());
         return "Login";
     }
@@ -44,27 +42,33 @@ public class LoginController {
 
 
         User userDatabase = service.findByUsername(user.getUsername());
-        if (userDatabase == null) return "redirect:/Login";
+        if (userDatabase == null) return REDIRECT_LOGIN;
         if (userDatabase.getUsername().equals(user.getUsername()) && userDatabase.getPassword().equals(user.getPassword())) {
-            CookieHandler cookieHandler = new CookieHandler(request, response);
-            cookieHandler.setCookie(user.getUsername(), user.isRemainConnected());
+            cookieService.setConfig(request, response);
+            cookieService.setCookie(user.getUsername(), user.isRemainConnected());
             return "redirect:/home";
         }
-        return "redirect:/Login";
+        return REDIRECT_LOGIN;
     }
 
     @PostMapping("/api/login")
     @ResponseBody
-    public ResponseEntity<?> getMessage(@RequestBody LoginInput user) {
+    public ResponseEntity<AjaxResponseBody> getMessage(@RequestBody LoginInput user) {
         AjaxResponseBody result = new AjaxResponseBody();
         User userDatabase = service.findByUsername(user.getUsername());
-        if (userDatabase != null) {
-            if (userDatabase.getUsername().equals(user.getUsername()) || userDatabase.getPassword().equals(user.getPassword())) {
-                result.setMsg("Corect");
-                return ResponseEntity.ok(result);
-            }
+        if (userDatabase != null && matchUser(userDatabase, user)) {
+            result.setMsg("Corect");
+            return ResponseEntity.ok(result);
         }
         result.setMsg("Your password or email is wrong!");
         return ResponseEntity.ok(result);
+    }
+
+    @Autowired
+    private ICookieService cookieService;
+    private static final String REDIRECT_LOGIN = "redirect:/Login";
+
+    private static boolean matchUser(User user, LoginInput input) {
+        return user.getUsername().equals(input.getUsername()) || user.getUsername().equals(input.getPassword());
     }
 }

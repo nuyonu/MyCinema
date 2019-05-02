@@ -1,8 +1,7 @@
 package app.controller;
 
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.infrastructure.IRepositoryRoom;
-import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +17,8 @@ public class ReservationController {
 
     @PostMapping(value = "reservationPlace")
     public String reservation(HttpServletRequest request, HttpServletResponse response, Model model) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-        if (!cookieHandler.isConnected()) return "redirect:/error403";
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected()) return "error403";
 
         String idMovie = request.getParameter("idMovie");
         Integer day = Integer.valueOf(request.getParameter("day"));
@@ -27,9 +26,11 @@ public class ReservationController {
         model.addAttribute("idMovie", idMovie);
         model.addAttribute("day", day);
         model.addAttribute("time", time);
-        model.addAttribute("user",cookieHandler.getUser());
+        model.addAttribute("user",cookieService.getUser());
         model.addAttribute("room", service.findByIdMovieAndTimeAndDay(idMovie, time, day));
         return "Room";
     }
+    @Autowired
+    private ICookieService cookieService;
 
 }

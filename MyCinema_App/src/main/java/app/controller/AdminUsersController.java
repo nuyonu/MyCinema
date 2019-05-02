@@ -1,7 +1,7 @@
 package app.controller;
 
 import app.controller.services.CommonFunctions;
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.service.UserService;
@@ -55,7 +55,8 @@ public class AdminUsersController {
                             @RequestParam(value = "username", required = false, defaultValue = "") String username,
                             Model model) {
 
-        if (!new CookieHandler(request, response).isConnected())
+        cookieService.setConfig( request,response);
+        if (!cookieService.isConnected())
             return "error403";
 
         int currentPage = page.orElse(1);
@@ -249,4 +250,6 @@ public class AdminUsersController {
         }
         return phoneNumber;
     }
+    @Autowired
+    private ICookieService cookieService;
 }

@@ -1,10 +1,8 @@
 package app.controller;
 
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
-import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryCinemaRoom;
-import app.database.service.IRepository;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,19 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -46,9 +39,8 @@ public class AdminRoomsController
     @GetMapping(value = "/admin-rooms")
     public String showRooms(HttpServletRequest request, HttpServletResponse response, Model model)
     {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-
-        if (!cookieHandler.isConnected())
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected())
             return "error403";
 
         model.addAttribute("cinemaRoom", new CinemaRoom());
@@ -94,9 +86,8 @@ public class AdminRoomsController
                                  @RequestParam(name = "id", required = true) String roomId,
                                  Model model)
     {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-
-        if (!cookieHandler.isConnected())
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected())
             return "error403";
 
         Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
@@ -254,4 +245,6 @@ public class AdminRoomsController
             System.err.println("Couldn't delete file: " + e);
         }
     }
+    @Autowired
+    private ICookieService cookieService;
 }

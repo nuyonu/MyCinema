@@ -1,6 +1,6 @@
 package app.controller;
 
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
 import org.slf4j.Logger;
@@ -30,6 +30,9 @@ public class AdminMoviesController {
 
     @Autowired
     private IRepositoryMovie repositoryMovie;
+  
+    @Autowired
+    private ICookieService cookieService;
 
     private List<String> errorMessages;
     private List<String> successfulMessages;
@@ -37,10 +40,11 @@ public class AdminMoviesController {
     private Logger logger = LoggerFactory.getLogger(AdminMoviesController.class);
 
     @GetMapping(value = "/admin-movies")
-    public String showMovies(HttpServletRequest request, HttpServletResponse response, Model model) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
+    public String showMovies(HttpServletRequest request, HttpServletResponse response, Model model)
+    {
+        cookieService.setConfig(request,response);
 
-        if (!cookieHandler.isConnected())
+        if (!cookieService.isConnected())
             return "error403";
 
         model.addAttribute("movies", repositoryMovie.findAll());
