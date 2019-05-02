@@ -1,5 +1,5 @@
 ## Contribuie
-Când contribuiți la acest depozit, vă rugăm să discutați mai întâi schimbarea pe care doriți să o faceți prin emisiune, e-mail sau orice altă metodă cu proprietarii acestui depozit înainte de a face o schimbare. Orice incercare de a strica ce se află în acest depozit va fi ignorată/anulată.
+Când contribuiți la acest depozit, vă rugăm să discutați mai întâi schimbarea pe care doriți să o faceți prin e-mail sau orice altă metodă cu proprietarii acestui depozit înainte de a face o schimbare. Orice incercare de a strica ce se află în acest depozit va fi ignorată/anulată.
 
 ## Cum contribui?
 
