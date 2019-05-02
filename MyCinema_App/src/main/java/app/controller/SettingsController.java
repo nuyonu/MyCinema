@@ -146,13 +146,8 @@ public class SettingsController {
     @ResponseBody
     public byte[] getImage(@PathVariable String imageId) {
         Path path = Paths.get("src/main/resources/static/images/userAvatarImages/" + imageId);
-
-        try {
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
-
+        if(Files.exists(path))
+            return CommonFunctions.imageFromPath(path);
         return new byte[0];
     }
 

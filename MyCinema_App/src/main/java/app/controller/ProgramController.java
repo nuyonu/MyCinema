@@ -26,7 +26,7 @@ public class ProgramController {
                              @RequestParam(name = "day", defaultValue = "0") String day,
                              @RequestParam(name = "idMovie", defaultValue = "") String idMovie) {
 
-        model.addAttribute("movieList", getMovieList(idMovie, day));
+        model.addAttribute("movieList", getMovieList(idMovie));
         model.addAttribute("day", day);
 
 
@@ -38,7 +38,7 @@ public class ProgramController {
                                @RequestParam(name = "day", defaultValue = "0") String day,
                                @RequestParam(name = "idMovie", defaultValue = "") String idMovie) {
 
-        model.addAttribute("movieList", getMovieList(idMovie, day));
+        model.addAttribute("movieList", getMovieList(idMovie));
         model.addAttribute("day", day);
 
         return checkForAcces(model, request, response);
@@ -55,10 +55,9 @@ public class ProgramController {
         }
     }
 
-    private List<Movie> getMovieList(String idMovie, String day)
+    private List<Movie> getMovieList(String idMovie)
     {
         List<Movie> movieList = movieRepository.findAll();
-        movieList.forEach(e->e.setDay(Integer.parseInt(day)));
 
         if (!idMovie.isEmpty())
             movieList = movieList.stream().filter(e -> e.getId().equals(idMovie)).collect(Collectors.toList());

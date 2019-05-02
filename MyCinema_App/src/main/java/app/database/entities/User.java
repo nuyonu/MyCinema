@@ -50,7 +50,7 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
 
-    private String avatarImagePath = "/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg";
+    private String avatarImagePath = "/images/userProfileDefaultAvatar/" + "userProfileDefaultAvatar.jpg";
 
     private UserType userType = UserType.MEMBER;
 
