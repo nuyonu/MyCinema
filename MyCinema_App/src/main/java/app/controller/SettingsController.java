@@ -1,7 +1,7 @@
 package app.controller;
 
 import app.controller.services.CommonFunctions;
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.service.UserService;
@@ -44,8 +44,9 @@ public class SettingsController {
 
     @GetMapping("/settings")
     public String getSettings(HttpServletRequest request, HttpServletResponse response, Model model) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-        if (!cookieHandler.isConnected()) return "error403";
+
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected()) return "error403";
 
         model.addAttribute("userInfo", userRepository.findByUsername(getUsernameFromCookie(request)));
 
@@ -63,8 +64,8 @@ public class SettingsController {
         errorMessages = new ArrayList<>();
         successfulMessages = new ArrayList<>();
 
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-        if (!cookieHandler.isConnected()) return "error403";
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected()) return "error403";
 
         User user = userRepository.findByUsername(getUsernameFromCookie(request));
 
@@ -162,4 +163,6 @@ public class SettingsController {
                 .map(Cookie::getValue)
                 .orElse(null);
     }
+    @Autowired
+    private ICookieService cookieService;
 }

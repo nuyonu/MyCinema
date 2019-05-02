@@ -3,8 +3,8 @@ package app.controller;
 import app.controller.dao.ResetConn;
 import app.database.entities.ResetAccount;
 import app.database.entities.User;
-import app.database.infrastructure.IRepositoryUser;
 import app.database.infrastructure.IRepositoryReset;
+import app.database.infrastructure.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +48,6 @@ public class ResetPageController {
     @Autowired
     private IRepositoryUser user;
 
-    private final  String RESET_PAGE="ResetPage";
+    private static final  String RESET_PAGE="ResetPage";
 }
 

@@ -21,4 +21,5 @@ public class MailServer {
     public void setEmailSender(JavaMailSender emailSender) {
         this.emailSender = emailSender;
     }
+
 }

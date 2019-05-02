@@ -17,7 +17,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     public boolean isValid(String value, ConstraintValidatorContext context) {
         return value != null && repositoryUser.findByUsername(value) != null;
     }
-
     private static final Logger logger = LoggerFactory.getLogger(UniqueUsernameValidator.class);
 
 }
