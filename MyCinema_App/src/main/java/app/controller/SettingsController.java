@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.controller.services.CommonFunctions;
-import app.controller.services.CookieHandler;
 import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;

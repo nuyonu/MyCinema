@@ -1,9 +1,7 @@
 package app.controller.services;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
@@ -19,8 +17,11 @@ public class CookieHandler implements ICookieService {
         this.response = response;
         user = WebUtils.getCookie(request, "user");
         secureConn = WebUtils.getCookie(request, "myCinema");
-        encryptor.setPassword(password);
-        encryptor.setAlgorithm(alg);
+        if(!setted){
+            encryptor.setPassword(password);
+            encryptor.setAlgorithm(alg);
+            setted=true;
+        }
     }
 
     @Override
@@ -81,4 +82,5 @@ public class CookieHandler implements ICookieService {
     private String password;
     @Value("${encrypt.alg}")
     private String alg;
+    private boolean setted=false;
 }

@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.controller.services.CookieHandler;
 import app.controller.services.ICookieService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;

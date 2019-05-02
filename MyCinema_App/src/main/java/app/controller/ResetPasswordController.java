@@ -36,7 +36,7 @@ public class ResetPasswordController {
 
     @PostMapping("/api/reset")
     @ResponseBody
-    public ResponseEntity<?> getStatusReset(@RequestBody Reset user) {
+    public ResponseEntity<AjaxResponseBody> getStatusReset(@RequestBody Reset user) {
         AjaxResponseBody result = new AjaxResponseBody();
         User userDatabase = repositoryUser.findByEmail(user.getEmail());
         if (userDatabase == null) {

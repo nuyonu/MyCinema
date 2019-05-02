@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.controller.services.CookieHandler;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.infrastructure.IRepositoryCinemaRoom;

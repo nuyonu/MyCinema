@@ -48,6 +48,6 @@ public class ResetPageController {
     @Autowired
     private IRepositoryUser user;
 
-    private final  String RESET_PAGE="ResetPage";
+    private static final  String RESET_PAGE="ResetPage";
 }
 
