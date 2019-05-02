@@ -1,14 +1,16 @@
 package app.controller;
 
 import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -45,11 +47,11 @@ public class ProgramController {
 
     private String checkForAcces(Model model, HttpServletRequest request, HttpServletResponse response)
     {
-        CookieHandler cookieHandler=new CookieHandler(request, response);
-        if (!cookieHandler.isConnected())
-            return "redirect:/error403";
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected()) return "error403";
+
         else {
-            model.addAttribute("user", cookieHandler.getUser());
+            model.addAttribute("user", cookieService.getUser());
             return "program";
         }
     }
@@ -64,5 +66,7 @@ public class ProgramController {
 
         return movieList;
     }
+    @Autowired
+    private ICookieService cookieService;
 
 }

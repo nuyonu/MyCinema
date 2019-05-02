@@ -3,9 +3,9 @@ package app.controller;
 import app.controller.dao.AjaxResponseBody;
 import app.controller.dao.LoginInput;
 import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
-import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,17 +23,16 @@ public class LoginController {
 
     @GetMapping("disconnect")
     public String disconnect(HttpServletRequest request, HttpServletResponse response, @ModelAttribute(name = "input") LoginInput user) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-        cookieHandler.disconnect();
+        cookieService.setConfig(request,response);
+        cookieService.disconnect();
         return "redirect:/Login";
     }
 
     @GetMapping("/Login")
     public String start(HttpServletRequest request, HttpServletResponse response, Model model) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-
-        if (cookieHandler.isConnected()) return "redirect:/home";
-        cookieHandler.createCookie();
+        cookieService.setConfig(request,response);
+        if (cookieService.isConnected()) return "redirect:/home";
+        cookieService.createCookie();
         model.addAttribute("LoginInput", new LoginInput());
         return "Login";
     }
@@ -46,8 +45,8 @@ public class LoginController {
         User userDatabase = service.findByUsername(user.getUsername());
         if (userDatabase == null) return "redirect:/Login";
         if (userDatabase.getUsername().equals(user.getUsername()) && userDatabase.getPassword().equals(user.getPassword())) {
-            CookieHandler cookieHandler = new CookieHandler(request, response);
-            cookieHandler.setCookie(user.getUsername(), user.isRemainConnected());
+            cookieService.setConfig(request,response);
+            cookieService.setCookie(user.getUsername(), user.isRemainConnected());
             return "redirect:/home";
         }
         return "redirect:/Login";
@@ -67,4 +66,6 @@ public class LoginController {
         result.setMsg("Your password or email is wrong!");
         return ResponseEntity.ok(result);
     }
+    @Autowired
+    private ICookieService cookieService;
 }

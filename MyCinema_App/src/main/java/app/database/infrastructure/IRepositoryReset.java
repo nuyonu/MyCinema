@@ -8,6 +8,8 @@ public interface IRepositoryReset extends MongoRepository<ResetAccount, String> 
 
     ResetAccount findByCode(String code);
     ResetAccount findByEmail(String username);
-    ResetAccount deleteByCode(String code);
+    void deleteByCode(String code);
+    void deleteByEmail(String email);
+
 
 }

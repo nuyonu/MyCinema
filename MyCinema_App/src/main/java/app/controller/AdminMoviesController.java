@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class AdminMoviesController
     @GetMapping(value = "/admin-movies")
     public String showMovies(HttpServletRequest request, HttpServletResponse response, Model model)
     {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
+        cookieService.setConfig(request,response);
 
-        if (!cookieHandler.isConnected())
+        if (!cookieService.isConnected())
             return "error403";
 
         model.addAttribute("movies", repository.findAll());
@@ -101,4 +102,6 @@ public class AdminMoviesController
     }
 
     private static final String RETURNED_STRING = "redirect:/admin-movies";
+    @Autowired
+    private ICookieService cookieService;
 }

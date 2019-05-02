@@ -1,9 +1,9 @@
 package app.controller;
 
 import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
-import app.database.service.IRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +21,14 @@ public class MoviesController {
 
     @GetMapping(value = "/movies")
     public String book(HttpServletRequest request, HttpServletResponse response, Model model) {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
-        if (!cookieHandler.isConnected()) return "error403";
-        model.addAttribute("user",cookieHandler.getUser());
+       cookieService.setConfig(request,response);
+        if (!cookieService.isConnected()) return "error403";
+        model.addAttribute("user",cookieService.getUser());
         List<Movie> listOfMovies = repository.findAll();
         model.addAttribute("listOfMovies", listOfMovies);
         return "movies";
     }
+    @Autowired
+    private ICookieService cookieService;
 
 }
