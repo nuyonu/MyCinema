@@ -31,8 +31,8 @@ body {
     padding: 50px 50px 15px 50px;
     font-family: 'Source Sans Pro', sans-serif;
     text-align: center;
-    width: 300px;
-    height: 450px;
+    width: 250px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -42,7 +42,7 @@ body {
     color: white;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 24px;
 }
 
 .movie-price {
@@ -58,6 +58,8 @@ body {
 .movie-price p {
     margin-top: 0;
     margin-bottom: 0;
+    color: green;
+    font-weight: bold;
 }
 
 .movie-name p, .movie-price p {

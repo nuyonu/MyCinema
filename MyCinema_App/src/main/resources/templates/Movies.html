@@ -28,13 +28,13 @@
             <p id="movies-title">Movies</p>
             <div class="movies-body">
                 <th:block th:each="movie:${listOfMovies}">
-                    <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.id})}">
-                        <div class="movies-data-show">
+                    <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.getId()})}">
+                        <div class="movies-data-show" th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
                             <div class="movie-name">
-                                <p th:text="${movie.title}"> Title</p>
+                                <p th:text="${movie.getTitle()}"></p>
                             </div>
                             <div class="movie-price">
-                                <p th:text="${movie.price}">Price</p>
+                                <p th:text="${movie.getPrice()} + ' lei'"></p>
                             </div>
                             <div class="movie-book-now">
                                 <button class="movie-button-book-now" type="submit">Book now</button>
