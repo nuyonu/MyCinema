@@ -58,7 +58,7 @@ public class ProgramController {
     private List<Movie> getMovieList(String idMovie, String day)
     {
         List<Movie> movieList = movieRepository.findAll();
-        movieList.forEach(e->e.setDay(Integer.parseInt(day)));
+//        movieList.forEach(e->e.setDay(Integer.parseInt(day)));
 
         if (!idMovie.isEmpty())
             movieList = movieList.stream().filter(e -> e.getId().equals(idMovie)).collect(Collectors.toList());

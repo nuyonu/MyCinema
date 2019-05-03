@@ -59,7 +59,7 @@
                                 <p th:text="${movie.title}"> Title</p>
                             </div>
                             <div class="movie-price">
-                                <p th:text="${movie.price}">Price</p>
+                                <p th:text=" ${'Price:'+ movie.price}">Price</p>
                             </div>
                             <div class="movie-book-now">
                                 <button class="movie-button-book-now" type="submit">Book now</button>
@@ -148,23 +148,6 @@
     };
 
 </script>
-<script>
-    function myFunction(id ) {
-        document.getElementById(id).classList.toggle("show");
-    }
 
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementById("dropdown-content1");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-</script>
 </body>
 </html>
