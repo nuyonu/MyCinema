@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" href="../static/stylesheets/movies.css" th:href="@{/stylesheets/movies.css}" type="text/css">
-    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
     <title>MyCinema | Movies</title>
 
@@ -23,10 +23,35 @@
 <div class="layout">
     <div th:replace="common.html :: left(${3})"></div>
     <div class="l-right">
-        <div th:replace="common.html :: top(${user})"></div>
+        <!--        <div th:replace="common.html :: top(${user})"></div>-->
+
+        <div class="top-bar">
+            <form action="#" class="left" id="search" name="search">
+                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
+                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
+                <input class="Search" id="input_search" placeholder="Search" onkeyup="search_func()" type="text">
+
+            </form>
+            <div class="right">
+                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+
+                <span th:text="${user}"></span>
+                <div class="dropdown">
+                    <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
+                        <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                        <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
+                            <a href="/settings">Settings</a>
+                            <a href="disconnect">Disconnect</a>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
         <div class="body-main">
             <p id="movies-title">Movies</p>
-            <div class="movies-body">
+            <div class="movies-body" id="list_movie">
                 <th:block th:each="movie:${listOfMovies}">
                     <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.id})}">
                         <div class="movies-data-show">
@@ -57,7 +82,89 @@
 <script crossorigin="anonymous"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="../static/script.js"></script>
+<script src="/scripts/script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
+<script>
+    // $("#search").submit(
+    function search_func() {
+
+
+        //stop submit the form event.
+        // event.preventDefault();
+
+        var search = {}
+        search["input_search"] = $("#input_search").val();
+
+
+        // $("#btn-search").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/api/search",
+            data: JSON.stringify(search),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                console.log(data);
+                document.getElementById('list_movie').innerHTML = "";
+
+                for (var movieIndex = 0; movieIndex < data.listOfResults.length; movieIndex++) {
+                    var movie = data.listOfResults[movieIndex];
+                    $("#list_movie").append(
+                        "<form action=\"#\" method=\"post\" action=\"/program?day=0&idMovie=id\">" +
+                        "<div class=\"movies-data-show\">" +
+                        "<div class=\"movie-name\">" +
+                        "<p> " + movie.name + "</p>" +
+                        "</div>" +
+                        "<div class=\"movie-price\">" +
+                        "<p >Price:" + movie.price + "</p>" +
+                        "</div>" +
+                        "<div class=\"movie-book-now\">" +
+                        "<button class=\"movie-button-book-now\" type=\"submit\">Book now</button>" +
+                        "</div>" +
+                        "</div>" +
+                        "</form>"
+                    )
+                    ;
+                }
+
+
+                $("#btn-search").prop("disabled", false);
+
+            },
+            error: function (e) {
+                document.getElementById('list_movie').innerHTML = "";
+                $("#list_movie").append("<div><h1>Sory:(</h1><h1>We don't find anything.</h1></div>")
+
+                console.log("ERROR : ", e);
+
+            },
+
+        });
+
+    };
+
+</script>
+<script>
+    function myFunction(id ) {
+        document.getElementById(id).classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementById("dropdown-content1");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

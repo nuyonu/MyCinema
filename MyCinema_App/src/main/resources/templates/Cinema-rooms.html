@@ -24,7 +24,31 @@
 <div class="layout">
     <div th:replace="common.html :: left(${4})"></div>
     <div class="l-right">
-        <div th:replace="common.html :: top(${user})"></div>
+
+        <div class="top-bar" th:fragment="top(user)">
+            <form action="#" class="left" id="search" name="search"   >
+                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
+                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
+                <input class="Search" id="input_search" placeholder="Search"  onkeyup="search_func()" type="text">
+
+            </form>
+            <div class="right">
+                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+
+                <span th:text="${user}"></span>
+                <div class="dropdown">
+                    <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
+                        <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                        <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
+                            <a href="/settings">Settings</a>
+                            <a href="disconnect">Disconnect</a>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
         <div class="main">
             <h2 class="title">Cinema Rooms</h2>
 
@@ -156,7 +180,64 @@
     </div>
 
 <script th:src="@{/scripts/buttonAccount.js}"></script>
+    <script>
+        // $("#search").submit(
+        function search_func() {
+            var search = {}
+            search["input_search"] = $("#input_search").val();
 
+
+            // $("#btn-search").prop("disabled", true);
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/api/search",
+                data: JSON.stringify(search),
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    console.log(data);
+                    document.getElementById('list_movie').innerHTML = "";
+
+                    for (var movieIndex = 0; movieIndex < data.listOfResults.length; movieIndex++) {
+                        var movie = data.listOfResults[movieIndex];
+                        $("#list_movie").append(
+                            "<form action=\"#\" method=\"post\" action=\"/program?day=0&idMovie=id\">" +
+                            "<div class=\"movies-data-show\">" +
+                            "<div class=\"movie-name\">" +
+                            "<p> " + movie.name + "</p>" +
+                            "</div>" +
+                            "<div class=\"movie-price\">" +
+                            "<p >Price:" + movie.price + "</p>" +
+                            "</div>" +
+                            "<div class=\"movie-book-now\">" +
+                            "<button class=\"movie-button-book-now\" type=\"submit\">Book now</button>" +
+                            "</div>" +
+                            "</div>" +
+                            "</form>"
+                        )
+                        ;
+                    }
+
+
+                    $("#btn-search").prop("disabled", false);
+
+                },
+                error: function (e) {
+                    document.getElementById('list_movie').innerHTML = "";
+                    $("#list_movie").append("<div><h1>Sory:(</h1><h1>We don't find anything.</h1></div>")
+
+                    console.log("ERROR : ", e);
+
+                },
+
+            });
+
+        };
+
+    </script>
 </body>
 
 </html>

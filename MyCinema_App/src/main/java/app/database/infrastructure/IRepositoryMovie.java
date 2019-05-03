@@ -24,5 +24,10 @@ public interface IRepositoryMovie extends MongoRepository<Movie, String> {
 
     List<Movie> findByDurationBetween(Integer from, Integer to);
 
+    List<Movie> findByTitleLike(String search);
+
+    List<Movie> findByPriceGreaterThan(Integer price);
+
+    List<Movie> findByPriceLessThan(Integer price);
 
 }
