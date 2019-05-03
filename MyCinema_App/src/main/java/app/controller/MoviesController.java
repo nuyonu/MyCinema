@@ -42,7 +42,6 @@ public class MoviesController {
     public ResponseEntity<AjaxResponseSearch> getMessage(@RequestBody Search search) {
         AjaxResponseSearch result = new AjaxResponseSearch();
         List<Movie> movieList=repository.findByTitleLike(search.getInput_search());
-        System.out.println(movieList);
         if(movieList.size()==0){
 
             return ResponseEntity.notFound().build();

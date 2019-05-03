@@ -28,10 +28,10 @@ public class CinemaRoomsController {
 
     @GetMapping("/cinema-rooms")
     public String rooms(HttpServletRequest request, HttpServletResponse response, Model model) {
-        cookieService.setConfig(request,response);
+        cookieService.setConfig(request, response);
         if (!cookieService.isConnected())
             return "error403";
-        model.addAttribute("user",cookieService.getUser());
+        model.addAttribute("user", cookieService.getUser());
         model.addAttribute("rooms", cinemaRoomRepository.findAll());
 
         return "Cinema-rooms";
@@ -41,17 +41,16 @@ public class CinemaRoomsController {
     @ResponseBody
     public ResponseEntity<RoomDao> getMessage(@RequestBody Search search) {
 
-        List<CinemaRoom> cinemaRooms=cinemaRoomRepository.findByNameLike(search.getInput_search());
-        System.out.println(cinemaRooms);
-        if(cinemaRooms.size()==0){
+        List<CinemaRoom> cinemaRooms = cinemaRoomRepository.findByNameLike(search.getInput_search());
+        if (cinemaRooms.size() == 0) {
 
             return ResponseEntity.notFound().build();
-        }else
-        {
+        } else {
 
             return ResponseEntity.ok().body(new RoomDao(cinemaRooms));
         }
     }
+
     @Autowired
     private ICookieService cookieService;
 }
