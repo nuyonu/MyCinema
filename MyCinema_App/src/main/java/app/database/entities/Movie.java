@@ -4,12 +4,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @EntityScan
 @Document(collection = "Movies")
@@ -31,6 +36,10 @@ public class Movie {
     private double price;
 
     private String path;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private String createdDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
     public Movie(@NotNull String title, @Positive int seconds, @Positive double price, String path) {
         this.title = title;

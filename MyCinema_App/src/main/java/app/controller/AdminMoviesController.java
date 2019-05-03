@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,13 +41,17 @@ public class AdminMoviesController {
     private Logger logger = LoggerFactory.getLogger(AdminMoviesController.class);
 
     @GetMapping(value = "/admin-movies")
-    public String showMovies(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String showMovies(@RequestParam(value = "movieTitle", required = false, defaultValue = "") String movieTitle,
+                             HttpServletRequest request,
+                             HttpServletResponse response,
+                             Model model) {
         cookieService.setConfig(request, response);
 
         if (!cookieService.isConnected())
             return "error403";
 
-        model.addAttribute("movies", repositoryMovie.findAll());
+        model.addAttribute("movies", repositoryMovie.findAllByTitleContainingOrderByCreatedDateDesc(movieTitle));
+        model.addAttribute("currentMovieTitle", movieTitle);
         return "AdminMovies";
     }
 
@@ -204,7 +207,7 @@ public class AdminMoviesController {
     @ResponseBody
     public byte[] getImage(@PathVariable String imageId) {
         Path path = Paths.get("src/main/resources/static/images/movieImages/" + imageId);
-        if(Files.exists(path))
+        if (Files.exists(path))
             return CommonFunctions.imageFromPath(path);
         return new byte[0];
     }
