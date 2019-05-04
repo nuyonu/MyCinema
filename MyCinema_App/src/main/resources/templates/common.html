@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div class="top-bar">
+<div class="top-bar" th:fragment="top(user)">
     <form action="" class="left">
         <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
         <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
@@ -46,8 +46,9 @@
         <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
         <!--                <a class="user-menu" href="/settings">-->
-        <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
-              th:text="${u.getValue()}"></span>
+<!--        <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"-->
+<!--              th:text="${u.getValue()}"></span>-->
+        <span th:text="${user}"></span>
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">
                 <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">

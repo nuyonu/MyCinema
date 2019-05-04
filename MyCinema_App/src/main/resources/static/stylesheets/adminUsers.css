@@ -541,7 +541,7 @@ p.information-text{
     margin: 0 0 5px 0;
 }
 
-.text-succesful{
+.text-successful{
     color: green;
 }
 
@@ -549,4 +549,37 @@ p.information-text{
     width: 100px;
     height: 100px;
     border-radius: 10px;
+}
+
+.pages{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.pages a {
+    font-size: 18px;
+    padding: 5px 10px;
+    transition: background-color .3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pages a.active {
+    background-color: #5C9AFF;
+}
+
+.page-elements{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.page-elements input{
+    width: 270px;
+    text-align: center;
 }

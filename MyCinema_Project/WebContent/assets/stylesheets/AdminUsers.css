@@ -151,15 +151,13 @@ body {
     color: #333;
     font-size: 14px;
     font-weight: 500;
-    padding: 0 10px;
-    padding-left: 15px;
+    padding: 0 15px 0 10px;
     margin-left: 10px;
     border-left: 1px solid #ddd;
 }
 
 .l-right .top-bar .right .user-menu .arrow {
-    margin: 0 5px;
-    margin-left: 12px;
+    magin: 0 5px 0 12px;
 }
 
 
@@ -394,9 +392,11 @@ body {
 {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
-.buttons-room
+.buttons-user
 {
     color: white;
     background-color: #3381ff;
@@ -407,44 +407,43 @@ body {
     margin: 10px;
 }
 
-.buttons-room:disabled {
+.buttons-user:disabled {
     background-color: #5C9AFF;
 }
 
-.buttons-room:active {
+.buttons-user:active {
     background-color: #0062ff;
 }
 
-.table-of-rooms
+.table-of-users
 {
     width: 100%;
     text-align: center;
 }
 
-.table-of-rooms th
+.table-of-users th
 {
     font-size: 16px;
     background-color: #f0f0f7;
 }
 
-.table-of-rooms tr:nth-child(2n+1)
+.table-of-users img
+{
+    width: 50px;
+    height: 50px;
+}
+
+.table-of-users tr:nth-child(2n+1)
 {
     background-color: lavender;
 }
 
-.table-of-rooms td:first-child
+.table-of-users td:first-child
 {
     font-weight: bold;
 }
 
-.table-of-rooms img
-{
-    width: 90px;
-    height: 90px;
-    margin: 5px;
-}
-
-.modal-form-add, .modal-form-edit {
+.modal-form-delete-by-username, .modal-form-edit {
     position: fixed;
     left: 0;
     top: 0;
@@ -508,11 +507,6 @@ body {
     margin: 15px 0 0 0;
 }
 
-.main-container .old-image
-{
-    height: 250px;
-}
-
 .main-panel
 {
     display: flex;
@@ -522,7 +516,56 @@ body {
     width: 50%;
 }
 
+.main-panel h1
+{
+    margin: 0;
+    font-size: 14px;
+}
+
 .main-panel p
 {
     margin: 0;
+}
+
+.text-danger
+{
+    color:red;
+    margin: 0 0 5px 0;
+}
+
+.information-text{
+    font-weight: bold;
+}
+
+p.information-text{
+    margin: 0 0 5px 0;
+}
+
+.text-successful{
+    color: green;
+}
+
+.actual-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.pages{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pages a {
+    font-size: 18px;
+    padding: 5px 10px;
+    transition: background-color .3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pages a.active {
+    background-color: #5C9AFF;
 }

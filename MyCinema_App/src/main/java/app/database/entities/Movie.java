@@ -1,22 +1,26 @@
 package app.database.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.Min;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @EntityScan
 @Document(collection = "Movies")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Movie {
     @Id
     private String id;
@@ -26,54 +30,38 @@ public class Movie {
     private String title;
 
     @Positive
-    @Min(0)
-    private int duration;
-
+    private int seconds;
 
     @Positive
-    @Min(0)
-    private int price;
+    private double price;
 
     private String path;
 
-    private List<List<String>> scren;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private String createdDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
-    public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path) {
+    public Movie(@NotNull String title, @Positive int seconds, @Positive double price, String path) {
         this.title = title;
-        this.duration = duration;
+        this.seconds = seconds;
         this.price = price;
         this.path = path;
     }
-
-    public Movie(@NotNull String title, @Positive @Min(0) int duration, @Positive @Min(0) int price, String path, List<List<String>> scren) {
-        this.title = title;
-        this.duration = duration;
-        this.price = price;
-        this.path = path;
-        this.scren = scren;
-    }
-
-
-    public Movie() {
-        this.title = " ";
-    }
-
-
 
     @Override
     public String toString() {
         return "Movie{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", duration=" + duration +
+                ", seconds=" + seconds +
                 ", price=" + price +
                 ", path='" + path + '\'' +
                 '}';
     }
 
-    public void setDay(int day) {
-        List<String> times = scren.get(day);
-        scren = new ArrayList<>();
-        scren.add(times);
+    public String getDuration() {
+        return  Integer.toString(this.seconds/3600) + ":" +
+                Integer.toString((this.seconds % 3600) / 60) + ":" +
+                Integer.toString(this.seconds % 60);
     }
 }

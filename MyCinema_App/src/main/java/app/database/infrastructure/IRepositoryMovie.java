@@ -12,17 +12,8 @@ public interface IRepositoryMovie extends MongoRepository<Movie, String> {
 
     Optional<Movie> findById(String id);
 
-    Movie findByTitle(String title);
+    List<Movie> findAllByTitleContainingOrderByCreatedDateDesc(String movieTitle);
 
-    List<Movie> findByDuration(Integer duration);
-
-    List<Movie> findByDurationLessThan(Integer duration);
-
-    List<Movie> findByDurationGreaterThan(Integer duration);
-
-    List<Movie> findByTitleContaining(String title);
-
-    List<Movie> findByDurationBetween(Integer from, Integer to);
-
+    List<Movie> findAll();
 
 }

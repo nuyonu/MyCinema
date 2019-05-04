@@ -24,7 +24,7 @@
 <div class="layout">
     <div th:replace="common.html :: left(${4})"></div>
     <div class="l-right">
-        <div th:replace="common.html :: div.top-bar"></div>
+        <div th:replace="common.html :: top(${user})"></div>
         <div class="main">
             <h2 class="title">Cinema Rooms</h2>
 
@@ -32,7 +32,7 @@
                 <div class="cinema-room" th:each="room : ${rooms}">
                     <h5 th:text="${room.getName()}"></h5>
                     <div class="slider-container w3-content w3-display-container">
-                        <img class="slide" th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '.jpg'}">
+                        <img class="slide" th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '/1.jpg'}">
                         <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
                         <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
                         <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
