@@ -1,0 +1,27 @@
+
+P
+squid:S106ñ"9Replace this use of System.out or System.err by a logger.(Ü­¼ÿ
+U
+squid:S106à"9Replace this use of System.out or System.err by a logger.(“àñåıÿÿÿÿ
+asquid:UselessImportCheck"=Remove this unused import 'java.nio.file.StandardCopyOption'.(×ÀòÔ
+msquid:S1192G"VDefine a constant instead of duplicating this literal "redirect:/admin-rooms" 4 times.(ÖïÁÒ
+Rsquid:UselessImportCheck")Remove this unused import 'java.net.URL'.(ñìÁ„üÿÿÿÿ
+Q
+squid:S899ú";Do something with the "boolean" value returned by "delete".(œğŠ
+Csquid:S1075Ÿ"&Remove this hard-coded path-delimiter.(¡¶¼—ÿÿÿÿÿ
+P
+squid:S106ş"9Replace this use of System.out or System.err by a logger.(™°¬æ
+asquid:UselessImportCheck""8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ
+\squid:UselessImportCheck"3Remove this unused import 'java.io.FilenameFilter'.(¶àıİşÿÿÿÿ
+`squid:S4042ú"IUse "java.nio.Files#delete" here for better messages on error conditions.(œğŠ
+ysquid:S1488¢"\Immediately return this expression instead of assigning it to the temporary variable "data".(°½‹Şøÿÿÿÿ
+`squid:S4042¸"IUse "java.nio.Files#delete" here for better messages on error conditions.(Í§Àu
+Csquid:S1612¸",Replace this lambda with a method reference.(Í§Àu
+asquid:UselessImportCheck"=Remove this unused import 'app.database.service.IRepository'.(Îôöş
+asquid:UselessImportCheck"8Remove this unused import 'app.database.entities.Movie'.(¶²«Ãùÿÿÿÿ
+U
+squid:S106§"9Replace this use of System.out or System.err by a logger.(Şàš¬øÿÿÿÿ
+Wsquid:S4684K"@Replace this persistent entity with a simple POJO or DTO object.(¥é°³
+>squid:S1168ª"&Return an empty array instead of null.(¥¹ï
+Ssquid:UselessImportCheck "*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+jsquid:ModifiersOrderCheck,"EReorder the modifiers to comply with the Java Language Specification.(ÙœÎª

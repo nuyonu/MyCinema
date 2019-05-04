@@ -6,20 +6,31 @@ import app.database.infrastructure.IRepositoryMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Controller
 public class AdminMoviesController
 {
     @Autowired
     IRepositoryMovie repository;
+
+    final private Path cinemaMoviesFolderPath = Paths.get("src/main/resources/static/images/movie-images/");
 
     @GetMapping(value = "/admin-movies")
     public String showMovies(HttpServletRequest request, HttpServletResponse response, Model model)
@@ -98,6 +109,40 @@ public class AdminMoviesController
         }
 
         return RETURNED_STRING;
+    }
+
+    private void saveImageInFolder(MultipartFile uploadedImage, Path folderPath)
+    {
+        MultipartFile image = uploadedImage;
+
+        if (!image.isEmpty())
+            saveImage(image, folderPath, image.toString() + ".jpg");
+    }
+
+    private boolean saveImage(MultipartFile inputFile, Path saveLocation, String saveFilename)
+    {
+        String inputFilename = StringUtils.cleanPath(inputFile.getOriginalFilename());
+
+        try
+        {
+            if (inputFile.isEmpty())
+                throw new IOException("Failed to store empty file " + inputFilename);
+            else if (inputFilename.contains(".."))
+                throw new IOException("Cannot store file with relative path outside current directory " + inputFilename);
+
+            try (InputStream inputStream = inputFile.getInputStream())
+            {
+                Files.createDirectories(saveLocation);
+                Files.copy(inputStream, saveLocation.resolve(saveFilename), REPLACE_EXISTING);
+            }
+        }
+        catch (IOException e)
+        {
+            System.err.println("Failed to store file " + inputFilename + ". Reason:\n" + e);
+            return false;
+        }
+
+        return true;
     }
 
     private static final String RETURNED_STRING = "redirect:/admin-movies";
