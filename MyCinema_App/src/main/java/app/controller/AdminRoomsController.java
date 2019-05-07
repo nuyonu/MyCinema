@@ -3,6 +3,8 @@ package app.controller;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.infrastructure.IRepositoryCinemaRoom;
+import app.database.infrastructure.IRepositoryUser;
+import app.database.utils.UserType;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,9 @@ public class AdminRoomsController {
     private IRepositoryCinemaRoom repository;
 
     @Autowired
+    private IRepositoryUser repositoryUser;
+
+    @Autowired
     private ICookieService cookieService;
 
     private final Path cinemaRoomsFolderPath = Paths.get("src/main/resources/static/images/cinema-rooms/");
@@ -52,6 +57,9 @@ public class AdminRoomsController {
         cookieService.setConfig(request, response);
         if (!cookieService.isConnected())
             return "error403";
+
+        if(!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
 
         model.addAttribute("cinemaRoom", new CinemaRoom());
         model.addAttribute("rooms", repository.findAllByNameContainingOrderByNameAsc(roomName));
@@ -95,6 +103,9 @@ public class AdminRoomsController {
         cookieService.setConfig(request, response);
         if (!cookieService.isConnected())
             return "error403";
+
+        if(!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
 
         Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
 

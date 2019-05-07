@@ -6,11 +6,11 @@
 <body>
 <div class="l-left" th:fragment="left(activ)">
     <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
-    <a class="logo-menu" href="admin-movies">Admin Panel</a>
+    <a class="logo-menu" href="javascript:window.location.href=window.location.href">Admin Panel</a>
     <div class="menu">
-        <a href="/home" th:class="${activ}=='1'?'menu-item active':'menu-item'">
+        <a href="/admin-home" th:class="${activ}=='1'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
-            Home
+            Admin Home
         </a>
         <a href="/admin-movies" th:class="${activ}=='2'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_products-1.svg}">
@@ -27,6 +27,10 @@
         <a href="/admin-users" th:class="${activ}=='5'?'menu-item active':'menu-item'">
             <img alt="" class="ico" th:src="@{/icons/icon_customers-1.svg}">
             Users
+        </a>
+        <a href="/home" th:class="menu-item">
+            <img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
+            Back To Normal Home
         </a>
     </div>
 </div>

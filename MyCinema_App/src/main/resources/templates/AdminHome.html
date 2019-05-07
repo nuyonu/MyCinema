@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminMovies.css"
+          th:href="@{/stylesheets/adminMovies.css}"/>
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminHome.css"
+          th:href="@{/stylesheets/adminHome.css}"/>
+
+    <title>MyCinema Admin Panel | Home</title>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="AdminCommon.html :: left(${1})"></div>
+    <div class="l-right">
+        <div class="top-bar">
+            <form action="/admin-movies" class="left">
+                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
+                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
+                <input class="Search" id="input_search" placeholder="Search | Coming soon" type="text">
+            </form>
+            <div class="right">
+                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+                <a class="user-menu" href="/settings">
+                    <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
+                          th:text="${u.getValue()}"></span>
+                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                </a>
+            </div>
+        </div>
+        <div class="main">
+            <h2 class="title">Admin Home</h2>
+            <div class="main-admin">
+                <div class="display-information">
+                    <div class="total-users">
+                        <p class="info-text">Total Users</p>
+                        <p class="info-numbers" th:text="${totalUsers}"></p>
+                    </div>
+                    <div class="total-movies">
+                        <p class="info-text">Total Movies
+                        <p class="info-numbers" th:text="${totalMovies}"></p>
+                    </div>
+                    <div class="total-rooms">
+                        <p class="info-text">Total Rooms</p>
+                        <p class="info-numbers" th:text="${totalRooms}"></p>
+                    </div>
+                    <div class="total-bookings">
+                        <p class="info-text">Total Bookings
+                        <p class="info-numbers">Coming soon</p>
+                    </div>
+                </div>
+                <div class="column-50">
+                    <div class="display-last-updates">
+                        <div class="last-update-information">
+                            <h2>Last five reservations</h2>
+                            <p><img class="mini-image" th:src="@{images/back.png}"> Maximilian Paulo Maxim</p>
+                            <p><img class="mini-image" th:src="@{images/back.png}"> Maximilian Paulo Maxim</p>
+                            <p><img class="mini-image" th:src="@{images/back.png}"> Maximilian Paulo Maxim</p>
+                            <p><img class="mini-image" th:src="@{images/back.png}"> Maximilian Paulo Maxim</p>
+                            <p><img class="mini-image" th:src="@{images/back.png}"> Maximilian Paulo Maxim</p>
+                            <h2>Last updates</h2>
+                            <div class="last-registered-user" th:if="${lastUser != null}">
+                                <img th:src="@{${lastUser.getAvatarImagePath()}}">
+                                <p><a th:href="'/admin-users?username=' + ${lastUser.getUsername()}"
+                                      th:text="${lastUser.getUsername()}"></a> is the last
+                                    <mark class="purple">registered user</mark>
+                                </p>
+                            </div>
+                            <div class="last-added" th:if="${lastRoom != null}">
+                                <img th:src="@{'/images/cinema-rooms/' + ${lastRoom.getId()} + '/1.jpg'}">
+                                <p><a th:href="'/admin-rooms?roomName=' + ${lastRoom.getName()}"
+                                      th:text="${lastRoom.getName()}"></a> is the last
+                                    <mark class="purple">added room</mark>
+                                </p>
+                            </div>
+                            <div class="last-added" th:if="${lastMovie != null}">
+                                <img th:src="@{${lastMovie.getPath()}}">
+                                <p><a th:href="'/admin-movies?movieTitle=' + ${lastMovie.getTitle()}"
+                                      th:text="${lastMovie.getTitle()}"></a> is the last
+                                    <mark class="purple">added movie</mark>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display-right-information">
+                        <div class="right-info">
+                            <img class="right-image" th:src="@{images/back.png}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

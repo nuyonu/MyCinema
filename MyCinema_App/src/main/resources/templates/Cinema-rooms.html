@@ -22,7 +22,7 @@
 <body>
 
 <div class="layout">
-    <div th:replace="common.html :: left(${4})"></div>
+    <div th:replace="common.html :: left(${4}, ${user})"></div>
     <div class="l-right">
         <div th:replace="common.html :: top(${user})"></div>
         <div class="main">

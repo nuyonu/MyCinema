@@ -31,7 +31,7 @@ public class SettingsController {
     private static final String REDIRECT_TO_SETTINGS = "redirect:/settings";
 
     @Autowired
-    private IRepositoryUser userRepository;
+    private IRepositoryUser repositoryUser;
 
     @Autowired
     private UserService userService;
@@ -44,10 +44,10 @@ public class SettingsController {
     @GetMapping("/settings")
     public String getSettings(HttpServletRequest request, HttpServletResponse response, Model model) {
 
-        cookieService.setConfig(request,response);
+        cookieService.setConfig(request, response);
         if (!cookieService.isConnected()) return "error403";
 
-        model.addAttribute("userInfo", userRepository.findByUsername(getUsernameFromCookie(request)));
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
 
         return "settings";
     }
@@ -63,10 +63,10 @@ public class SettingsController {
         errorMessages = new ArrayList<>();
         successfulMessages = new ArrayList<>();
 
-        cookieService.setConfig(request,response);
+        cookieService.setConfig(request, response);
         if (!cookieService.isConnected()) return "error403";
 
-        User user = userRepository.findByUsername(getUsernameFromCookie(request));
+        User user = repositoryUser.findByUsername(getUsernameFromCookie(request));
 
         if (user == null) {
             String error = "Invalid user: " + getUsernameFromCookie(request);
@@ -103,7 +103,7 @@ public class SettingsController {
             return REDIRECT_TO_SETTINGS;
         }
 
-        userRepository.save(user);
+        repositoryUser.save(user);
         successfulMessages.add("Ai modificat cu succes datele tale");
         redirectAttributes.addFlashAttribute("successfulMessages", successfulMessages);
 
@@ -123,12 +123,12 @@ public class SettingsController {
                 imageFile.getContentType().equals("image/png")) {
             String usernameFromRequest = getUsernameFromCookie(request);
 
-            User user = userRepository.findByUsername(usernameFromRequest);
+            User user = repositoryUser.findByUsername(usernameFromRequest);
 
             userService.saveAvatarImage(imageFile, user);
 
             user.setAvatarImagePath("/images/userAvatarImages/" + user.getId() + ".jpg");
-            userRepository.save(user);
+            repositoryUser.save(user);
 
             successfulMessages.add("Ai modificat cu succes poza de profil.");
             redirectAttributes.addFlashAttribute("successfulMessages", successfulMessages);
@@ -144,10 +144,15 @@ public class SettingsController {
     @GetMapping("/images/userAvatarImages/{imageId}")
     @ResponseBody
     public byte[] getImage(@PathVariable String imageId) {
+        if (!imageId.matches("[a-zA-Z0-9.]++")) {
+            return new byte[0];
+        }
+
         Path path = Paths.get("src/main/resources/static/images/userAvatarImages/" + imageId);
-        if(Files.exists(path))
+        if (Files.exists(path))
             return CommonFunctions.imageFromPath(path);
         return new byte[0];
+
     }
 
     private String getUsernameFromCookie(HttpServletRequest request) {
@@ -157,6 +162,7 @@ public class SettingsController {
                 .map(Cookie::getValue)
                 .orElse(null);
     }
+
     @Autowired
     private ICookieService cookieService;
 }

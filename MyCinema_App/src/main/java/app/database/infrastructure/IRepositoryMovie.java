@@ -14,6 +14,8 @@ public interface IRepositoryMovie extends MongoRepository<Movie, String> {
 
     List<Movie> findAllByTitleContainingOrderByCreatedDateDesc(String movieTitle);
 
+    Movie findFirstByOrderByCreatedDateDesc();
+
     List<Movie> findAll();
 
 }
