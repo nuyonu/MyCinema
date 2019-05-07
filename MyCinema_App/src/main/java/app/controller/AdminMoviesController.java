@@ -224,10 +224,14 @@ public class AdminMoviesController {
     @GetMapping("/images/movieImages/{imageId}")
     @ResponseBody
     public byte[] getImage(@PathVariable String imageId) {
-        Path path = Paths.get("src/main/resources/static/images/movieImages/" + imageId);
-        if (Files.exists(path))
-            return CommonFunctions.imageFromPath(path);
-        return new byte[0];
+        if (!imageId.matches("a-zA-Z0-9."))
+            return new byte[0];
+        else {
+            Path path = Paths.get("src/main/resources/static/images/movieImages/" + imageId);
+            if (Files.exists(path))
+                return CommonFunctions.imageFromPath(path);
+            return new byte[0];
+        }
     }
 
     private void saveMovieImage(MultipartFile movieImage, Movie movie) {
