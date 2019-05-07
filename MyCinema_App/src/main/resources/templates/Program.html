@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${5})"></div>
+    <div th:replace="common.html :: left(${5}, ${user})"></div>
     <div class="l-right">
         <div th:replace="common.html :: top(${user})"></div>
         <div class="body-main">

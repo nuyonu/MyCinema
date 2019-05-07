@@ -2,6 +2,7 @@ package app.controller;
 
 import app.controller.services.ICookieService;
 import app.database.infrastructure.IRepositoryCinemaRoom;
+import app.database.infrastructure.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +16,15 @@ public class CinemaRoomsController {
     @Autowired
     IRepositoryCinemaRoom cinemaRoomRepository;
 
+    @Autowired
+    IRepositoryUser repositoryUser;
 
     @GetMapping("/cinema-rooms")
     public String rooms(HttpServletRequest request, HttpServletResponse response, Model model) {
         cookieService.setConfig(request,response);
         if (!cookieService.isConnected())
             return "error403";
-        model.addAttribute("user",cookieService.getUser());
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("rooms", cinemaRoomRepository.findAll());
 
         return "Cinema-rooms";

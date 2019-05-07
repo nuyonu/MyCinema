@@ -12,4 +12,6 @@ public interface IRepositoryCinemaRoom extends MongoRepository<CinemaRoom, Strin
     CinemaRoom findByName(String name);
 
     List<CinemaRoom> findAllByNameContainingOrderByNameAsc(String roomName);
+
+    CinemaRoom findFirstByOrderByCreatedDateDesc();
 }

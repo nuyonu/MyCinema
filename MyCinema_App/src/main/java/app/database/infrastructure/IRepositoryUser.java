@@ -19,6 +19,10 @@ public interface IRepositoryUser extends MongoRepository<User, String> {
 
     User findByUsername(String username);
 
+    long count();
+
+    User findFirstByOrderByCreatedDateDesc();
+
     @Override
     <S extends User> S save(S entity);
 }

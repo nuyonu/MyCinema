@@ -22,7 +22,7 @@
 
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${6})"></div>
+    <div th:replace="common.html :: left(${6}, ${user})"></div>
 
 
     <div class="l-right">
@@ -38,7 +38,7 @@
                         <div class="image-details">
                             <div class="image-part">
                                 <img src="" alt="" class="profile changeAvatar"
-                                     th:src="@{${userInfo.getAvatarImagePath()}}">
+                                     th:src="@{${user.getAvatarImagePath()}}">
                                 <div class="bgPen"><img src="" alt="" class="editProfile changeAvatar"
                                                         th:src="@{/icons/icon_edit.svg}">
                                 </div>
@@ -53,28 +53,28 @@
                             <div class="name">
                                 <h3 th:each="u: ${#httpServletRequest.getCookies()}"
                                     th:if="${u.getName().equals('user')}" th:text="${u.getValue()}"></h3>
-                                <p th:text="${userInfo.getUserType()}"></p>
+                                <p th:text="${user.getUserType()}"></p>
                             </div>
                         </div>
                         <div class="details-part">
                             <div class="details">
                                 <h5>First Name</h5>
-                                <p th:text="${userInfo.getFirstName()}"></p>
+                                <p th:text="${user.getFirstName()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>Last Name</h5>
-                                <p th:text="${userInfo.getLastName()}"></p>
+                                <p th:text="${user.getLastName()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>E-Mail</h5>
-                                <p th:text="${userInfo.getEmail()}"></p>
+                                <p th:text="${user.getEmail()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>Phone number</h5>
-                                <p th:text="${userInfo.getPhoneNumber()}"></p>
+                                <p th:text="${user.getPhoneNumber()}"></p>
                             </div>
 
                         </div>
@@ -86,25 +86,25 @@
                             <div class="field">
                                 <input class="formField" id="FName" placeholder="Enter your first name"
                                        type="text" th:name="firstName">
-                                <label th:text="${userInfo.getFirstName()}"></label>
+                                <label th:text="${user.getFirstName()}"></label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="LName" placeholder="Enter your last name"
                                        type="text" th:name="lastName">
-                                <label th:text="${userInfo.getLastName()}"></label>
+                                <label th:text="${user.getLastName()}"></label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="Email" placeholder="Enter your email address"
                                        type="email" th:name="email">
-                                <label th:text="${userInfo.getEmail()}"></label>
+                                <label th:text="${user.getEmail()}"></label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="phone" placeholder="Enter your phone number"
                                        type="text" th:name="phoneNumber">
-                                <label th:text="${userInfo.getPhoneNumber()}"></label>
+                                <label th:text="${user.getPhoneNumber()}"></label>
                             </div>
                             <div class="form-buttons-container">
                                 <button class="discardBtn" type="button">Discard</button>
