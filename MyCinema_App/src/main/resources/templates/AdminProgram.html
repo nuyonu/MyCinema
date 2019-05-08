@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen" />
+    <link th:href="@{/stylesheets/timingfield.css}" type="text/css" rel="stylesheet" media="screen" />
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminProgram.css" th:href="@{/stylesheets/adminProgram.css}">
+
+    <title>MyCinema Admin Panel | Program</title>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="AdminCommon.html :: left(${4})"></div>
+    <div class="l-right">
+        <div class="top-bar">
+            <form action="/admin-program" class="left">
+                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
+                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
+<!--                <input class="Search" id="input_search" th:name="movieTitle"-->
+<!--                       th:placeholder="${!currentMovieTitle.equals('')} ? ${currentMovieTitle} : 'Search'" type="text">-->
+                <input class="search" id="input_search" placeholder="search" type="text">
+            </form>
+            <div class="right">
+                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+                <a class="user-menu" href="/settings">
+            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
+                  th:text="${u.getValue()}"></span>
+                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                </a>
+            </div>
+        </div>
+        <div class="main">
+            <h2 class="title">Program</h2>
+            <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
+            <div class="alert alert-success" th:each="message: ${successfulMessages}" th:text="${message}"></div>
+            <div class="main-container">
+                <form th:action="@{/admin-delete-movies}" method="POST">
+                    <div class="buttons-top">
+                        <button class="buttons-program" id="button-add" type="button">Add Program</button>
+                        <button class="buttons-program" id="button-delete" type="submit">Delete Movie</button>
+                    </div>
+                    <table class="table-of-programs">
+                        <tr>
+                            <th>Number</th>
+                            <th>Title</th>
+                            <th>Room</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Delete</th>
+                            <th>Modify</th>
+                        </tr>
+                        <th:block th:each="screeningHour, iterStat :${screeningHours}">
+                            <tr>
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${screeningHour.getMovieId()}"></td>
+                                <td th:text="${screeningHour.getRoomId()}"></td>
+                                <td th:text="${screeningHour.getDate()}"></td>
+                                <td th:text="${screeningHour.getTime()}"></td>
+<!--                                <td><input type="checkbox" class="check-for-delete" th:name="movie-ids" th:value="${movie.getId()}"/></td>-->
+<!--                                <td><a class="button-edit" th:href="@{/admin-edit-movie(id=${movie.getId()})}">Edit</a></td>-->
+                            </tr>
+                        </th:block>
+                    </table>
+                </form>
+                <form th:action="@{/admin-add-program}" method="POST">
+                    <div class="modal-form-add">
+                        <div class="modal-form-content">
+                            <span class="close-button">&times;</span>
+                            <div class="modal-form-items">
+                                <h1>Add Program</h1>
+                                <div class="modal-form-inputs">
+                                    <p>Movie:</p>
+                                    <td>
+                                        <select required th:name="movie-id">
+                                            <option value="empty"> -- </option>
+                                            <option th:each="movie : ${movies}"
+                                                    th:value="${movie.getId()}"
+                                                    th:utext="${movie.getTitle()}"/option>
+                                        </select>
+                                    </td>
+                                    <p>Room:</p>
+                                    <td>
+                                        <select required th:name="room-id">
+                                            <option value="empty"> -- </option>
+                                            <option th:each="room : ${rooms}"
+                                                    th:value="${room.getId()}"
+                                                    th:utext="${room.getName()}"/option>
+                                        </select>
+                                    </td>
+                                    <p>Date:</p>
+                                    <input type="date" th:name="date">
+                                    <p>Time:</p>
+                                    <input type="time" th:name="time">
+                                </div>
+                                <button class="buttons-program" id="modal-button-add" type="submit">Add Program</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/adminMovies.js}"></script>
+<script th:src="@{/scripts/timingfield.js}"></script>
+<script th:src="@{/scripts/alert.js}"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $(".timing").timingfield();
+    });
+</script>
+</body>
+</html>
