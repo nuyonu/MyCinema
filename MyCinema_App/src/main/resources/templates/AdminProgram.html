@@ -41,10 +41,10 @@
             <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
             <div class="alert alert-success" th:each="message: ${successfulMessages}" th:text="${message}"></div>
             <div class="main-container">
-                <form th:action="@{/admin-delete-movies}" method="POST">
+                <form th:action="@{/admin-delete-program}" method="POST">
                     <div class="buttons-top">
                         <button class="buttons-program" id="button-add" type="button">Add Program</button>
-                        <button class="buttons-program" id="button-delete" type="submit">Delete Movie</button>
+                        <button class="buttons-program" id="button-delete" type="submit">Delete Program</button>
                     </div>
                     <table class="table-of-programs">
                         <tr>
@@ -54,7 +54,7 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Delete</th>
-                            <th>Modify</th>
+<!--                            <th>Modify</th>-->
                         </tr>
                         <th:block th:each="screeningHour, iterStat :${screeningHours}">
                             <tr>
@@ -63,8 +63,8 @@
                                 <td th:text="${screeningHour.getRoomId()}"></td>
                                 <td th:text="${screeningHour.getDate()}"></td>
                                 <td th:text="${screeningHour.getTime()}"></td>
-<!--                                <td><input type="checkbox" class="check-for-delete" th:name="movie-ids" th:value="${movie.getId()}"/></td>-->
-<!--                                <td><a class="button-edit" th:href="@{/admin-edit-movie(id=${movie.getId()})}">Edit</a></td>-->
+                                <td><input type="checkbox" class="check-for-delete" th:name="program-ids" th:value="${screeningHour.getId()}"/></td>
+<!--                                <td><a class="button-edit" th:href="@{/admin-edit-program(id=${screeningHour.getId()})}">Edit</a></td>-->
                             </tr>
                         </th:block>
                     </table>
@@ -114,7 +114,7 @@
 <script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
 <script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 <script th:src="@{/scripts/script.js}"></script>
-<script th:src="@{/scripts/adminMovies.js}"></script>
+<script th:src="@{/scripts/adminProgram.js}"></script>
 <script th:src="@{/scripts/timingfield.js}"></script>
 <script th:src="@{/scripts/alert.js}"></script>
 <script type="text/javascript">

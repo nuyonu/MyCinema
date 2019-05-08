@@ -17,9 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AdminProgramController {
@@ -40,6 +42,10 @@ public class AdminProgramController {
     private static final String SUCCESSFUL_MESSAGES = "successfulMessages";
     private static final String REDIRECT_TO_ADMIN_PROGRAM = "redirect:/admin-program";
 
+
+    List<String> errorMessages;
+    List<String> successfulMessages;
+
     @GetMapping(value = "/admin-program")
     public String showProgram(HttpServletRequest request,
                               HttpServletResponse response,
@@ -56,6 +62,38 @@ public class AdminProgramController {
         return "AdminProgram";
     }
 
+    @PostMapping(value = "/admin-delete-program")
+    public String deleteProgram(@RequestParam(name = "program-ids", required = false) List<String> programIds,
+                              RedirectAttributes redirectAttributes) {
+        errorMessages = new ArrayList<>();
+        successfulMessages = new ArrayList<>();
+        if (programIds == null) {
+            errorMessages.add("Nu ai selectat niciun program");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            return REDIRECT_TO_ADMIN_PROGRAM;
+        } else {
+            for (String id : programIds) {
+                Optional<ScreeningHours> screeningHour = screeningHoursRepository.findById(id);
+                if (!screeningHour.isPresent()) {
+                    errorMessages.add("Un program pe care ai incercat sa il elimini nu mai exista.");
+                } else {
+
+                    screeningHoursRepository.deleteById(id);
+                }
+            }
+        }
+
+        if (programIds.size() == 1)
+            successfulMessages.add("You have successfully removed the selected program");
+        else
+            successfulMessages.add("You removed the selected programs successfully");
+
+        redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+        redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
+
+        return REDIRECT_TO_ADMIN_PROGRAM;
+    }
+
     @PostMapping(value = "/admin-add-program")
     public String addMovieInProgram(@RequestParam(name = "movie-id") String movieId,
                                     @RequestParam(name = "room-id") String roomId,
@@ -65,38 +103,31 @@ public class AdminProgramController {
 
         ScreeningHours screeningHours = new ScreeningHours();
 
-        List<String> errorMessages;
-        List<String> successfulMessages;
-
         errorMessages = new ArrayList<>();
         successfulMessages = new ArrayList<>();
 
-        if(movieId.equals("empty"))
-        {
+        if (movieId.equals("empty")) {
             errorMessages.add("Trebuie sa selectezi un film.");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
 
             return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
-        if(roomId.equals("empty"))
-        {
+        if (roomId.equals("empty")) {
             errorMessages.add("Trebuie sa selectezi o camera.");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
 
             return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
-        if(date.isEmpty())
-        {
+        if (date.isEmpty()) {
             errorMessages.add("Trebuie sa selectezi o data.");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
 
             return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
-        if(time.isEmpty())
-        {
+        if (time.isEmpty()) {
             errorMessages.add("Trebuie sa selectezi o ora.");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
 
@@ -106,54 +137,27 @@ public class AdminProgramController {
         screeningHours.setMovieId(movieId);
         screeningHours.setRoomId(roomId);
 
-        String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        String currentTime = new SimpleDateFormat("HH:mm").format(new Date());
+        long diff = 0;
+        long allowedTime = 3600;
+        try {
+            Date oldDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date + " " + time);
+            diff = oldDate.getTime() - new Date().getTime();
+            diff /= 1000; //in seconds
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        Date startTime = sdf.parse(currentTime);
-        Date endTime = sdf.parse(time);
-        long timeElapsed = endTime.getTime() - startTime.getTime();
-        timeElapsed/=60000; //minute din milisecunde
-
-        sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate=sdf.parse(currentDate);
-        Date endDate=sdf.parse(date);
-        long daysElapsed = endDate.getTime() - startDate.getTime();
-        daysElapsed/=86400000; //zile din milisecunde
-
-        boolean canSave= true;
-
-        /*if(daysElapsed<0)
-            canSave=false;
-        else if(daysElapsed==0)
-        {
-            if(timeElapsed-59>0)
-                canSave=true;
-            else
-                canSave=false;
+        } catch (ParseException e) {
+            e.getStackTrace();
         }
-        else
-        {
-            if(daysElapsed==1)
-                if(timeElapsed+24*60-59<0)
-                    canSave=false;
-                else
-                    canSave=true;
-            else
-                canSave=true;
-        }*/
 
-        if(daysElapsed<0 || daysElapsed==0&&(timeElapsed-59<=0) || daysElapsed==1&&(timeElapsed+24*60-59<0))
-            canSave=false;
+        boolean canSave = true;
+
+        if (diff < allowedTime)
+            canSave = false;
 
         screeningHours.setDate(date);
         screeningHours.setTime(time);
 
-        if(!canSave)
-        {
-            //o-oh... ceva s-a intamplat... ora e de vina ;*
-
-            errorMessages.add("Poti pune filme cu o ora in plus fata de ora curenta.");
+        if (!canSave) {
+            errorMessages.add("Poti pune filme la ora " + (Date.from(new Date().toInstant().plus(Duration.ofHours(allowedTime / 3600)))));
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
 
             return REDIRECT_TO_ADMIN_PROGRAM;
