@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.controller.dao.CinemaRoomDTO;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.infrastructure.IRepositoryCinemaRoom;
@@ -58,7 +59,7 @@ public class AdminRoomsController {
         if (!cookieService.isConnected())
             return "error403";
 
-        if(!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
         model.addAttribute("cinemaRoom", new CinemaRoom());
@@ -80,7 +81,7 @@ public class AdminRoomsController {
     }
 
     @PostMapping(value = "/admin-add-room")
-    public String addRoom(@Valid @ModelAttribute(value = "cinemaRoom") CinemaRoom room,
+    public String addRoom(@Valid @ModelAttribute(value = "cinemaRoom") CinemaRoomDTO room,
                           BindingResult bindingResult,
                           @RequestParam(name = "room-image", required = true) MultipartFile file) {
         if (bindingResult.hasErrors())
@@ -104,7 +105,7 @@ public class AdminRoomsController {
         if (!cookieService.isConnected())
             return "error403";
 
-        if(!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
         Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
@@ -155,18 +156,22 @@ public class AdminRoomsController {
         return "redirect:/admin-edit-room";
     }
 
-    @RequestMapping(value = "/images/cinema-rooms/{roomId}/{imageId}")
+    @GetMapping(value = "/images/cinema-rooms/{roomId}/{imageId}")
     @ResponseBody
     public byte[] getImage(@PathVariable String roomId, @PathVariable String imageId) {
-        Path path = Paths.get("src/main/resources/static/images/cinema-rooms/" + roomId + "/" + imageId);
+        if (!imageId.matches("[a-zA-Z0-9.]++"))
+            return new byte[0];
+        else {
+            Path path = Paths.get("src/main/resources/static/images/cinema-rooms/" + roomId + "/" + imageId);
 
-        try {
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            System.err.println(e);
+            try {
+                return Files.readAllBytes(path);
+            } catch (IOException e) {
+                logger.error(e.toString());
+            }
+
+            return new byte[0];
         }
-
-        return new byte[0];
     }
 
     private File getRoomFolderById(String roomId) {
@@ -178,7 +183,7 @@ public class AdminRoomsController {
 
         Arrays.stream(imagesInFolder)
                 .filter(image -> checkedImages.contains(image.getName()))
-                .forEach(image -> image.delete());
+                .forEach(File::delete);
 
         imagesInFolder = Arrays.stream(imagesInFolder)
                 .filter(image -> !checkedImages.contains(image.getName()))
