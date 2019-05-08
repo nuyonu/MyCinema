@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.controller.dao.CinemaRoomDTO;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.infrastructure.IRepositoryCinemaRoom;
@@ -80,7 +81,7 @@ public class AdminRoomsController {
     }
 
     @PostMapping(value = "/admin-add-room")
-    public String addRoom(@Valid @ModelAttribute(value = "cinemaRoom") CinemaRoom room,
+    public String addRoom(@Valid @ModelAttribute(value = "cinemaRoom") CinemaRoomDTO room,
                           BindingResult bindingResult,
                           @RequestParam(name = "room-image", required = true) MultipartFile file) {
         if (bindingResult.hasErrors())
@@ -158,7 +159,7 @@ public class AdminRoomsController {
     @GetMapping(value = "/images/cinema-rooms/{roomId}/{imageId}")
     @ResponseBody
     public byte[] getImage(@PathVariable String roomId, @PathVariable String imageId) {
-        if (!imageId.matches("a-zA-Z0-9."))
+        if (!imageId.matches("[a-zA-Z0-9.]++"))
             return new byte[0];
         else {
             Path path = Paths.get("src/main/resources/static/images/cinema-rooms/" + roomId + "/" + imageId);
@@ -182,7 +183,7 @@ public class AdminRoomsController {
 
         Arrays.stream(imagesInFolder)
                 .filter(image -> checkedImages.contains(image.getName()))
-                .forEach(image -> image.delete());
+                .forEach(File::delete);
 
         imagesInFolder = Arrays.stream(imagesInFolder)
                 .filter(image -> !checkedImages.contains(image.getName()))

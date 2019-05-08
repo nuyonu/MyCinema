@@ -224,7 +224,7 @@ public class AdminMoviesController {
     @GetMapping("/images/movieImages/{imageId}")
     @ResponseBody
     public byte[] getImage(@PathVariable String imageId) {
-        if (!imageId.matches("a-zA-Z0-9."))
+        if (!imageId.matches("[a-zA-Z0-9.]++"))
             return new byte[0];
         else {
             Path path = Paths.get("src/main/resources/static/images/movieImages/" + imageId);
