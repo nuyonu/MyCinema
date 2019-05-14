@@ -213,6 +213,13 @@ public class AdminRoomsController
             else if (inputFilename.contains(".."))
                 throw new IOException("Cannot store file with relative path outside current directory " + inputFilename);
 
+            if (!(inputFile.getContentType().equals("image/gif") ||
+                inputFile.getContentType().equals("image/jpeg") ||
+                inputFile.getContentType().equals("image/png")))
+            {
+                throw new IOException("You can store only .jpg/.jpeg, .png, .gif files.");
+            }
+
             try (InputStream inputStream = inputFile.getInputStream())
             {
                 Files.createDirectories(saveLocation);
