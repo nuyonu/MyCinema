@@ -11,14 +11,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/stylesheets/program.css}" type="text/css">
+    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
 
     <title>MyCinema | Program</title>
 </head>
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${5})"></div>
+    <div th:replace="common.html :: left(${5}, ${user})"></div>
     <div class="l-right">
-        <div th:replace="common.html :: div.top-bar"></div>
+        <div th:replace="common.html :: top(${user})"></div>
         <div class="body-main">
             <h1 id="program-title">Program</h1>
             <div class="programs">
@@ -64,7 +65,7 @@
                         <div class="column-right">
                             <th:block th:each="hour:${movie.getScren().get(0)}">
                                 <form action="#" method="post"
-                                      th:action="@{/reservationPlace(idMovie=${movie.id},day=${day},time=${hour})}">
+                                      th:action="@{/reservationPlace(idMovie=${movie.id},day=${day},time=${hour},place=${day})}">
                                     <button class="button-hour" th:text="${hour}" type="submit">hour</button>
                                 </form>
                             </th:block>
@@ -77,6 +78,11 @@
         </div>
     </div>
 </div>
+
+<script>
+
+</script>
+<script th:src="@{/scripts/buttonAccount.js}"></script>
 
 <script crossorigin="anonymous"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

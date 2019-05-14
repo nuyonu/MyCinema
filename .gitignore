@@ -235,3 +235,17 @@ MyCinema_App/.idea/workspace.xml
 MyCinema_App/.idea/sonarlint/issuestore/6/1/61b68408d9be329695c36f5e4e3ba9efeb3d663d
 MyCinema_App/.idea/sonarlint/issuestore/5/e/5ee265a368f7abbc688c3cb732a0879af31060a2
 MyCinema_App/.idea/sonarlint/issuestore/5/0/50442bc936816762d9da48f74b88b9e6a98633fd
+MyCinema_App/.idea/workspace.xml
+MyCinema_App/target/classes/app/database/entities/CinemaRoom.class
+MyCinema_App/target/classes/app/controller/AdminRoomsController.class
+MyCinema_App/target/classes/app/database/infrastructure/IRepositoryCinemaRoom.class
+MyCinema_App/target/classes/static/scripts/adminRooms.js
+MyCinema_App/target/classes/static/stylesheets/adminRooms.css
+MyCinema_App/target/classes/templates/AdminCommon.html
+MyCinema_App/target/classes/templates/AdminRooms.html
+MyCinema_App/target/classes/templates/AdminRoomsEdit.html
+MyCinema_App/.idea/sonarlint/issuestore/d/0/d05c9f5f97abc9dea4f468e4594588940ba4f1a9
+MyCinema_App/.idea/sonarlint/issuestore/7/5/753a4202ad8bbe590a89a3a134142796a39e571f
+MyCinema_App/.idea/sonarlint/issuestore/6/2/62ba5cc3e8b05e8dc0c2480e10ff6bdfcb2b1721
+MyCinema_App/target/classes/static/images/cinema-rooms/DONT-DELETE.txt
+MyCinema_App/target/classes/static/images/userAvatarImages/DONT-DELETE.txt

@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/stylesheets/myCinemaSettings.css}" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
     <title>My Cinema | Settings</title>
 
@@ -21,25 +22,29 @@
 
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${6})"></div>
+    <div th:replace="common.html :: left(${6}, ${user})"></div>
 
 
     <div class="l-right">
-        <div th:replace="common.html :: div.top-bar"></div>
+        <div th:replace="common.html :: top(${user})"></div>
         <div class="container">
 
             <div class="settingsContainer">
                 <h1 class="Title">Settings</h1>
-                <p class="text-danger text-error-specifications" th:if="${message != null}" th:text="${message}"></p>
+                <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
+                <div class="alert alert-success" th:each="message : ${successfulMessages}" th:text="${message}"></div>
                 <div class="settings">
                     <div class="settingsLeftSide">
                         <div class="image-details">
                             <div class="image-part">
-                                <img src="" alt="" class="profile changeAvatar" th:src="@{${userInfo.getAvatarImagePath()}}">
-                                <div class="bgPen"><img src="" alt="" class="editProfile changeAvatar" th:src="@{/icons/icon_edit.svg}">
+                                <img src="" alt="" class="profile changeAvatar"
+                                     th:src="@{${user.getAvatarImagePath()}}">
+                                <div class="bgPen"><img src="" alt="" class="editProfile changeAvatar"
+                                                        th:src="@{/icons/icon_edit.svg}">
                                 </div>
                                 <form th:action="@{/changeAvatar}" enctype="multipart/form-data" method="post">
-                                    <input type="file" id="image-avatar" name="imageFile" accept="image/*" style="display: none;" onchange="this.form.submit()" />
+                                    <input type="file" id="image-avatar" name="imageFile" accept="image/*"
+                                           style="display: none;" onchange="this.form.submit()"/>
                                 </form>
                             </div>
                             <div class="nameContainerProfile">
@@ -48,67 +53,59 @@
                             <div class="name">
                                 <h3 th:each="u: ${#httpServletRequest.getCookies()}"
                                     th:if="${u.getName().equals('user')}" th:text="${u.getValue()}"></h3>
-                                <p th:text="${userInfo.getUserType()}"></p>
+                                <p th:text="${user.getUserType()}"></p>
                             </div>
                         </div>
                         <div class="details-part">
                             <div class="details">
                                 <h5>First Name</h5>
-                                <p th:text="${userInfo.getFirstName()}"></p>
+                                <p th:text="${user.getFirstName()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>Last Name</h5>
-                                <p th:text="${userInfo.getLastName()}"></p>
+                                <p th:text="${user.getLastName()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>E-Mail</h5>
-                                <p th:text="${userInfo.getEmail()}"></p>
+                                <p th:text="${user.getEmail()}"></p>
                             </div>
 
                             <div class="details">
                                 <h5>Phone number</h5>
-                                <p th:text="${userInfo.getPhoneNumber()}"></p>
+                                <p th:text="${user.getPhoneNumber()}"></p>
                             </div>
 
                         </div>
 
                     </div>
                     <div class="settingsRightSide">
-                        <form class="settingsForm" th:action="@{/changeInformation}" th:object="${changeInformationModel}"
+                        <form class="settingsForm" th:action="@{/changeInformation}"
                               method="post">
                             <div class="field">
-                                <input class="formField" id="FName" placeholder="Enter your first name" required
-                                       type="text" th:value="FName" th:field="*{firstName}">
-                                <label th:text="${userInfo.getFirstName()}"></label>
+                                <input class="formField" id="FName" placeholder="Enter your first name"
+                                       type="text" th:name="firstName">
+                                <label th:text="${user.getFirstName()}"></label>
                             </div>
 
                             <div class="field">
-                                <input class="formField" id="LName" placeholder="Enter your last name" required
-                                       type="text" th:value="LName" th:field="*{lastName}">
-                                <span class="text-danger" th:if="${#fields.hasErrors('firstName')}"
-                                      th:errors="*{firstName}"></span>
-                                <label th:text="${userInfo.getLastName()}"></label>
+                                <input class="formField" id="LName" placeholder="Enter your last name"
+                                       type="text" th:name="lastName">
+                                <label th:text="${user.getLastName()}"></label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="Email" placeholder="Enter your email address"
-                                       required type="email" th:value="Email" th:field="*{email}">
-                                <label th:text="${userInfo.getEmail()}"></label>
-                                <span class="text-danger" th:if="${#fields.hasErrors('lastName')}"
-                                      th:errors="*{lastName}"></span>
+                                       type="email" th:name="email">
+                                <label th:text="${user.getEmail()}"></label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="phone" placeholder="Enter your phone number"
-                                       required type="text" th:value="phone" th:field="*{phoneNumber}">
-                                <label th:text="${userInfo.getPhoneNumber()}"></label>
-                                <span class="text-danger" th:if="${#fields.hasErrors('email')}"
-                                      th:errors="*{email}"></span>
+                                       type="text" th:name="phoneNumber">
+                                <label th:text="${user.getPhoneNumber()}"></label>
                             </div>
-                            <span class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}"
-                                  th:errors="*{phoneNumber}"></span>
                             <div class="form-buttons-container">
                                 <button class="discardBtn" type="button">Discard</button>
                                 <button class="saveBtn" type="submit" id="submit">Save</button>
@@ -120,6 +117,7 @@
         </div>
     </div>
 </div>
+<script th:src="@{/scripts/buttonAccount.js}"></script>
 
 
 <script crossorigin="anonymous"
@@ -133,6 +131,7 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script th:src="@{/scripts/scriptSettings.js}"></script>
 <script th:src="@{/scripts/settings.js}" async></script>
+<script th:src="@{/scripts/alert.js}"></script>
 </body>
 
 </html>

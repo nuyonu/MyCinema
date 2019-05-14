@@ -9,8 +9,13 @@ import java.util.Arrays;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
+    /**
+     * @param arg0
+     * for nothing
+     */
     @Override
     public void initialize(ValidPassword arg0) {
+        //Do something
     }
 
     @Override

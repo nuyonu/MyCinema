@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminUsers.css"
+          th:href="@{/stylesheets/adminUsers.css}">
+
+    <title>MyCinema Admin Panel | Users</title>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="AdminCommon.html :: left(${5})"></div>
+    <div class="l-right">
+        <div class="top-bar">
+            <form action="/admin-users" class="left">
+                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
+                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
+                <input class="Search" id="input_search" th:name="username"
+                       th:placeholder="${!currentUsername.equals('')} ? ${currentUsername} : 'Search'" type="text">
+            </form>
+            <div class="right">
+                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+                <a class="user-menu" href="/settings">
+            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
+                  th:text="${u.getValue()}"></span>
+                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                </a>
+            </div>
+        </div>
+        <div class="main">
+            <h2 class="title">Users</h2>
+            <p class="text-danger" th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+            <p class="text-successful" th:if="${successfulMessage != null}" th:text="${successfulMessage}"></p>
+            <div class="main-container">
+                <form th:action="@{/delete-selected-users}" method="post">
+                    <div class="buttons-top">
+                        <button disabled class="buttons-user" id="button-delete" type="submit">Delete user</button>
+                        <button class="buttons-user" id="button-delete-by-username" type="button">Delete by username
+                        </button>
+                    </div>
+                    <table class="table-of-users">
+                        <tr>
+                            <th>Number</th>
+                            <th>UserName</th>
+                            <th>Profile Image</th>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>E-mail</th>
+                            <th>Phone Number</th>
+                            <th>Delete</th>
+                            <th>Modify</th>
+                        </tr>
+                        <tr th:each="user, iterator : ${userPage.content}">
+                            <td th:text="${iterator.count}"></td>
+                            <td th:text="${user.getUsername()}"></td>
+                            <td><img th:src="${user.getAvatarImagePath()}"/></td>
+                            <td th:text="${user.getFirstName()}"></td>
+                            <td th:text="${user.getLastName()}"></td>
+                            <td th:text="${user.getEmail()}"></td>
+                            <td th:text="${user.getPhoneNumber()}"></td>
+                            <td><input type="checkbox" class="check-for-delete" th:name="usersForDelete"
+                                       th:value="${user.getId()}"/></td>
+                            <td><a class="button-edit" th:href="@{/admin-edit-user(userId=${user.getId()})}">Edit</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <div class="pages">
+                    <div th:if="${userPage.totalPages > 0}">
+                        <a th:text="First"
+                           th:href="@{/admin-users(size=${userPage.size}, page=1, username=${currentUsername})}"></a>
+                    </div>
+                    <div th:if="${userPage.number + 1 > 1}">
+                        <a th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number}, username=${currentUsername})}">&#9668;</a>
+                    </div>
+                    <div th:if="${userPage.totalPages > 0}">
+                        <a th:if="${userPage.number - 1 > 0}" th:text="${userPage.number - 1}"
+                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number - 1}, username=${currentUsername})}"></a>
+                    </div>
+                    <div th:if="${userPage.totalPages > 0}">
+                        <a th:if="${userPage.number > 0}" th:text="${userPage.number}"
+                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number}, username=${currentUsername})}"></a>
+                    </div>
+                    <!--Current page-->
+                    <div th:if="${userPage.totalPages > 0}">
+                        <a th:if="${userPage.number + 1 > 0}" th:text="${userPage.number + 1}"
+                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 1}, username=${currentUsername})}"
+                           class="active"></a>
+                    </div>
+                    <div th:if="${userPage.totalPages >= userPage.number + 2}">
+                        <a th:if="${userPage.number + 2 > 0}" th:text="${userPage.number + 2}"
+                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 2}, username=${currentUsername})}"></a>
+                    </div>
+                    <div th:if="${userPage.totalPages >= userPage.number + 3}">
+                        <a th:if="${userPage.number + 3 > 0}" th:text="${userPage.number + 3}"
+                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 3}, username=${currentUsername})}"></a>
+                    </div>
+                    <div th:if="${userPage.number + 1 < userPage.totalPages}">
+                        <a th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 2}, username=${currentUsername})}">&#9658;</a>
+                    </div>
+                    <div th:if="${userPage.totalPages > 1}">
+                        <a th:text="Last"
+                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.totalPages}, username=${currentUsername})}"></a>
+                    </div>
+                </div>
+                <form th:action="@{/delete-by-username}" method="post">
+                    <div class="modal-form-delete-by-username">
+                        <div class="modal-form-content">
+                            <span class="close-button">&times;</span>
+                            <div class="modal-form-items">
+                                <h1>Delete user by username</h1>
+                                <div class="modal-form-inputs">
+                                    <p>Username:</p>
+                                    <input type="text" th:name="usernameForDelete">
+                                </div>
+                                <button class="buttons-user" id="modal-button-add" type="submit">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/adminUsers.js}"></script>
+</body>
+</html>

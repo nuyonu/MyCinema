@@ -10,16 +10,17 @@
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
     <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/styleHome.css" th:href="@{/stylesheets/styleHome.css}">
+    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
 
 
     <title>MyCinema | Home</title>
 </head>
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${1})"></div>
+    <div th:replace="common.html :: left(${1}, ${user})"></div>
 
     <div class="l-right">
-        <div th:replace="common.html :: div.top-bar"></div>
+        <div th:replace="common.html :: top(${user})"></div>
 
 
         <div class="main">
@@ -107,6 +108,7 @@
         </div>
     </div>
 </div>
+<script th:src="@{/scripts/buttonAccount.js}"></script>
 
 
 <script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>

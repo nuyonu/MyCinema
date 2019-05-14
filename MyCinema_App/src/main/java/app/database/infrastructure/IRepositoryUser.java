@@ -7,15 +7,24 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IRepositoryUser extends MongoRepository<User, String> {
-    User findByFirstName(String firstName);
 
-    List<User> findAllByLastName(String lastName);
+    List<User> findAllByUsernameContainingOrderByUsernameAsc(String username);
 
     User findByEmail(String email);
 
     Optional<User> findById(String id);
 
     User findByUsername(String username);
+
+    long count();
+
+    User findFirstByOrderByCreatedDateDesc();
+
+    @Override
+    void delete(User entity);
+
+    @Override
+    void deleteAll();
 
     @Override
     <S extends User> S save(S entity);

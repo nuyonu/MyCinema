@@ -1,13 +1,13 @@
 package app.controller;
 
-import app.controller.services.CookieHandler;
+import app.controller.services.ICookieService;
 import app.database.entities.Movie;
-import app.database.service.IRepository;
+import app.database.infrastructure.IRepositoryMovie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,28 +19,52 @@ import java.util.stream.Collectors;
 public class ProgramController {
 
     @Autowired
-    IRepository serviceDatabase;
+    IRepositoryMovie movieRepository;
 
-    @RequestMapping(value = "/program", method = { RequestMethod.GET, RequestMethod.POST })
+    @GetMapping("/program")
+    public String getProgram(HttpServletRequest request, HttpServletResponse response, Model model,
+                             @RequestParam(name = "day", defaultValue = "0") String day,
+                             @RequestParam(name = "idMovie", defaultValue = "") String idMovie) {
+
+        model.addAttribute("movieList", getMovieList(idMovie));
+        model.addAttribute("day", day);
+
+
+        return checkForAcces(model ,request, response);
+    }
+
+    @PostMapping("/program")
     public String programQuery(HttpServletRequest request, HttpServletResponse response, Model model,
                                @RequestParam(name = "day", defaultValue = "0") String day,
-                               @RequestParam(name = "idMovie", defaultValue = "") String idMovie)
+                               @RequestParam(name = "idMovie", defaultValue = "") String idMovie) {
+
+        model.addAttribute("movieList", getMovieList(idMovie));
+        model.addAttribute("day", day);
+
+        return checkForAcces(model, request, response);
+    }
+
+    private String checkForAcces(Model model, HttpServletRequest request, HttpServletResponse response)
     {
-        CookieHandler cookieHandler = new CookieHandler(request, response);
+        cookieService.setConfig(request,response);
+        if (!cookieService.isConnected()) return "error403";
 
-        if (!cookieHandler.isConnected())
-            return "redirect:/error403";
+        else {
+            model.addAttribute("user", cookieService.getUser());
+            return "program";
+        }
+    }
 
-        List<Movie> movieList = serviceDatabase.getAllMovies();
-        movieList.forEach(e->e.setDay(Integer.parseInt(day)));
+    private List<Movie> getMovieList(String idMovie)
+    {
+        List<Movie> movieList = movieRepository.findAll();
 
         if (!idMovie.isEmpty())
             movieList = movieList.stream().filter(e -> e.getId().equals(idMovie)).collect(Collectors.toList());
 
-        model.addAttribute("movieList", movieList);
-        model.addAttribute("day", day);
-
-        return "program";
+        return movieList;
     }
+    @Autowired
+    private ICookieService cookieService;
 
 }

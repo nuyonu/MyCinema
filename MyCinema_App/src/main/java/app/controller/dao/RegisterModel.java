@@ -2,11 +2,15 @@ package app.controller.dao;
 
 import app.controller.constraints.UniqueUsername;
 import app.database.constraints.ValidPassword;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@Getter
+@Setter
 public class RegisterModel implements Serializable {
     @Size(min = 4, max = 30, message = "First Name must contain at least 3 characters and a maximum of 30 characters")
     private String firstName;
@@ -22,21 +26,6 @@ public class RegisterModel implements Serializable {
     @Size(min = 4, max = 30, message = "Confirm Password must contain at least 3 characters and a maximum of 30 characters")
     private String confirmPassword;
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String geteMail() {
         return eMail;
@@ -46,29 +35,6 @@ public class RegisterModel implements Serializable {
         this.eMail = eMail;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
 
     @Override
     public String toString() {

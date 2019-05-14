@@ -15,131 +15,147 @@
     <script th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js}"></script>
     <script th:src="@{/scripts/cinema-rooms.js}"></script>
     <link media="screen" rel="stylesheet" th:href="@{/stylesheets/cinema-rooms.css}" type="text/css">
+    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
 
 </head>
 
 <body>
 
 <div class="layout">
-    <div th:replace="common.html :: left(${4})"></div>
+    <div th:replace="common.html :: left(${4}, ${user})"></div>
     <div class="l-right">
-        <div th:replace="common.html :: div.top-bar"></div>
+        <div th:replace="common.html :: top(${user})"></div>
         <div class="main">
             <h2 class="title">Cinema Rooms</h2>
 
             <div class="cinema-rooms-grid-container">
-                <div class="column">
-                    <div class="cinema-room">
-                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
-                        <div class="slider-container w3-content w3-display-container">
-                            <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
-                            <div
-                                    class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="cinema-room">
-                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
-                        <div class="slider-container w3-content w3-display-container">
-                            <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
-                            <div
-                                    class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                            </div>
+                <div class="cinema-room" th:each="room : ${rooms}">
+                    <h5 th:text="${room.getName()}"></h5>
+                    <div class="slider-container w3-content w3-display-container">
+                        <img class="slide" th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '/1.jpg'}">
+                        <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
+                        <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
+                        <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
+                        <div class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
+                            <span class="w3-badge badge w3-hover-white"></span>
+                            <span class="w3-badge badge w3-hover-white"></span>
+                            <span class="w3-badge badge w3-hover-white"></span>
+                            <span class="w3-badge badge w3-hover-white"></span>
                         </div>
                     </div>
                 </div>
+                <!--<div class="column">-->
+                    <!--<div class="cinema-room">-->
+                        <!--<h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>-->
+                        <!--<div class="slider-container w3-content w3-display-container">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">-->
+                            <!--<div-->
+                                    <!--class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                <div class="column">
-                    <div class="cinema-room">
-                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
-                        <div class="slider-container w3-content w3-display-container">
-                            <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
-                            <div
-                                    class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="cinema-room">-->
+                        <!--<h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>-->
+                        <!--<div class="slider-container w3-content w3-display-container">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">-->
+                            <!--<div-->
+                                    <!--class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
-                    <div class="cinema-room">
-                        <h5 class="title"><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room
-                            name</a></h5>
-                        <div class="slider-container w3-content w3-display-container">
-                            <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
-                            <div
-                                    class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="cinema-room">
-                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
-                        <div class="slider-container w3-content w3-display-container">
-                            <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">
-                            <div
-                                    class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                            </div>
-                        </div>
-                    </div>
+                <!--<div class="column">-->
+                    <!--<div class="cinema-room">-->
+                        <!--<h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>-->
+                        <!--<div class="slider-container w3-content w3-display-container">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">-->
+                            <!--<div-->
+                                    <!--class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="cinema-room">
-                        <h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>
-                        <div class="slider-container w3-content w3-display-container">
-                            <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">
-                            <img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">
-                            <div
-                                    class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                                <span class="w3-badge badge w3-hover-white"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!--<div class="cinema-room">-->
+                        <!--<h5 class="title"><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room-->
+                            <!--name</a></h5>-->
+                        <!--<div class="slider-container w3-content w3-display-container">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">-->
+                            <!--<div-->
+                                    <!--class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="column">-->
+                    <!--<div class="cinema-room">-->
+                        <!--<h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>-->
+                        <!--<div class="slider-container w3-content w3-display-container">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-1-2.jpg}">-->
+                            <!--<div-->
+                                    <!--class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="cinema-room">-->
+                        <!--<h5><a th:href="@{/Room(idMovie=${idMovie},day=${day},hour=${hour})}">Room name</a></h5>-->
+                        <!--<div class="slider-container w3-content w3-display-container">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-1.jpg}">-->
+                            <!--<img class="slide" th:src="@{/images/cinema-room-2-2.jpg}">-->
+                            <!--<div-->
+                                    <!--class="badges-container w3-center w3-container w3-large w3-text-white w3-display-bottommiddle">-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                                <!--<span class="w3-badge badge w3-hover-white"></span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
-</div>
 
+<script th:src="@{/scripts/buttonAccount.js}"></script>
 
 </body>
 
