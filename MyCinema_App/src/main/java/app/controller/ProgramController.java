@@ -59,6 +59,7 @@ public class ProgramController {
     {
         List<Movie> movieList = movieRepository.findAll();
 
+
         if (!idMovie.isEmpty())
             movieList = movieList.stream().filter(e -> e.getId().equals(idMovie)).collect(Collectors.toList());
 
