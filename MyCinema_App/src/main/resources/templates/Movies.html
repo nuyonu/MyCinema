@@ -42,7 +42,7 @@
             <div class="right">
                 <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
-                <span th:text="${user}"></span>
+                <span th:text="${user.getUsername()}"></span>
                 <div class="dropdown">
                     <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
                         <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
@@ -60,9 +60,9 @@
             <p id="movies-title">Movies</p>
             <div class="movies-body" id="list_movie">
                 <th:block th:each="movie:${listOfMovies}">
-                    <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.id})}" id="form">
-                        <div class="movies-data-show">
-
+                    <form action="#" method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="-1"/>
+                        <input type="hidden" name="idMovie" th:value="${movie.getId()}"/>
                         <div class="movies-data-show" th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
                             <div class="movie-name">
                                 <p th:text="${movie.getTitle()}"></p>

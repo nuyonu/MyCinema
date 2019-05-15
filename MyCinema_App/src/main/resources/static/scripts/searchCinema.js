@@ -47,7 +47,7 @@ function search_func() {
         },
         error: function (e) {
             document.getElementById('list_rooms').innerHTML = "";
-            $("#list_rooms").append("<div><h1>Sory:(</h1><h1>We don't find anything.</h1></div>")
+            $("#list_rooms").append("<div><h1>Sorry:(</h1><h1>We didn't find anything.</h1></div>")
 
             console.log("ERROR : ", e);
 

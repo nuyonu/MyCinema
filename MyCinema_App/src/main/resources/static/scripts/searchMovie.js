@@ -27,7 +27,7 @@ function search_func() {
                 var movie = data.listOfResults[movieIndex];
                 $("#list_movie").append(
                     "<form action=\"#\" method=\"post\" action=\"/program?day=0&idMovie=id\">" +
-                    "<div class=\"movies-data-show\">" +
+                    "<div class=\"movies-data-show\" " + "style=\"background: url( " + movie.path + "); background-repeat: no-repeat; background-size: 100% 100%;\">" +
                     "<div class=\"movie-name\">" +
                     "<p> " + movie.name + "</p>" +
                     "</div>" +
@@ -49,7 +49,7 @@ function search_func() {
         },
         error: function (e) {
             document.getElementById('list_movie').innerHTML = "";
-            $("#list_movie").append("<div><h1>Sory:(</h1><h1>We don't find anything.</h1></div>")
+            $("#list_movie").append("<div><h1>Sorry:(</h1><h1>We didn't find anything.</h1></div>")
 
             console.log("ERROR : ", e);
 
