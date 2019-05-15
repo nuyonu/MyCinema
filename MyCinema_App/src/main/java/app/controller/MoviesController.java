@@ -3,6 +3,7 @@ package app.controller;
 import app.controller.dao.AjaxResponseSearch;
 import app.controller.dao.Search;
 import app.controller.services.ICookieService;
+import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
 import app.database.infrastructure.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class MoviesController {
@@ -41,7 +43,7 @@ public class MoviesController {
     @ResponseBody
     public ResponseEntity<AjaxResponseSearch> getMessage(@RequestBody Search search) {
         AjaxResponseSearch result = new AjaxResponseSearch();
-        List<Movie> movieList=repository.findByTitleLike(search.getInput_search());
+        List<Movie> movieList=repositoryMovie.findByTitleLike(search.getInput_search());
         if(movieList.isEmpty()){
 
             return ResponseEntity.notFound().build();
@@ -51,10 +53,5 @@ public class MoviesController {
             return ResponseEntity.ok().body(result);
         }
     }
-
-    @Autowired
-    private ICookieService cookieService;
-
-
 
 }

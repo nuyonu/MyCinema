@@ -54,17 +54,17 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Delete</th>
-<!--                            <th>Modify</th>-->
+                            <th>Modify</th>
                         </tr>
-                        <th:block th:each="screeningHour, iterStat :${screeningHours}">
+                        <th:block th:each="screening, iterStat :${screenings}">
                             <tr>
                                 <td th:text="${iterStat.count}"></td>
-                                <td th:text="${screeningHour.getMovieId()}"></td>
-                                <td th:text="${screeningHour.getRoomId()}"></td>
-                                <td th:text="${screeningHour.getDate()}"></td>
-                                <td th:text="${screeningHour.getTime()}"></td>
-                                <td><input type="checkbox" class="check-for-delete" th:name="program-ids" th:value="${screeningHour.getId()}"/></td>
-<!--                                <td><a class="button-edit" th:href="@{/admin-edit-program(id=${screeningHour.getId()})}">Edit</a></td>-->
+                                <td th:text="${screening.getMovie().getTitle()}"></td>
+                                <td th:text="${screening.getRoom().getName()}"></td>
+                                <td th:text="${screening.getDate()}"></td>
+                                <td th:text="${screening.getTime()}"></td>
+                                <td><input type="checkbox" class="check-for-delete" th:name="program-ids" th:value="${screening.getId()}"/></td>
+                                <td><a class="button-edit" th:href="@{/admin-edit-program(id=${screening.getId()})}">Edit</a></td>
                             </tr>
                         </th:block>
                     </table>
