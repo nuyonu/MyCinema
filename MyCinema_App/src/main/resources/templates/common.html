@@ -5,7 +5,7 @@
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
 </head>
 <body>
-<div class="l-left" th:fragment="left(activ)">
+<div class="l-left" th:fragment="left(activ, user)">
     <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
     <a class="logo-menu" href="home">My Cinema</a>
     <div class="menu">
@@ -33,30 +33,31 @@
             <img alt="" class="ico" th:src="@{/icons/icon_setting.svg}">
             Settings
         </a>
+        <a href="/admin-home" th:if="${#strings.equals(user.getUserType(), 'ADMIN')}" th:class="menu-item"><img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
+            Admin Panel</a>
     </div>
 </div>
 
 <div class="top-bar" th:fragment="top(user)">
-    <form action="" class="left">
+    <form action="#" class="left" id="search" name="search"   >
         <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
         <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
-        <input class="Search" id="input_search" placeholder="Search" type="text">
+        <input class="Search" id="input_search" placeholder="Search"  type="text">
+
     </form>
     <div class="right">
         <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
-        <!--                <a class="user-menu" href="/settings">-->
-<!--        <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"-->
-<!--              th:text="${u.getValue()}"></span>-->
-        <span th:text="${user}"></span>
+        <span th:text="${user.getUsername()}"></span>
         <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">
+            <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
                 <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-                <div id="myDropdown" class="dropdown-content" style="right: 0px;">
+                <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
                     <a href="/settings">Settings</a>
                     <a href="disconnect">Disconnect</a>
                 </div>
             </button>
+
         </div>
     </div>
 </div>

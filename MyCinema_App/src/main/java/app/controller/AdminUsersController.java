@@ -5,6 +5,7 @@ import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.service.UserService;
+import app.database.utils.UserType;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,10 +38,13 @@ public class AdminUsersController {
     private static final String ERROR_MESSAGES = "errorMessages";
 
     @Autowired
-    private IRepositoryUser userRepository;
+    private IRepositoryUser repositoryUser;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ICookieService cookieService;
 
     private List<String> errorMessages;
     private List<String> successfulMessages;
@@ -55,9 +59,12 @@ public class AdminUsersController {
                             @RequestParam(value = "username", required = false, defaultValue = "") String username,
                             Model model) {
 
-        cookieService.setConfig( request,response);
+        cookieService.setConfig(request, response);
         if (!cookieService.isConnected())
             return "error403";
+
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
 
         int currentPage = page.orElse(1);
         int pageSize = CommonFunctions.clamp(size.orElse(25), 25, 100);
@@ -92,10 +99,10 @@ public class AdminUsersController {
         }
 
         for (String id : usersForDelete) {
-            Optional<User> user = userRepository.findById(id);
+            Optional<User> user = repositoryUser.findById(id);
 
             if (user.isPresent()) {
-                userRepository.deleteById(id);
+                repositoryUser.deleteById(id);
                 if (!user.get().getAvatarImagePath().equals("/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg"))
                     try {
                         Files.deleteIfExists(Paths.get("src/main/resources/static/images/userAvatarImages/" + id + ".jpg"));
@@ -109,8 +116,7 @@ public class AdminUsersController {
         if (usersForDelete.size() == 1) {
             successfulMessages.add("Ai eliminat utilizatorul selectat cu succes: " + usersForDelete.get(0));
             redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
-        }
-        else {
+        } else {
             successfulMessages.add("Ai eliminat utilizatorii selectati cu succes.");
             redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
         }
@@ -130,7 +136,7 @@ public class AdminUsersController {
             return REDIRECT_TO_ADMIN_USERS;
         }
 
-        User user = userRepository.findByUsername(username);
+        User user = repositoryUser.findByUsername(username);
 
         if (user == null) {
             errorMessages.add("Utilizatorul pe care ai incercat sa il elimini nu exista.");
@@ -138,7 +144,7 @@ public class AdminUsersController {
             return REDIRECT_TO_ADMIN_USERS;
         }
 
-        userRepository.delete(user);
+        repositoryUser.delete(user);
         if (!user.getAvatarImagePath().equals("/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg"))
             try {
                 Files.deleteIfExists(Paths.get("src/main/resources/static/images/userAvatarImages/" + user.getId() + ".jpg"));
@@ -153,11 +159,20 @@ public class AdminUsersController {
     }
 
     @GetMapping("/admin-edit-user")
-    public String editUser(@RequestParam(name = "userId") String userId,
+    public String editUser(HttpServletRequest request,
+                           HttpServletResponse response,
+                           @RequestParam(name = "userId") String userId,
                            Model model,
                            RedirectAttributes redirectAttributes) {
+        cookieService.setConfig(request, response);
+        if (!cookieService.isConnected())
+            return "error403";
+
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
+
         errorMessages = new ArrayList<>();
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> user = repositoryUser.findById(userId);
 
         if (user.isPresent()) {
             model.addAttribute("user", user.get());
@@ -180,7 +195,7 @@ public class AdminUsersController {
         errorMessages = new ArrayList<>();
         successfulMessages = new ArrayList<>();
 
-        Optional<User> temp = userRepository.findById(userId);
+        Optional<User> temp = repositoryUser.findById(userId);
 
         if (!temp.isPresent()) {
             errorMessages.add("Utilizatorul pe care ai incercat sa il modifici nu mai exista deoarece a fost sters din baza de date.");
@@ -211,7 +226,7 @@ public class AdminUsersController {
             return "redirect:/admin-edit-user/?userId=" + userId;
         }
 
-        userRepository.save(user);
+        repositoryUser.save(user);
 
         successfulMessages.add("Ai modificat cu succes datele utilizatorului: " + user.getUsername());
         redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
@@ -220,15 +235,20 @@ public class AdminUsersController {
     }
 
     private String verifyFirstName(String firstName, User user) {
-        if (!firstName.isEmpty() && !CommonFunctions.lengthBetween(firstName, 2, 30)) {
+        if (firstName.isEmpty())
+            return user.getFirstName();
+        else if (!CommonFunctions.lengthBetween(firstName, 2, 30)) {
             errorMessages.add("FirstName trebuie sa contina minim 3 caractere si maxim 30");
             return user.getFirstName();
         }
+
         return firstName;
     }
 
     private String verifyLastName(String lastName, User user) {
-        if (!lastName.isEmpty() && !CommonFunctions.lengthBetween(lastName, 2, 30)) {
+        if (lastName.isEmpty())
+            return user.getLastName();
+        else if (!CommonFunctions.lengthBetween(lastName, 2, 30)) {
             errorMessages.add("LastName trebuie sa contina minim 3 caractere si maxim 30");
             return user.getLastName();
         }
@@ -236,7 +256,9 @@ public class AdminUsersController {
     }
 
     private String verifyEmail(String email, User user) {
-        if (!email.isEmpty() && !EmailValidator.getInstance().isValid(email)) {
+        if (email.isEmpty())
+            return user.getEmail();
+        else if (!EmailValidator.getInstance().isValid(email)) {
             errorMessages.add("Email is not valid");
             return user.getEmail();
         }
@@ -244,12 +266,12 @@ public class AdminUsersController {
     }
 
     private String verifyPhoneNumber(String phoneNumber, User user) {
-        if (!phoneNumber.isEmpty() && !CommonFunctions.isPhoneNumber(phoneNumber)) {
+        if (phoneNumber.isEmpty())
+            return user.getPhoneNumber();
+        else if (!CommonFunctions.isPhoneNumber(phoneNumber)) {
             errorMessages.add("Phone number is not valid");
             return user.getPhoneNumber();
         }
         return phoneNumber;
     }
-    @Autowired
-    private ICookieService cookieService;
 }

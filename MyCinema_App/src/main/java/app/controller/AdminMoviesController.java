@@ -4,6 +4,8 @@ import app.controller.services.CommonFunctions;
 import app.controller.services.ICookieService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
+import app.database.infrastructure.IRepositoryUser;
+import app.database.utils.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class AdminMoviesController {
     private IRepositoryMovie repositoryMovie;
 
     @Autowired
+    private IRepositoryUser repositoryUser;
+
+    @Autowired
     private ICookieService cookieService;
 
     private List<String> errorMessages;
@@ -53,6 +58,9 @@ public class AdminMoviesController {
 
         if (!cookieService.isConnected())
             return "error403";
+
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
 
         model.addAttribute("movies", repositoryMovie.findAllByTitleContainingOrderByCreatedDateDesc(movieTitle));
         model.addAttribute("currentMovieTitle", movieTitle);
@@ -142,9 +150,19 @@ public class AdminMoviesController {
     }
 
     @GetMapping(value = "/admin-edit-movie")
-    public String toEditMoviePage(@RequestParam(name = "id") String movieId, Model model) {
+    public String toEditMoviePage(HttpServletRequest request,
+                                  HttpServletResponse response,
+                                  @RequestParam(name = "id") String movieId,
+                                  Model model) {
         Optional<Movie> movie = repositoryMovie.findById(movieId);
         errorMessages = new ArrayList<>();
+
+        cookieService.setConfig(request, response);
+        if (!cookieService.isConnected())
+            return "error403";
+
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
 
         if (movie.isPresent()) {
             model.addAttribute("movie", movie.get());
@@ -210,10 +228,14 @@ public class AdminMoviesController {
     @GetMapping("/images/movieImages/{imageId}")
     @ResponseBody
     public byte[] getImage(@PathVariable String imageId) {
-        Path path = Paths.get("src/main/resources/static/images/movieImages/" + imageId);
-        if (Files.exists(path))
-            return CommonFunctions.imageFromPath(path);
-        return new byte[0];
+        if (!imageId.matches("[a-zA-Z0-9.]++"))
+            return new byte[0];
+        else {
+            Path path = Paths.get("src/main/resources/static/images/movieImages/" + imageId);
+            if (Files.exists(path))
+                return CommonFunctions.imageFromPath(path);
+            return new byte[0];
+        }
     }
 
     private void saveMovieImage(MultipartFile movieImage, Movie movie) {

@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MovieDao {
     private String name;
-    private int price;
+    private double price;
     private String path;
 }
