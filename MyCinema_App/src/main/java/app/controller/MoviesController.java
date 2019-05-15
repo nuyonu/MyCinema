@@ -1,8 +1,6 @@
 package app.controller;
 
-import app.controller.dao.AjaxResponseBody;
 import app.controller.dao.AjaxResponseSearch;
-import app.controller.dao.LoginInput;
 import app.controller.dao.Search;
 import app.controller.services.ICookieService;
 import app.database.entities.Movie;
@@ -18,9 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class MoviesController {
@@ -42,7 +38,7 @@ public class MoviesController {
     public ResponseEntity<AjaxResponseSearch> getMessage(@RequestBody Search search) {
         AjaxResponseSearch result = new AjaxResponseSearch();
         List<Movie> movieList=repository.findByTitleLike(search.getInput_search());
-        if(movieList.size()==0){
+        if(movieList.isEmpty()){
 
             return ResponseEntity.notFound().build();
         }else

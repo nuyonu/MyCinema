@@ -1,11 +1,9 @@
 package app.controller;
 
-import app.controller.dao.AjaxResponseSearch;
 import app.controller.dao.RoomDao;
 import app.controller.dao.Search;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
-import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryCinemaRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +40,7 @@ public class CinemaRoomsController {
     public ResponseEntity<RoomDao> getMessage(@RequestBody Search search) {
 
         List<CinemaRoom> cinemaRooms = cinemaRoomRepository.findByNameLike(search.getInput_search());
-        if (cinemaRooms.size() == 0) {
+        if (cinemaRooms.isEmpty()) {
 
             return ResponseEntity.notFound().build();
         } else {

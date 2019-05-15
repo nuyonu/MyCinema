@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" href="../static/stylesheets/movies.css" th:href="@{/stylesheets/movies.css}" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"
+            integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <title>MyCinema | Movies</title>
 
@@ -53,7 +60,7 @@
             <p id="movies-title">Movies</p>
             <div class="movies-body" id="list_movie">
                 <th:block th:each="movie:${listOfMovies}">
-                    <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.id})}">
+                    <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.id})}" id="form">
                         <div class="movies-data-show">
                             <div class="movie-name">
                                 <p th:text="${movie.title}"> Title</p>
@@ -61,12 +68,28 @@
                             <div class="movie-price">
                                 <p th:text=" ${'Price:'+ movie.price}">Price</p>
                             </div>
+
                             <div class="movie-book-now">
+
                                 <button class="movie-button-book-now" type="submit">Book now</button>
                             </div>
                         </div>
                     </form>
                 </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <iframe id="iframeYoutube" width="560" height="315"  src="https://www.youtube.com/embed/e80BbX05D7Y" frameborder="0" allowfullscreen></iframe>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
