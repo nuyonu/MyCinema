@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 @Controller
 public class AdminMoviesController {
     private static final String REDIRECT_TO_ADMIN_MOVIES = "redirect:/admin-movies";
@@ -44,6 +46,8 @@ public class AdminMoviesController {
     private List<String> successfulMessages;
 
     private Logger logger = LoggerFactory.getLogger(AdminMoviesController.class);
+
+    final private Path cinemaMoviesFolderPath = Paths.get("src/main/resources/static/images/movie-images/");
 
     @GetMapping(value = "/admin-movies")
     public String showMovies(@RequestParam(value = "movieTitle", required = false, defaultValue = "") String movieTitle,

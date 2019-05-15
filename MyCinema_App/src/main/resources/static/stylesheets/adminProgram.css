@@ -1,0 +1,570 @@
+:root {
+    --color-prim: #43425d;
+    /* --color-sec: #3c3b54; */
+    --color-sec: #a3a0fb;
+    --color-bg1: #f0f0f7;
+
+    --darken-1: rgba(0, 0, 0, 0.2);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.layout {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    min-height: 100vh;
+}
+
+.layout .l-left {
+    flex-basis: 220px;
+    background: var(--color-prim);
+    color: #333;
+    position: relative;
+}
+
+.layout .l-right {
+    flex: 1;
+    background: var(--color-bg1);
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout .toggle-menu {
+    display: none;
+}
+
+.l-left .toggle-menu.topm1 {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 14px;
+    color: white;
+    z-index: 5;
+}
+
+.l-right .toggle-menu.topm2 {
+    display: none;
+    color: #aaa;
+    margin-bottom: -8px;
+    vertical-align: top;
+    margin-top: 2px;
+    margin-right: 9px;
+}
+
+
+.l-left .logo-menu {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 3px;
+    padding: 0 20px;
+    position: relative;
+    height: 55px;
+    line-height: 55px;
+    font-size: 15px;
+    font-weight: bold;
+    background: var(--darken-1);
+}
+
+.l-left .menu {
+    display: block;
+}
+
+.l-left .menu .menu-item {
+    display: block;
+    text-decoration: none;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 5px solid transparent;
+    margin-top: 2px;
+}
+
+.l-left .menu .menu-item:hover,
+.l-left .menu .menu-item.active {
+    background: var(--darken-1);
+    border-left-color: var(--color-sec);
+}
+
+.l-left .menu .menu-item img.ico {
+    height: 14px;
+    vertical-align: baseline;
+    margin-bottom: -2px;
+    margin-right: 6px;
+}
+
+.l-right .top-bar {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    background: white;
+    flex-basis: 55px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    box-shadow: 0 0 2px 1px rgba(150, 150, 150, 0.2);
+}
+
+.l-right .top-bar form.left {
+    display: block;
+    padding: 14px;
+    flex: 1;
+}
+
+.l-right .top-bar form.left #input_search {
+    display: inline-block;
+    border: none;
+    outline: none;
+    height: calc(55px - 2 * 14px);
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 7px;
+    width: 80%;
+}
+
+.l-right .top-bar .right {
+    padding: 15px;
+}
+
+.l-right .top-bar .right .notif-ico {
+    vertical-align: bottom;
+    height: 22px;
+    margin-bottom: 2px;
+}
+
+.l-right .top-bar .right .user-menu {
+    vertical-align: bottom;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0 10px;
+    padding-left: 15px;
+    margin-left: 10px;
+    border-left: 1px solid #ddd;
+}
+
+.l-right .top-bar .right .user-menu .arrow {
+    margin: 0 5px;
+    margin-left: 12px;
+}
+
+
+.l-right .main {
+    padding: 20px 50px;
+    overflow-y: auto;
+}
+
+
+.card {
+    box-shadow: 0 0 3px 0 rgba(150, 150, 150, 0.2);
+    border-radius: 0;
+    border: none;
+    /* height: 100%; */
+}
+
+#cinema-articles {
+    grid-area: cinema-articles;
+    /* background: blue; */
+    display: grid;
+    grid-auto-columns: 32%;
+    grid-template-areas: 'article1 article2 article3';
+    grid-gap: 0px 1.2vw;
+    height: auto;
+    /* justify-content: stretch;
+    align-content: stretch;
+    justify-items: stretch; */
+}
+
+#article1 {
+    grid-area: article1;
+
+    background: rgb(247, 247, 247);
+    border-radius: 15px;
+
+}
+
+#article2 {
+    grid-area: article2;
+    background: rgb(247, 247, 247);
+    border-radius: 15px;
+}
+
+#article3 {
+    grid-area: article3;
+    background: rgb(247, 247, 247);
+    border-radius: 15px;
+}
+
+.slide-image {
+    height: 250px;
+    width: 100%;
+    vertical-align: middle;
+}
+
+* {
+    box-sizing: border-box
+}
+
+/* Slideshow container */
+.cinema-slide-show {
+    grid-area: cinema-photos;
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+/* Hide the images by default */
+.slide {
+    display: none;
+}
+
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -50px;
+    padding: 16px;
+    color: white;
+    /* background: rgb(216, 216, 216); */
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    opacity: 1.5;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Caption text */
+.slide-text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+    opacity: .85;
+}
+
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: rgb(212, 212, 212);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: #414141;
+}
+
+/* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+.p-title {
+    font-size: 1vw;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-bottom: 5px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.p-text {
+    font-size: 0.9vw;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-bottom: 0px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+.title-article {
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+@media only screen and (max-width: 300px) {
+    .prev, .next, .text {
+        font-size: 11px
+    }
+}
+
+@media (max-width: 600px) {
+    .layout .l-left {
+        display: block;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: -100%;
+        z-index: 2;
+        min-height: 100vh;
+        transition: .3s all;
+    }
+
+    .l-left.on {
+        left: 0;
+    }
+
+    .toggle-menu {
+        display: inline-block !important;
+    }
+
+    #cinema-articles {
+        grid-template-areas: "article1" "article2" "article3";
+        grid-gap: 1vh 0vw;
+        grid-template-columns: 50vw;
+    }
+
+    .p-title {
+        font-size: 2vw;
+    }
+
+    .p-text {
+        font-size: 1.8vw;
+    }
+}
+
+.main {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.main h2.title
+{
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.main-container
+{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 5px;
+}
+
+.row-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.buttons-top
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons-program
+{
+    color: white;
+    background-color: #3381ff;
+    border-radius: 5px;
+    padding: 10px 40px;
+    border: none;
+    font-size: 13px;
+    margin: 10px;
+}
+
+.buttons-program:disabled {
+    background-color: #5C9AFF;
+}
+
+.buttons-program:active {
+    background-color: #0062ff;
+}
+
+.table-of-programs
+{
+    width: 100%;
+    text-align: center;
+}
+
+.table-of-programs th
+{
+    font-size: 16px;
+    background-color: #f0f0f7;
+    text-align: center;
+}
+
+.table-of-programs tr:nth-child(2n+1)
+{
+    background-color: lavender;
+}
+
+.table-of-programs td:first-child
+{
+    font-weight: bold;
+}
+
+.table-of-programs img
+{
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+}
+
+.modal-form-add, .modal-form-edit {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-form-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 33rem;
+    border-radius: 0.5rem;
+}
+
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button:hover {
+    background-color: darkgray;
+}
+
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-form-items
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.modal-form-inputs
+{
+    align-self: flex-start;
+    padding: 15px;
+}
+
+.modal-form-inputs p
+{
+    margin: 15px 0 0 0;
+}
+
+.main-container .old-image
+{
+    height: 500px;
+}
+
+.main-panel
+{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0px 15px 15px 15px;
+    width: 50%;
+}
+
+.main-panel p
+{
+    margin: 0;
+}
+
+.bdp-input {
+    border-radius: 2px;
+    padding: 0 3px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    cursor: pointer;
+}
+
+.bdp-input.disabled {
+    color: #AAA;
+    cursor: default;
+}
+
+.bdp-popover {
+    min-width: 110px;
+}
+
+.bdp-popover input {
+    display: inline;
+    margin-bottom: 3px;
+    width: 60px;
+}
+
+.bdp-block {
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    padding: 5px 3px;
+}
+
+.bdp-label {
+    font-size: 70%;
+}
+
+.container {
+    padding-top: 80px;
+}
+
+p.go-down {
+    margin-top: 50px;
+}
