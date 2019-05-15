@@ -2,6 +2,7 @@ package app.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -19,6 +20,7 @@ import java.util.Date;
 @EntityScan
 @Getter
 @Setter
+@ToString
 @Document(collection = "CinemaRooms")
 public class CinemaRoom implements Serializable
 {
@@ -39,14 +41,5 @@ public class CinemaRoom implements Serializable
     public CinemaRoom(String name)
     {
         this.name = name;
-    }
-
-
-    @Override
-    public String toString() {
-        return "CinemaRoom{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
