@@ -1,15 +1,16 @@
 package app.controller.dao;
 
-
+import app.database.entities.CinemaRoom;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class MovieDao {
-    private String name;
-    private double price;
-    private String path;
+public class RoomDao {
+    List<CinemaRoom> roomList;
+
 }
