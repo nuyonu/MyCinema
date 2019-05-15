@@ -12,7 +12,9 @@ public interface IRepositoryMovie extends MongoRepository<Movie, String> {
 
     Optional<Movie> findById(String id);
 
-    Movie findByTitle(String title);
+    List<Movie> findAllByTitleContainingOrderByCreatedDateDesc(String movieTitle);
+
+    Movie findFirstByOrderByCreatedDateDesc();
 
     List<Movie> findByDuration(Integer duration);
 

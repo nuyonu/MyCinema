@@ -10,5 +10,12 @@ public interface IRepositoryCinemaRoom extends MongoRepository<CinemaRoom, Strin
 {
     Optional<CinemaRoom> findById(String id);
     CinemaRoom findByName(String name);
+
     List<CinemaRoom> findByNameLike(String name);
+
+
+    List<CinemaRoom> findAllByNameContainingOrderByNameAsc(String roomName);
+
+    CinemaRoom findFirstByOrderByCreatedDateDesc();
+
 }

@@ -5,6 +5,7 @@ import app.controller.dao.Search;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.infrastructure.IRepositoryCinemaRoom;
+import app.database.infrastructure.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,16 @@ public class CinemaRoomsController {
     @Autowired
     IRepositoryCinemaRoom cinemaRoomRepository;
 
+    @Autowired
+    IRepositoryUser repositoryUser;
 
     @GetMapping("/cinema-rooms")
     public String rooms(HttpServletRequest request, HttpServletResponse response, Model model) {
         cookieService.setConfig(request, response);
         if (!cookieService.isConnected())
             return "error403";
-        model.addAttribute("user", cookieService.getUser());
+
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("rooms", cinemaRoomRepository.findAll());
 
         return "Cinema-rooms";

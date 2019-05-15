@@ -1,0 +1,161 @@
+.main h2.title {
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.main-admin {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: white;
+    padding: 5px;
+}
+
+.display-information {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.info-text {
+    font-size: 25px;
+}
+
+p.info-text {
+    margin: 0;
+}
+
+.info-numbers {
+    font-size: 18px;
+    text-align: center;
+}
+
+p.info-numbers {
+    margin: 0;
+}
+
+p.info-numbers, p.info-text {
+    padding: 5px;
+}
+
+.total-users {
+    background: linear-gradient(90deg, rgba(49,48,83,1) 25%, rgba(51,129,255,1) 100%);
+}
+
+.total-movies {
+    background-color: #3381FF;
+}
+
+.total-rooms {
+    background-color: #3381FF;
+}
+
+.total-bookings {
+    background: linear-gradient(90deg, rgba(51,129,255,1) 0%, rgba(49,48,83,1) 75%);
+}
+
+.total-users, .total-movies, .total-rooms, .total-bookings {
+    padding: 10px;
+    margin: 20px;
+    border-radius: 20px;
+    color: white;
+}
+
+.column-50 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.display-last-updates {
+    width: 50%;
+}
+
+.display-right-information {
+    width: 50%;
+}
+
+.last-update-information {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+
+.last-update-information p {
+    margin: 0;
+    font-size: 20px;
+}
+
+.last-update-information p {
+    margin-left: 5px;
+}
+
+.last-update-information h2{
+    margin: 0 0 5px 0;
+    background-color: lightgray;
+    text-align: center;
+}
+
+.recent-activities h2 {
+    margin: 0;
+}
+
+.right-info {
+    padding: 10px;
+}
+
+.right-info img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.last-registered-user {
+
+}
+
+.last-registered-user img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.last-added {
+
+}
+
+.last-added, .last-registered-user {
+    display: flex;
+    flex-direction: row;
+    margin: 2px 0 2px 0;
+}
+
+.last-added img {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+}
+
+.last-registered-user p, .last-added p {
+    margin: 15px 0 10px 5px;
+}
+
+.last-registered-user a, .last-added a {
+    text-decoration: none;
+    color: #3381ff;
+    font-weight: bold;
+}
+
+img.mini-image {
+    width: auto;
+    height: 20px;
+    border-radius: 3px;
+}
+
+mark.purple {
+    color: #9137f1;
+    font-weight: bold;
+    background-color: white;
+}

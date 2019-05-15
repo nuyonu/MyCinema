@@ -5,7 +5,7 @@
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
 </head>
 <body>
-<div class="l-left" th:fragment="left(activ)">
+<div class="l-left" th:fragment="left(activ, user)">
     <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
     <a class="logo-menu" href="home">My Cinema</a>
     <div class="menu">
@@ -33,6 +33,8 @@
             <img alt="" class="ico" th:src="@{/icons/icon_setting.svg}">
             Settings
         </a>
+        <a href="/admin-home" th:if="${#strings.equals(user.getUserType(), 'ADMIN')}" th:class="menu-item"><img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
+            Admin Panel</a>
     </div>
 </div>
 
@@ -46,8 +48,7 @@
     <div class="right">
         <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
-        <span th:text="${user}"></span>
-
+        <span th:text="${user.getUsername()}"></span>
         <div class="dropdown">
             <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
                 <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">

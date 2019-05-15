@@ -28,7 +28,7 @@
 <body>
 
 <div class="layout">
-    <div th:replace="common.html :: left(${3})"></div>
+    <div th:replace="common.html :: left(${3}, ${user})"></div>
     <div class="l-right">
         <!--        <div th:replace="common.html :: top(${user})"></div>-->
 
@@ -62,11 +62,14 @@
                 <th:block th:each="movie:${listOfMovies}">
                     <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.id})}" id="form">
                         <div class="movies-data-show">
+
+                        <div class="movies-data-show" th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
                             <div class="movie-name">
-                                <p th:text="${movie.title}"> Title</p>
+                                <p th:text="${movie.getTitle()}"></p>
                             </div>
                             <div class="movie-price">
-                                <p th:text=" ${'Price:'+ movie.price}">Price</p>
+
+                                <p th:text="${movie.getPrice()} + ' lei'"></p>
                             </div>
 
                             <div class="movie-book-now">

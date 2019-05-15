@@ -82,7 +82,7 @@
 </head>
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${2})"></div>
+    <div th:replace="common.html :: left(${2}, ${user})"></div>
     <div class="l-right">
         <div th:replace="common.html :: top(${user})"></div>
         <div class="main">

@@ -6,15 +6,20 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @EntityScan
 @Audited
@@ -50,12 +55,15 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
 
-    private String avatarImagePath = "/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg";
+    private String avatarImagePath = "/images/userProfileDefaultAvatar/" + "userProfileDefaultAvatar.jpg";
 
     private UserType userType = UserType.MEMBER;
 
     private String phoneNumber = "No phone number";
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private String createdDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
     public User(@NotNull @Size(min = 5, max = 30) String username, @NotNull @Size(min = 4, max = 200) String firstName, @NotNull @Size(min = 4, max = 50) String lastName, @Email String email, String password) {
         this.username = username;
