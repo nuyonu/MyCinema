@@ -28,7 +28,7 @@ public class CookieHandler implements ICookieService {
     public String getUser() {
         if (secureConn == null)
             return null;
-        return encryptor.decrypt(secureConn.getValue()).substring(5);
+        return encryptor.decrypt(secureConn.getValue()).substring(4);
     }
 
     @Override

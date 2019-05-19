@@ -9,9 +9,8 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen" />
-    <link th:href="@{/stylesheets/timingfield.css}" type="text/css" rel="stylesheet" media="screen" />
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminMovies.css" th:href="@{/stylesheets/adminMovies.css}">
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}">
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMovies.css}">
 
     <title>MyCinema Admin Panel | Movies</title>
 </head>
@@ -26,23 +25,18 @@
                 <input class="Search" id="input_search" th:name="movieTitle"
                        th:placeholder="${!currentMovieTitle.equals('')} ? ${currentMovieTitle} : 'Search'" type="text">
             </form>
-            <div class="right">
-                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
-                <a class="user-menu" href="/settings">
-            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
-                  th:text="${u.getValue()}"></span>
-                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-                </a>
-            </div>
+            <div th:replace="AdminCommon.html :: right(${user})"></div>
         </div>
         <div class="main">
-            <h2 class="title">Movies</h2>
+            <h2 class="title">Admin | Movies</h2>
             <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
             <div class="alert alert-success" th:each="message: ${successfulMessages}" th:text="${message}"></div>
             <div class="main-container">
                 <form th:action="@{/admin-delete-movies}" method="POST">
                     <div class="buttons-top">
-                        <button class="buttons-movie" id="button-add" type="button">Add Movie</button>
+                        <button class="buttons-movie" id="button-add" type="button"
+                                onclick="location.href='/admin-add-movie'">Add Movie
+                        </button>
                         <button class="buttons-movie" id="button-delete" type="submit">Delete Movie</button>
                     </div>
                     <table class="table-of-movies">
@@ -62,32 +56,13 @@
                                 <td><img th:src="@{${movie.getPath()}}"/></td>
                                 <td th:text="${movie.getPrice()}"></td>
                                 <td th:text="${movie.getDuration()}"></td>
-                                <td><input type="checkbox" class="check-for-delete" th:name="movie-ids" th:value="${movie.getId()}"/></td>
-                                <td><a class="button-edit" th:href="@{/admin-edit-movie(id=${movie.getId()})}">Edit</a></td>
+                                <td><input type="checkbox" class="check-for-delete" th:name="movie-ids"
+                                           th:value="${movie.getId()}"/></td>
+                                <td><a class="button-edit" th:href="@{/admin-edit-movie(id=${movie.getId()})}">Edit</a>
+                                </td>
                             </tr>
                         </th:block>
                     </table>
-                </form>
-                <form th:action="@{/admin-add-movie}" method="POST" enctype="multipart/form-data">
-                    <div class="modal-form-add">
-                        <div class="modal-form-content">
-                            <span class="close-button">&times;</span>
-                            <div class="modal-form-items">
-                                <h1>Add Movie</h1>
-                                <div class="modal-form-inputs">
-                                    <p>Movie Name:</p>
-                                    <input type="text" required th:name="movie-title">
-                                    <p>Movie Price:</p>
-                                    <input type="text" required th:name="movie-price">
-                                    <p>Movie Duration:</p>
-                                    <input type="text" class="timing" th:name="movie-seconds"/>
-                                    <p>Movie Image:</p>
-                                    <input type="file" accept="image/*" required th:name="movie-image">
-                                </div>
-                                <button class="buttons-movie" id="modal-button-add" type="submit">Add Movie</button>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
@@ -100,12 +75,6 @@
 <script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 <script th:src="@{/scripts/script.js}"></script>
 <script th:src="@{/scripts/adminMovies.js}"></script>
-<script th:src="@{/scripts/timingfield.js}"></script>
 <script th:src="@{/scripts/alert.js}"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $(".timing").timingfield();
-    });
-</script>
 </body>
 </html>

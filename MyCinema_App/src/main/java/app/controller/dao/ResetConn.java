@@ -14,5 +14,6 @@ public class ResetConn {
     @ValidPassword
     private String password=" ";
     private String passwordConfirm=" ";
+    private String code;
 
 }

@@ -30,6 +30,7 @@ public class AdminMoviesController {
     private static final String REDIRECT_TO_ADMIN_MOVIES = "redirect:/admin-movies";
     private static final String ERROR_MESSAGES = "errorMessages";
     private static final String SUCCESSFUL_MESSAGES = "successfulMessages";
+    private static final String REDIRECT_TO_LOGIN = "redirect:/Login";
 
     @Autowired
     private IRepositoryMovie repositoryMovie;
@@ -53,11 +54,12 @@ public class AdminMoviesController {
         cookieService.setConfig(request, response);
 
         if (!cookieService.isConnected())
-            return "error403";
+            return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("movies", repositoryMovie.findAllByTitleContainingOrderByCreatedDateDesc(movieTitle));
         model.addAttribute("currentMovieTitle", movieTitle);
         return "AdminMovies";
@@ -76,7 +78,7 @@ public class AdminMoviesController {
             for (String id : movieIds) {
                 Optional<Movie> movie = repositoryMovie.findById(id);
                 if (!movie.isPresent()) {
-                    errorMessages.add("Un film pe care ai incercat sa il elimini nu mai exista.");
+                    errorMessages.add("A movie you tried to remove does not exist anymore");
                 } else {
                     try {
                         Files.deleteIfExists(Paths.get("src/main/resources/static/images/movieImages/"
@@ -101,7 +103,18 @@ public class AdminMoviesController {
         return REDIRECT_TO_ADMIN_MOVIES;
     }
 
-    @PostMapping(value = "/admin-add-movie")
+    @GetMapping("/admin-add-movie")
+    public String getAddMovie(HttpServletRequest request, HttpServletResponse response, Model model) {
+        cookieService.setConfig(request, response);
+
+        if (!cookieService.isConnected())
+            return REDIRECT_TO_LOGIN;
+
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
+        return "AdminMoviesAdd";
+    }
+
+    @PostMapping(value = "/admin-add-movie-submit")
     public String addMovie(@RequestParam(name = "movie-title") String movieTitle,
                            @RequestParam(name = "movie-seconds") String movieSeconds,
                            @RequestParam(name = "movie-price") String moviePrice,
@@ -121,7 +134,7 @@ public class AdminMoviesController {
         try {
             price = Double.parseDouble(moviePrice);
         } catch (Exception e) {
-            errorMessages.add("Pretul introdus este incorect.");
+            errorMessages.add("The price entered is incorrect");
         }
 
         movie.setPrice(price);
@@ -135,7 +148,7 @@ public class AdminMoviesController {
         if (!errorMessages.isEmpty()) {
             repositoryMovie.delete(movie);
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-            return REDIRECT_TO_ADMIN_MOVIES;
+            return "redirect:/admin-add-movie";
         }
 
         //Success
@@ -155,16 +168,17 @@ public class AdminMoviesController {
 
         cookieService.setConfig(request, response);
         if (!cookieService.isConnected())
-            return "error403";
+            return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
         if (movie.isPresent()) {
+            model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
             model.addAttribute("movie", movie.get());
             return "AdminMoviesEdit";
         } else {
-            errorMessages.add("Filmul pe care ai incercat sa il modifici nu mai exista in baza de date");
+            errorMessages.add("The movie you tried to modify is no longer in the database");
             return REDIRECT_TO_ADMIN_MOVIES;
         }
     }
@@ -182,7 +196,7 @@ public class AdminMoviesController {
         Optional<Movie> optionalMovie = repositoryMovie.findById(movieId);
 
         if (!optionalMovie.isPresent()) {
-            errorMessages.add("Filmul pe care ai incercat sa il elimini nu mai exista in baza de date.");
+            errorMessages.add("The movie you tried to remove is no longer in the database");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
             return REDIRECT_TO_ADMIN_MOVIES;
         }
@@ -203,12 +217,13 @@ public class AdminMoviesController {
             try {
                 price = Double.parseDouble(newMoviePrice);
             } catch (Exception e) {
-                errorMessages.add("Pretul introdus este incorect.");
+                errorMessages.add("The price entered is incorrect");
             }
-
+        if (price < 0)
+            errorMessages.add("The price you entered is incorrect, it can not be negative");
         movie.setPrice(price);
 
-        if (newMovieImage != null)
+        if (!newMovieImage.isEmpty())
             saveMovieImage(newMovieImage, movie);
 
         if (!errorMessages.isEmpty()) {
@@ -217,7 +232,8 @@ public class AdminMoviesController {
         }
 
         repositoryMovie.save(movie);
-        successfulMessages.add("Ai modificat filmul " + movie.getTitle() + " cu succes");
+        successfulMessages.add("You've changed the movie " + movie.getTitle() + " successfully");
+        redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
         return REDIRECT_TO_ADMIN_MOVIES;
     }
 
@@ -249,6 +265,6 @@ public class AdminMoviesController {
             }
             movie.setPath("/images/movieImages/" + movie.getId() + ".jpg");
         } else
-            errorMessages.add("Poți încărca doar imagini cu extensia .jpg/.jpeg, .png, .gif");
+            errorMessages.add("You can only upload images with the .jpg / .jpeg, .png, .gif extension");
     }
 }

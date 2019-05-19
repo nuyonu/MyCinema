@@ -2,6 +2,7 @@ package app.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -12,13 +13,19 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.stream.Stream;
 
 @EntityScan
 @Getter
 @Setter
+@ToString
 @Document(collection = "CinemaRooms")
 public class CinemaRoom implements Serializable
 {
@@ -41,12 +48,13 @@ public class CinemaRoom implements Serializable
         this.name = name;
     }
 
-
-    @Override
-    public String toString() {
-        return "CinemaRoom{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public long getNumberOfImages() {
+        long count = 0;
+        try (Stream<Path> files = Files.list(Paths.get("src/main/resources/static/images/cinema-rooms/" + id))) {
+            count = files.count();
+        } catch (IOException e) {
+            e.getStackTrace();
+        }
+        return count;
     }
 }

@@ -2,44 +2,37 @@ package app.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.bson.types.ObjectId;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @EntityScan
 @Document(collection = "Screening")
 @Getter
 @Setter
+@ToString
 public class ScreeningHours {
 
     @Id
     private String id;
 
+    private String date;
 
-    @Indexed(unique = true)
-    private String movieId;
+    private String time;
 
-    private List<List<ScreeningHours>> screeaningHours;
+    private ObjectId movieId;
 
-    public ScreeningHours(@NotNull String movieId, List<List<ScreeningHours>> screeaningHours) {
+    private ObjectId roomId;
+
+    public ScreeningHours(ObjectId movieId, ObjectId roomId, String date, String time) {
         this.movieId = movieId;
-        this.screeaningHours = screeaningHours;
+        this.roomId = roomId;
+        this.date = date;
+        this.time = time;
     }
 
-    public ScreeningHours() {
-    }
-
-
-    @Override
-    public String toString() {
-        return "ScreeningHours{" +
-                "id='" + id + '\'' +
-                ", movieId='" + movieId + '\'' +
-                ", screeaningHours=" + screeaningHours +
-                '}';
-    }
+    public ScreeningHours() { }
 }

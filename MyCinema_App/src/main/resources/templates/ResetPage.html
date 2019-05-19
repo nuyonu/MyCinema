@@ -20,11 +20,11 @@
     <div class="subtitle-container">Reset account.</div>
     <div class="login-container">
 
-        <form action="#" id="myform" name="myform" th:object="${reset}" method="post" th:action="@{/goToHome}" autocomplete="off" >
+        <form action="#" id="myform" name="myform" th:object="${reset}" method="post" th:action="@{/resetAccount}" autocomplete="on" >
             <div id="feedback"></div>
-            <input id="username" placeholder="Password" required th:field="*{password}" type="password" autocomplete="false"/>
-            <input id="password" placeholder="Confirm Password" required th:field="*{passwordConfirm}" autocomplete="false" type="password">
-
+            <input id="username" placeholder="Password" required th:field="*{password}" type="password" autocomplete="true"/>
+            <input id="password" placeholder="Confirm Password" required th:field="*{passwordConfirm}" autocomplete="true" type="password">
+            <input th:value="${reset.code}" th:field="*{code}" hidden >
             <div class="checkbox-forgpass-container">
                 <a class="forgot-password-container" href="/Login"> Back to login</a>
 

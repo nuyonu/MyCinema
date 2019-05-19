@@ -3,14 +3,14 @@ package app.database.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.text.SimpleDateFormat;
@@ -20,6 +20,7 @@ import java.util.Date;
 @Document(collection = "Movies")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class Movie {
     @Id
@@ -46,17 +47,6 @@ public class Movie {
         this.seconds = seconds;
         this.price = price;
         this.path = path;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", seconds=" + seconds +
-                ", price=" + price +
-                ", path='" + path + '\'' +
-                '}';
     }
 
     public String getDuration() {

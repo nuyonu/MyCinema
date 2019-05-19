@@ -6,13 +6,12 @@
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
 
     <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{//https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}">
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminUsers.css"
-          th:href="@{/stylesheets/adminUsers.css}">
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}">
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminUsers.css}">
 
     <title>MyCinema Admin Panel | Users</title>
 </head>
@@ -27,25 +26,16 @@
                 <input class="Search" id="input_search" th:name="username"
                        th:placeholder="${!currentUsername.equals('')} ? ${currentUsername} : 'Search'" type="text">
             </form>
-            <div class="right">
-                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
-                <a class="user-menu" href="/settings">
-            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
-                  th:text="${u.getValue()}"></span>
-                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-                </a>
-            </div>
+            <div th:replace="AdminCommon.html :: right(${user})"></div>
         </div>
         <div class="main">
-            <h2 class="title">Users</h2>
+            <h2 class="title">Admin | Users</h2>
             <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
             <div class="alert alert-success" th:each="message : ${successfulMessages}" th:text="${message}"></div>
             <div class="main-container">
                 <form th:action="@{/delete-selected-users}" method="post">
                     <div class="buttons-top">
                         <button disabled class="buttons-user" id="button-delete" type="submit">Delete user</button>
-                        <button class="buttons-user" id="button-delete-by-username" type="button">Delete by username
-                        </button>
                     </div>
                     <table class="table-of-users">
                         <tr>
@@ -59,7 +49,7 @@
                             <th>Delete</th>
                             <th>Modify</th>
                         </tr>
-                        <tr th:each="user, iterator : ${userPage.content}">
+                        <tr th:each="user, iterator : ${users}">
                             <td th:text="${iterator.count}"></td>
                             <td th:text="${user.getUsername()}"></td>
                             <td><img th:src="${user.getAvatarImagePath()}"/></td>
@@ -74,65 +64,6 @@
                         </tr>
                     </table>
                 </form>
-                <div class="pages">
-                    <div th:if="${userPage.totalPages > 0}">
-                        <a th:text="First"
-                           th:href="@{/admin-users(size=${userPage.size}, page=1, username=${currentUsername})}"></a>
-                    </div>
-                    <div th:if="${userPage.number + 1 > 1}">
-                        <a th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number}, username=${currentUsername})}">&#9668;</a>
-                    </div>
-                    <div th:if="${userPage.totalPages > 0}">
-                        <a th:if="${userPage.number - 1 > 0}" th:text="${userPage.number - 1}"
-                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number - 1}, username=${currentUsername})}"></a>
-                    </div>
-                    <div th:if="${userPage.totalPages > 0}">
-                        <a th:if="${userPage.number > 0}" th:text="${userPage.number}"
-                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number}, username=${currentUsername})}"></a>
-                    </div>
-                    <!--Current page-->
-                    <div th:if="${userPage.totalPages > 0}">
-                        <a th:if="${userPage.number + 1 > 0}" th:text="${userPage.number + 1}"
-                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 1}, username=${currentUsername})}"
-                           class="active"></a>
-                    </div>
-                    <div th:if="${userPage.totalPages >= userPage.number + 2}">
-                        <a th:if="${userPage.number + 2 > 0}" th:text="${userPage.number + 2}"
-                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 2}, username=${currentUsername})}"></a>
-                    </div>
-                    <div th:if="${userPage.totalPages >= userPage.number + 3}">
-                        <a th:if="${userPage.number + 3 > 0}" th:text="${userPage.number + 3}"
-                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 3}, username=${currentUsername})}"></a>
-                    </div>
-                    <div th:if="${userPage.number + 1 < userPage.totalPages}">
-                        <a th:href="@{/admin-users(size=${userPage.size}, page=${userPage.number + 2}, username=${currentUsername})}">&#9658;</a>
-                    </div>
-                    <div th:if="${userPage.totalPages > 1}">
-                        <a th:text="Last"
-                           th:href="@{/admin-users(size=${userPage.size}, page=${userPage.totalPages}, username=${currentUsername})}"></a>
-                    </div>
-                </div>
-                <div class="page-elements">
-                    <form th:action="@{/admin-users(username=${currentUsername}, page=${userPage.number + 1})}">
-                        <input type="text" th:name="size"
-                               th:placeholder="'Elements in the page: ' + ${userPage.size} + '. Min:25, Max:100'">
-                    </form>
-                </div>
-                <form th:action="@{/delete-by-username}" method="post">
-                    <div class="modal-form-delete-by-username">
-                        <div class="modal-form-content">
-                            <span class="close-button">&times;</span>
-                            <div class="modal-form-items">
-                                <h1>Delete user by username</h1>
-                                <div class="modal-form-inputs">
-                                    <p>Username:</p>
-                                    <input type="text" th:name="usernameForDelete">
-                                </div>
-                                <button class="buttons-user" id="modal-button-add" type="submit">Delete</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -145,6 +76,5 @@
 <script th:src="@{/scripts/script.js}"></script>
 <script th:src="@{/scripts/adminUsers.js}"></script>
 <script th:src="@{/scripts/alert.js}"></script>
-<script th:src="@{/scripts/buttonAccount.js}"></script>
 </body>
 </html>

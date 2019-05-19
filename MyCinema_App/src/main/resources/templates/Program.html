@@ -24,55 +24,61 @@
             <h1 id="program-title">Program</h1>
             <div class="programs">
                 <div class="buttons-top">
-                    <form action="#" method="post" th:action="@{/program(day=0, idMovie=${param.idMovie})}">
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="0" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Monday</button>
                     </form>
-                    <form action="#" method="post" th:action="@{/program(day=1, idMovie=${param.idMovie})}">
-
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="1" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Tuesday</button>
                     </form>
-
-                    <form action="#" method="post" th:action="@{/program(day=2, idMovie=${param.idMovie})}">
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="2" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Wednesday</button>
                     </form>
-
-                    <form action="#" method="post" th:action="@{/program(day=3, idMovie=${param.idMovie})}">
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="3" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Thursday</button>
                     </form>
-                    <form action="#" method="post" th:action="@{/program(day=4, idMovie=${param.idMovie})}">
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="4" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Friday</button>
                     </form>
-
-                    <form action="#" method="post" th:action="@{/program(day=5, idMovie=${param.idMovie})}">
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="5" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Saturday</button>
                     </form>
-
-                    <form action="#" method="post" th:action="@{/program(day=6, idMovie=${param.idMovie})}">
+                    <form method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="6" />
+                        <input type="hidden" name="idMovie" th:value="${param.idMovie}" />
                         <button class="button-day" type="submit">Sunday</button>
                     </form>
-
                 </div>
                 <div class="headers-table">
                     <p id="header-movie">Movie</p>
                     <p id="header-hours">Screening Hours</p>
                 </div>
-                <th:block th:each="movie:${movieList}">
+                <th:block th:each="program : ${programs}">
                     <div class="table-row">
                         <div class="column-left">
                             <div class="information-play"></div>
-                            <p th:text="${movie.getTitle()}">Movie</p>
+                            <p th:text="${program.getTitle()}">Movie</p>
                         </div>
                         <div class="column-right">
-                            <th:block th:each="hour:${movie.getScren().get(0)}">
+                            <th:block th:each="screening : ${program.getScreenings()}">
                                 <form action="#" method="post"
-                                      th:action="@{/reservationPlace(idMovie=${movie.id},day=${day},time=${hour},place=${day})}">
-                                    <button class="button-hour" th:text="${hour}" type="submit">hour</button>
+                                      th:action="@{/reservationPlace(idMovie=${program.getId()},day=${screening.getDate()},time=${screening.getTime()},place=${screening.getRoomId()})}">
+                                    <button class="button-hour" th:text="${screening.getTime()}" type="submit">hour</button>
                                 </form>
                             </th:block>
-
                         </div>
                     </div>
-
                 </th:block>
             </div>
         </div>

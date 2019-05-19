@@ -1,0 +1,6 @@
+
+Xsquid:S1068!":Remove this unused "cinemaMoviesFolderPath" private field.(¼šêú8û…µ†¥-
+qsquid:ModifiersOrderCheck!"EReorder the modifiers to comply with the Java Language Specification.(¼šêú8ıÕ´†¥-
+gsquid:UnusedPrivateMethodr"6Remove this unused private "saveImageInFolder" method.(•–õÍúÿÿÿÿ8º÷È†¥-
+\
+squid:S106"9Replace this use of System.out or System.err by a logger.(“àñåıÿÿÿÿ8çüÜ†¥-

@@ -38,6 +38,7 @@ public class AdminHomeController {
         if(!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("totalUsers", repositoryUser.count());
         model.addAttribute("totalMovies", repositoryMovie.count());
         model.addAttribute("totalRooms", repositoryCinemaRoom.count());

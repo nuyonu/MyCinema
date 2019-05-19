@@ -12,7 +12,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" href="../static/stylesheets/movies.css" th:href="@{/stylesheets/movies.css}" type="text/css">
-    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"
+            integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <title>MyCinema | Movies</title>
 
@@ -23,25 +30,69 @@
 <div class="layout">
     <div th:replace="common.html :: left(${3}, ${user})"></div>
     <div class="l-right">
-        <div th:replace="common.html :: top(${user})"></div>
+        <!--        <div th:replace="common.html :: top(${user})"></div>-->
+
+        <div class="top-bar">
+            <form action="#" class="left" id="search" name="search">
+                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
+                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
+                <input class="Search" id="input_search" placeholder="Search" onkeyup="search_func()" type="text">
+
+            </form>
+            <div class="right">
+                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+
+                <span th:text="${user.getUsername()}"></span>
+                <div class="dropdown">
+                    <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
+                        <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                        <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
+                            <a href="/settings">Settings</a>
+                            <a href="disconnect">Disconnect</a>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
         <div class="body-main">
             <p id="movies-title">Movies</p>
-            <div class="movies-body">
+            <div class="movies-body" id="list_movie">
                 <th:block th:each="movie:${listOfMovies}">
-                    <form action="#" method="post" th:action="@{/program(day=0,idMovie=${movie.getId()})}">
+                    <form action="#" method="get" th:action="@{/program}">
+                        <input type="hidden" name="day" th:value="-1"/>
+                        <input type="hidden" name="idMovie" th:value="${movie.getId()}"/>
                         <div class="movies-data-show" th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
                             <div class="movie-name">
                                 <p th:text="${movie.getTitle()}"></p>
                             </div>
                             <div class="movie-price">
+
                                 <p th:text="${movie.getPrice()} + ' lei'"></p>
                             </div>
+
                             <div class="movie-book-now">
+
                                 <button class="movie-button-book-now" type="submit">Book now</button>
                             </div>
                         </div>
                     </form>
                 </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <iframe id="iframeYoutube" width="560" height="315"  src="https://www.youtube.com/embed/e80BbX05D7Y" frameborder="0" allowfullscreen></iframe>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -57,7 +108,10 @@
 <script crossorigin="anonymous"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="../static/script.js"></script>
+<script src="/scripts/script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script th:src="@{/scripts/searchMovie.js}"></script>
 
 </body>
 </html>
