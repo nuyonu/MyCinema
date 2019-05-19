@@ -1,22 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(event) {
-    var modalAdd = document.querySelector(".modal-form-add");
 
     var deleteButton = document.querySelector("#button-delete");
-    var addButton = document.querySelector("#button-add");
-    var closeAddModalButton = document.querySelector(".modal-form-add .close-button");
 
     var checkboxes = document.querySelectorAll(".check-for-delete");
-
-    function toggleModalAdd() {
-        modalAdd.classList.toggle("show-modal");
-        modalAdd.parentElement.reset();
-    }
-
-    function windowOnClick(event) {
-        if (event.target === modalAdd) {
-            toggleModalAdd();
-        }
-    }
 
     function totalChecks() {
         var total = 0;
@@ -46,10 +32,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
-    addButton.addEventListener("click", toggleModalAdd);
-    closeAddModalButton.addEventListener("click", toggleModalAdd);
-    window.addEventListener("click", windowOnClick);
-
     deleteButton.disabled = true;
 
     checkboxes.forEach(function(elem) {
@@ -57,4 +39,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
         elem.addEventListener("click", renameButton);
     });
 });
-
