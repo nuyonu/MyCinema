@@ -1,0 +1,72 @@
+.main-container .old-image
+{
+    height: 500px;
+}
+
+.main-panel
+{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0px 15px 15px 15px;
+    width: 50%;
+}
+
+.main-panel p
+{
+    margin: 0;
+}
+
+.bdp-input {
+    border-radius: 2px;
+    padding: 0 3px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    cursor: pointer;
+}
+
+.bdp-input.disabled {
+    color: #AAA;
+    cursor: default;
+}
+
+.bdp-popover {
+    min-width: 110px;
+}
+
+.bdp-popover input {
+    display: inline;
+    margin-bottom: 3px;
+    width: 60px;
+}
+
+.bdp-block {
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    padding: 5px 3px;
+}
+
+.bdp-label {
+    font-size: 70%;
+}
+
+.container {
+    padding-top: 80px;
+}
+
+.buttons-top
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.buttons-movie
+{
+    color: white;
+    background-color: #3381ff;
+    border-radius: 5px;
+    padding: 10px 40px;
+    border: none;
+    font-size: 13px;
+    margin: 10px;
+}

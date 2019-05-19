@@ -6,12 +6,11 @@ import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.service.UserService;
 import app.database.utils.UserType;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +27,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 public class AdminUsersController {
@@ -54,8 +51,6 @@ public class AdminUsersController {
     @GetMapping("/admin-users")
     public String showUsers(HttpServletRequest request,
                             HttpServletResponse response,
-                            @RequestParam(value = "page") Optional<Integer> page,
-                            @RequestParam(value = "size") Optional<Integer> size,
                             @RequestParam(value = "username", required = false, defaultValue = "") String username,
                             Model model) {
 
@@ -66,22 +61,9 @@ public class AdminUsersController {
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
-        int currentPage = page.orElse(1);
-        int pageSize = CommonFunctions.clamp(size.orElse(25), 25, 100);
-
-        currentPage = (currentPage < 1) ? 1 : currentPage;
-
-        Page<User> userPage = userService.findPaginated(PageRequest.of(currentPage - 1, pageSize), username);
-        model.addAttribute("userPage", userPage);
-
-        int totalPages = userPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("currentUsername", username);
+        model.addAttribute("users", repositoryUser.findAllByUsernameContainingOrderByUsernameAsc(username));
 
         return "AdminUsers";
     }
@@ -93,68 +75,31 @@ public class AdminUsersController {
         successfulMessages = new ArrayList<>();
 
         if (usersForDelete == null || usersForDelete.isEmpty()) {
-            errorMessages.add("Nu poti sterge daca nu ai selectat nimic");
+            errorMessages.add("You can not delete if you have not selected anything");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
             return REDIRECT_TO_ADMIN_USERS;
         }
 
-        for (String id : usersForDelete) {
-            Optional<User> user = repositoryUser.findById(id);
-
-            if (user.isPresent()) {
-                repositoryUser.deleteById(id);
-                if (!user.get().getAvatarImagePath().equals("/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg"))
-                    try {
-                        Files.deleteIfExists(Paths.get("src/main/resources/static/images/userAvatarImages/" + id + ".jpg"));
-                    } catch (IOException e) {
-                        String error = "Couldn't delete profile file: " + e;
-                        logger.error(error);
-                    }
-            }
-        }
+        deleteUsers(usersForDelete);
 
         if (usersForDelete.size() == 1) {
-            successfulMessages.add("Ai eliminat utilizatorul selectat cu succes: " + usersForDelete.get(0));
-            redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
-        } else {
-            successfulMessages.add("Ai eliminat utilizatorii selectati cu succes.");
-            redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
-        }
-
-        return REDIRECT_TO_ADMIN_USERS;
-    }
-
-    @PostMapping("/delete-by-username")
-    public String deleteByUsername(@RequestParam(name = "usernameForDelete") String username,
-                                   RedirectAttributes redirectAttributes) {
-        errorMessages = new ArrayList<>();
-        successfulMessages = new ArrayList<>();
-
-        if (username.isEmpty()) {
-            errorMessages.add("Nu ai introdus nici un nume de utilizator.");
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-            return REDIRECT_TO_ADMIN_USERS;
-        }
-
-        User user = repositoryUser.findByUsername(username);
-
-        if (user == null) {
-            errorMessages.add("Utilizatorul pe care ai incercat sa il elimini nu exista.");
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-            return REDIRECT_TO_ADMIN_USERS;
-        }
-
-        repositoryUser.delete(user);
-        if (!user.getAvatarImagePath().equals("/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg"))
-            try {
-                Files.deleteIfExists(Paths.get("src/main/resources/static/images/userAvatarImages/" + user.getId() + ".jpg"));
-            } catch (IOException e) {
-                String error = "Couldn't delete profile file: " + e;
-                logger.error(error);
+            if (!errorMessages.isEmpty())
+                redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            else {
+                successfulMessages.add("You have successfully removed the selected user");
+                redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
             }
+        } else {
+            if (!errorMessages.isEmpty()) {
+                redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+                successfulMessages.add("Ai eliminat utilizatorii fara grad ADMIN cu succes.");
+                redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
+            } else {
+                successfulMessages.add("You have successfully removed selected users");
+                redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
+            }
+        }
 
-        successfulMessages.add("Ai eliminat utilizatorul " + user.getUsername() + " cu succes.");
-        redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
         return REDIRECT_TO_ADMIN_USERS;
     }
 
@@ -175,11 +120,12 @@ public class AdminUsersController {
         Optional<User> user = repositoryUser.findById(userId);
 
         if (user.isPresent()) {
-            model.addAttribute("user", user.get());
+            model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
+            model.addAttribute("userForEdit", user.get());
             return "AdminUsersEdit";
         }
 
-        redirectAttributes.addFlashAttribute(ERROR_MESSAGES, "Utilizatorul pe care ai incercat sa il modifici nu mai exista in baza de date deoarece a fost sters");
+        redirectAttributes.addFlashAttribute(ERROR_MESSAGES, "The user you attempted to modify has disappeared from the database because it was deleted");
 
         return REDIRECT_TO_ADMIN_USERS;
     }
@@ -198,12 +144,22 @@ public class AdminUsersController {
         Optional<User> temp = repositoryUser.findById(userId);
 
         if (!temp.isPresent()) {
-            errorMessages.add("Utilizatorul pe care ai incercat sa il modifici nu mai exista deoarece a fost sters din baza de date.");
+            errorMessages.add("The user you attempted to modify has disappeared since it was deleted from the database");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
             return REDIRECT_TO_ADMIN_USERS;
         }
 
         User user = temp.get();
+
+        for (int index = 0; index < 20; index++) {
+            repositoryUser.save(new User(
+                    RandomStringUtils.random(10, true, true),
+                    RandomStringUtils.random(10, true, true),
+                    RandomStringUtils.random(10, true, true),
+                    RandomStringUtils.random(10, true, true) + "@gmail.com",
+                    RandomStringUtils.random(10, true, true)
+            ));
+        }
 
         user.setFirstName(verifyFirstName(newFirstName, user));
         user.setLastName(verifyLastName(newLastName, user));
@@ -218,7 +174,7 @@ public class AdminUsersController {
                 userService.saveAvatarImage(newImageFile, user);
                 user.setAvatarImagePath("/images/userAvatarImages/" + user.getId() + ".jpg");
             } else
-                errorMessages.add("Poți încărca doar imagini cu extensia .jpg/.jpeg, .png, .gif");
+                errorMessages.add("You can only upload images with the .jpg / .jpeg, .png, .gif extension");
         }
 
         if (!errorMessages.isEmpty()) {
@@ -228,7 +184,7 @@ public class AdminUsersController {
 
         repositoryUser.save(user);
 
-        successfulMessages.add("Ai modificat cu succes datele utilizatorului: " + user.getUsername());
+        successfulMessages.add("You have successfully changed user data: " + user.getUsername());
         redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
 
         return REDIRECT_TO_ADMIN_USERS;
@@ -238,7 +194,7 @@ public class AdminUsersController {
         if (firstName.isEmpty())
             return user.getFirstName();
         else if (!CommonFunctions.lengthBetween(firstName, 2, 30)) {
-            errorMessages.add("FirstName trebuie sa contina minim 3 caractere si maxim 30");
+            errorMessages.add("First Name must contain a minimum of 3 characters and a maximum of 30 characters");
             return user.getFirstName();
         }
 
@@ -249,7 +205,7 @@ public class AdminUsersController {
         if (lastName.isEmpty())
             return user.getLastName();
         else if (!CommonFunctions.lengthBetween(lastName, 2, 30)) {
-            errorMessages.add("LastName trebuie sa contina minim 3 caractere si maxim 30");
+            errorMessages.add("Last Name must contain a minimum of 3 characters and a maximum of 30 characters");
             return user.getLastName();
         }
         return lastName;
@@ -273,5 +229,30 @@ public class AdminUsersController {
             return user.getPhoneNumber();
         }
         return phoneNumber;
+    }
+
+    private void deleteUsers(List<String> usersForDelete) {
+        for (String id : usersForDelete) {
+            Optional<User> user = repositoryUser.findById(id);
+
+            if (user.isPresent()) {
+                if (user.get().getUserType() == UserType.ADMIN) {
+                    errorMessages.add("You can not remove the user: " + user.get().getUsername() + " because it has the rank of ADMIN");
+                } else {
+                    repositoryUser.deleteById(id);
+                    deleteUserAvatarProfile(user.get());
+                }
+            }
+        }
+    }
+
+    private void deleteUserAvatarProfile(User user) {
+        if (!user.getAvatarImagePath().equals("/images/userProfileDefaultAvatar/userProfileDefaultAvatar.jpg"))
+            try {
+                Files.deleteIfExists(Paths.get("src/main/resources/static/images/userAvatarImages/" + user.getId() + ".jpg"));
+            } catch (IOException e) {
+                String error = "Couldn't delete profile file: " + e;
+                logger.error(error);
+            }
     }
 }

@@ -60,7 +60,7 @@ public class LoginController {
             result.setMsg("Corect");
             return ResponseEntity.ok(result);
         }
-        result.setMsg("Your password or email is wrong!");
+        result.setMsg("Your password or username is wrong!");
         return ResponseEntity.ok(result);
     }
 
@@ -69,6 +69,6 @@ public class LoginController {
     private static final String REDIRECT_LOGIN = "redirect:/Login";
 
     private static boolean matchUser(User user, LoginInput input) {
-        return user.getUsername().equals(input.getUsername()) || user.getUsername().equals(input.getPassword());
+        return user.getUsername().equals(input.getUsername()) || user.getPassword().equals(input.getPassword());
     }
 }
