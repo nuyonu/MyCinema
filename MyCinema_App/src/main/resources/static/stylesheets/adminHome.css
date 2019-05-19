@@ -1,9 +1,3 @@
-.main h2.title {
-    font-size: 25px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 .main-admin {
     display: flex;
     flex-direction: column;

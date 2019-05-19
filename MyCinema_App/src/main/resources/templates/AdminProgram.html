@@ -82,7 +82,7 @@
                                             <option value="empty"> -- </option>
                                             <option th:each="movie : ${movies}"
                                                     th:value="${movie.getId()}"
-                                                    th:utext="${movie.getTitle()}"/option>
+                                                    th:utext="${movie.getTitle()}"></option>
                                         </select>
                                     </td>
                                     <p>Room:</p>
@@ -91,7 +91,7 @@
                                             <option value="empty"> -- </option>
                                             <option th:each="room : ${rooms}"
                                                     th:value="${room.getId()}"
-                                                    th:utext="${room.getName()}"/option>
+                                                    th:utext="${room.getName()}"></option>
                                         </select>
                                     </td>
                                     <p>Date:</p>

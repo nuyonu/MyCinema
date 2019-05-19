@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
-</head>
 <body>
 <div class="l-left" th:fragment="left(activ)">
     <a class="toggle-menu topm1" href="#"><i class="material-icons">menu</i></a>
@@ -34,17 +31,16 @@
         </a>
     </div>
 </div>
-<div class="top-bar">
+<div class="top-bar" th:fragment="top-bar(user)">
     <form action="" class="left">
         <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
         <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
         <input class="Search" id="input_search" placeholder="Search" type="text">
     </form>
-    <div class="right">
+    <div class="right" th:fragment="right(user)">
         <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
         <a class="user-menu" href="/settings">
-            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
-                  th:text="${u.getValue()}"></span>
+            <span th:text="${user.getUsername()}"></span>
             <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
         </a>
     </div>

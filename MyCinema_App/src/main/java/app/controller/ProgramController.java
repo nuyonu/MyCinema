@@ -1,14 +1,11 @@
 package app.controller;
 
 import app.controller.services.ICookieService;
-import app.database.entities.Movie;
 import app.database.entities.ScreeningHours;
-import app.database.infrastructure.IRepositoryMovie;
 import app.database.infrastructure.IRepositoryUser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -48,7 +45,7 @@ class ProgramResult
         if (dayOfWeek < 1 || dayOfWeek > 7)
             return screenings;
 
-        List<ScreeningHours> filtered = new ArrayList<ScreeningHours>();
+        List<ScreeningHours> filtered = new ArrayList<>();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d", Locale.ENGLISH);
 
@@ -68,7 +65,7 @@ class ProgramResult
         if (movieId.isEmpty())
             return screenings;
 
-        List<ScreeningHours> filtered = new ArrayList<ScreeningHours>();
+        List<ScreeningHours> filtered = new ArrayList<>();
 
         for (ScreeningHours screening : screenings)
         {
@@ -84,9 +81,6 @@ class ProgramResult
 public class ProgramController {
     @Autowired
     private IRepositoryUser repositoryUser;
-
-    @Autowired
-    private IRepositoryMovie movieRepository;
 
     @Autowired
     private MongoTemplate mongoTemplate;
