@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+
+    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
+    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet"
+          media="screen"/>
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}">
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminProgramAdd.css}">
+
+    <title>MyCinema Admin Panel | Add Movie</title>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="AdminCommon.html :: left(${4})"></div>
+    <div class="l-right">
+        <div th:replace="AdminCommon.html :: top-bar(${user})"></div>
+        <div class="main">
+            <h2 class="title">Admin | Add Program</h2>
+            <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
+            <div class="add-program-div">
+                <form class="add-program-form" th:action="@{/admin-add-program-submit}" method="post">
+                    <p>Select Movie</p>
+                    <select required th:name="movie-id">
+                        <option th:each="movie : ${movies}"
+                                th:value="${movie.getId()}"
+                                th:utext="${movie.getTitle()}"></option>
+                    </select>
+                    <p>Select Room</p>
+                    <select required th:name="room-id">
+                        <option th:each="room : ${rooms}"
+                                th:value="${room.getId()}"
+                                th:utext="${room.getName()}"></option>
+                    </select>
+                    <div class="row-program">
+                        <p>Date</p>
+                        <input id="date" required type="date" th:name="date">
+                        <p>Hour</p>
+                        <input id="time" required type="time" th:name="time">
+                    </div>
+                    <button class="buttons-program" id="modal-button-add" type="submit">Add Program</button>
+                    <button class="buttons-program" type="button" onclick="location.href='/admin-program'">Back to Program</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/adminProgramAdd.js}"></script>
+<script th:src="@{/scripts/alert.js}"></script>
+</html>
