@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.controller.dao.CinemaRoomDTO;
+import app.controller.services.CommonFunctions;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.infrastructure.IRepositoryCinemaRoom;
@@ -27,6 +28,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,11 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 public class AdminRoomsController {
 
     private static final String REDIRECT_TO_ADMIN_ROOMS = "redirect:/admin-rooms";
+    private static final String REDIRECT_TO_LOGIN = "redirect:/Login";
+    private static final String REDIRECT_TO_ADMIN_EDIT_ROOM = "redirect:/admin-edit-room";
+    private static final String REDIRECT_TO_ADMIN_ADD_ROOM = "redirect:/admin-add-room";
+    private static final String ERROR_MESSAGES = "errorMessages";
+    private static final String SUCCESSFUL_MESSAGES = "successfulMessages";
 
     @Autowired
     private IRepositoryCinemaRoom repository;
@@ -50,18 +57,23 @@ public class AdminRoomsController {
     private final Path cinemaRoomsFolderPath = Paths.get("src/main/resources/static/images/cinema-rooms/");
     private final Logger logger = LoggerFactory.getLogger(AdminRoomsController.class);
 
+    private List<String> errorMessages;
+    private List<String> successfulMessages;
+
     @GetMapping(value = "/admin-rooms")
     public String showRooms(@RequestParam(value = "roomName", required = false, defaultValue = "") String roomName,
                             HttpServletRequest request,
                             HttpServletResponse response,
                             Model model) {
         cookieService.setConfig(request, response);
+
         if (!cookieService.isConnected())
-            return "error403";
+            return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
 
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("cinemaRoom", new CinemaRoom());
         model.addAttribute("rooms", repository.findAllByNameContainingOrderByNameAsc(roomName));
         model.addAttribute("currentRoomName", roomName);
@@ -80,18 +92,71 @@ public class AdminRoomsController {
         return REDIRECT_TO_ADMIN_ROOMS;
     }
 
-    @PostMapping(value = "/admin-add-room")
-    public String addRoom(@Valid @ModelAttribute(value = "cinemaRoom") CinemaRoomDTO room,
-                          BindingResult bindingResult,
-                          @RequestParam(name = "room-image", required = true) MultipartFile file) {
-        if (bindingResult.hasErrors())
-            return REDIRECT_TO_ADMIN_ROOMS;
+    @GetMapping(value = "/admin-add-room")
+    public String adminAddRoom(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 Model model)
+    {
+        cookieService.setConfig(request, response);
 
-        CinemaRoom cinemaRoom = new CinemaRoom(room.getName());
+        if (!cookieService.isConnected())
+            return REDIRECT_TO_LOGIN;
+
+        if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
+            return "noAccess";
+
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
+
+        return "AdminRoomsAdd";
+    }
+
+    @PostMapping(value = "/admin-add-room-submit")
+    public String addRoom(@RequestParam(name = "room-title", required = true) String title,
+                          @RequestParam(name = "room-image-1", required = true) MultipartFile file1,
+                          @RequestParam(name = "room-image-2", required = true) MultipartFile file2,
+                          @RequestParam(name = "room-image-3", required = true) MultipartFile file3,
+                          @RequestParam(name = "room-image-4", required = true) MultipartFile file4,
+                          RedirectAttributes redirectAttributes)
+    {
+        errorMessages = new ArrayList<>();
+        successfulMessages = new ArrayList<>();
+
+        if (!CommonFunctions.lengthBetween(title, 2, 30))
+        {
+            errorMessages.add("The name you entered is not valid. It's length must be between 2 and 30 characters long");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            return REDIRECT_TO_ADMIN_ADD_ROOM;
+        }
+
+        if (repository.findByName(title) != null)
+        {
+            errorMessages.add("There already exists a room which has the name '" + title + "'");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            return REDIRECT_TO_ADMIN_ADD_ROOM;
+        }
+
+        CinemaRoom cinemaRoom = new CinemaRoom(title);
         repository.save(cinemaRoom);
 
-        if (!saveImage(file, cinemaRoomsFolderPath.resolve(cinemaRoom.getId()), "1.jpg"))
+        final Path cinemaRoomFolder = cinemaRoomsFolderPath.resolve(cinemaRoom.getId());
+
+        if (!saveImage(file1, cinemaRoomFolder, "1.jpg") ||
+            !saveImage(file2, cinemaRoomFolder, "2.jpg") ||
+            !saveImage(file3, cinemaRoomFolder, "3.jpg") ||
+            !saveImage(file4, cinemaRoomFolder, "4.jpg"))
+        {
+            errorMessages.add("The image you entered is not valid. You can store only .jpg/.jpeg, .png, .gif files.");
+        }
+
+        if (!errorMessages.isEmpty())
+        {
             repository.delete(cinemaRoom);
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            return REDIRECT_TO_ADMIN_ADD_ROOM;
+        }
+
+        successfulMessages.add("You have successfully added the room.");
+        redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
 
         return REDIRECT_TO_ADMIN_ROOMS;
     }
@@ -100,13 +165,17 @@ public class AdminRoomsController {
     public String toEditRoomPage(HttpServletRequest request,
                                  HttpServletResponse response,
                                  @RequestParam(name = "id", required = true) String roomId,
-                                 Model model) {
+                                 Model model)
+    {
         cookieService.setConfig(request, response);
+
         if (!cookieService.isConnected())
-            return "error403";
+            return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
+
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
 
         Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
 
@@ -123,24 +192,52 @@ public class AdminRoomsController {
     public String saveRoom(@RequestParam(name = "room-id") String roomId,
                            @RequestParam(name = "new-room-name") String newRoomName,
                            @RequestParam(name = "image-file", defaultValue = "") List<MultipartFile> newImages,
-                           @RequestParam(name = "image-checked", defaultValue = "") List<String> checkedImages,
-                           RedirectAttributes redirectAttributes) {
-        Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
+                           RedirectAttributes redirectAttributes)
+    {
+        errorMessages = new ArrayList<>();
+        successfulMessages = new ArrayList<>();
 
-        if (optionalRoom.isPresent()) {
-            CinemaRoom room = optionalRoom.get();
-
-            if (!newRoomName.trim().isEmpty())
-                room.setName(newRoomName);
-
-            saveImagesInFolder(newImages, cinemaRoomsFolderPath.resolve(roomId));
-            deleteCheckedImages(checkedImages, getRoomFolderById(roomId));
-
-            repository.save(room);
+        if (!newRoomName.isEmpty() && !CommonFunctions.lengthBetween(newRoomName, 2, 30))
+        {
+            errorMessages.add("The name you entered is not valid. It's length must be between 2 and 30 characters long");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            redirectAttributes.addAttribute("id", roomId);
+            return REDIRECT_TO_ADMIN_EDIT_ROOM;
         }
 
-        redirectAttributes.addAttribute("id", roomId);
-        return "redirect:/admin-edit-room";
+        if (repository.findByName(newRoomName) != null)
+        {
+            errorMessages.add("There already exists a room which has the name '" + newRoomName + "'");
+            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+            redirectAttributes.addAttribute("id", roomId);
+            return REDIRECT_TO_ADMIN_EDIT_ROOM;
+        }
+
+        Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
+
+        if (optionalRoom.isPresent())
+        {
+            CinemaRoom room = optionalRoom.get();
+
+            if (!saveImagesInFolder(newImages, cinemaRoomsFolderPath.resolve(roomId)))
+            {
+                errorMessages.add("The image you entered is not valid. You can store only .jpg/.jpeg, .png, .gif files");
+                redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+                redirectAttributes.addAttribute("id", roomId);
+                return REDIRECT_TO_ADMIN_EDIT_ROOM;
+            }
+            else
+            {
+                if (!newRoomName.isEmpty())
+                    room.setName(newRoomName);
+
+                repository.save(room);
+            }
+        }
+
+        successfulMessages.add("You have successfully changed the room");
+        redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
+        return REDIRECT_TO_ADMIN_ROOMS;
     }
 
     @PostMapping(value = "/admin-rooms-edit-add-image")
@@ -153,7 +250,7 @@ public class AdminRoomsController {
         }
 
         redirectAttributes.addAttribute("id", roomId);
-        return "redirect:/admin-edit-room";
+        return REDIRECT_TO_ADMIN_EDIT_ROOM;
     }
 
     @GetMapping(value = "/images/cinema-rooms/{roomId}/{imageId}")
@@ -193,13 +290,16 @@ public class AdminRoomsController {
             renameFile(imagesInFolder[index], (index + 1) + ".jpg");
     }
 
-    private void saveImagesInFolder(List<MultipartFile> images, Path folderPath) {
+    private boolean saveImagesInFolder(List<MultipartFile> images, Path folderPath) {
         for (int index = 0; index < images.size(); ++index) {
             MultipartFile image = images.get(index);
 
             if (!image.isEmpty())
-                saveImage(image, folderPath, (index + 1) + ".jpg");
+                if (!saveImage(image, folderPath, (index + 1) + ".jpg"))
+                    return false;
         }
+
+        return true;
     }
 
     private boolean saveImage(MultipartFile inputFile, Path saveLocation, String saveFilename) {
@@ -211,7 +311,15 @@ public class AdminRoomsController {
             else if (inputFilename.contains(".."))
                 throw new IOException("Cannot store file with relative path outside current directory " + inputFilename);
 
-            try (InputStream inputStream = inputFile.getInputStream()) {
+            if (!(inputFile.getContentType().equals("image/gif") ||
+                inputFile.getContentType().equals("image/jpeg") ||
+                inputFile.getContentType().equals("image/png")))
+            {
+                throw new IOException("You can store only .jpg/.jpeg, .png, .gif files.");
+            }
+
+            try (InputStream inputStream = inputFile.getInputStream())
+            {
                 Files.createDirectories(saveLocation);
                 Files.copy(inputStream, saveLocation.resolve(saveFilename), REPLACE_EXISTING);
             }

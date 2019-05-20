@@ -14,9 +14,9 @@ public final class CommonFunctions {
     private static Logger logger = LoggerFactory.getLogger(CommonFunctions.class);
 
     public static boolean lengthBetween(String string, Integer left, Integer right) {
-        if (left > right)
-            return string.length() > right && string.length() < left;
-        return string.length() > left && string.length() < right;
+        if (left >= right)
+            return string.length() >= right && string.length() <= left;
+        return string.length() >= left && string.length() <= right;
     }
 
     public static boolean isPhoneNumber(String phoneNumber) {

@@ -9,8 +9,10 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminMenu.css"
+          th:href="@{/stylesheets/adminMenu.css}">
     <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminRooms.css"
-          th:href="@{/stylesheets/adminRooms.css}">
+                                                          th:href="@{/stylesheets/adminRooms.css}">
 
     <title>MyCinema Admin Panel | Rooms</title>
 </head>
@@ -18,28 +20,16 @@
 <div class="layout">
     <div th:replace="AdminCommon.html :: left(${3})"></div>
     <div class="l-right">
-        <div class="top-bar">
-            <form action="/admin-rooms" class="left">
-                <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
-                <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
-                <input class="Search" id="input_search" th:name="roomName"
-                       th:placeholder="${!currentRoomName.equals('')} ? ${currentRoomName} : 'Search'" type="text">
-            </form>
-            <div class="right">
-                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
-                <a class="user-menu" href="/settings">
-            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
-                  th:text="${u.getValue()}"></span>
-                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-                </a>
-            </div>
-        </div>
+        <div th:replace="AdminCommon.html :: top-bar(${user})"></div>
         <div class="main">
             <h2 class="title">Admin | Cinema-rooms</h2>
+            <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
+            <div class="alert alert-success" th:each="message : ${successfulMessages}" th:text="${message}"></div>
             <div class="main-container">
                 <form th:action="@{/admin-delete-rooms}" method="POST">
                     <div class="buttons-top">
-                        <button class="buttons-room" id="button-add" type="button">Add Room</button>
+                        <button class="buttons-room" id="button-add" type="button"
+                                onclick="location.href='/admin-add-room'">Add Room</button>
                         <button class="buttons-room" id="button-delete" type="submit">Delete Room</button>
                     </div>
                     <table class="table-of-rooms">
@@ -62,26 +52,6 @@
                             </tr>
                         </th:block>
                     </table>
-                </form>
-                <form action="#" th:action="@{/admin-add-room}" th:object="${cinemaRoom}" method="POST"
-                      enctype="multipart/form-data">
-                    <div class="modal-form-add">
-                        <div class="modal-form-content">
-                            <span class="close-button">&times;</span>
-                            <div class="modal-form-items">
-                                <h1>Add Room</h1>
-                                <div class="modal-form-inputs">
-                                    <p>Room Name:</p>
-                                    <input type="text" th:field="*{name}" required
-                                           placeholder="Between 2 and 30 characters" th:name="name"/>
-                                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</p>
-                                    <p>Room Image:</p>
-                                    <input type="file" required th:name="room-image">
-                                </div>
-                                <button class="buttons-room" id="modal-button-add" type="submit">Add Room</button>
-                            </div>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
