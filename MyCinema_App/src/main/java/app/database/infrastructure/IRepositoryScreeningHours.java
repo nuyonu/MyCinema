@@ -1,6 +1,7 @@
 package app.database.infrastructure;
 
 import app.database.entities.ScreeningHours;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
@@ -9,9 +10,9 @@ public interface IRepositoryScreeningHours extends MongoRepository<ScreeningHour
 
     Optional<ScreeningHours> findById(String id);
 
-    ScreeningHours findByMovieId(String movieId);
+    ScreeningHours findByMovieId(ObjectId movieId);
 
-    ScreeningHours findByRoomId(String roomId);
+    ScreeningHours findByRoomId(ObjectId roomId);
 
 }
 

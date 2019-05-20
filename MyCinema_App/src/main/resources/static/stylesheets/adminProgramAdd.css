@@ -1,0 +1,50 @@
+.add-program-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.add-program-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 260px;
+    justify-content: center;
+}
+
+.add-program-form input {
+    width: 100%;
+}
+
+.add-program-form p {
+    margin: 0 0 5px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.buttons-program
+{
+    color: white;
+    background-color: #3381ff;
+    border-radius: 5px;
+    padding: 10px 40px;
+    border: none;
+    font-size: 13px;
+    margin: 10px;
+}
+
+.row-program {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 10px 0 0 0;
+}
+
+.row-program input[type=date] {
+    width: auto;
+}
+
+.row-program input[type=time] {
+    width: auto;
+}
