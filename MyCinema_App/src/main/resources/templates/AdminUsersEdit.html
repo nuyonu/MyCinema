@@ -12,6 +12,8 @@
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}">
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminUsersEdit.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <title>MyCinema Admin Panel | Edit User</title>
 </head>
@@ -33,13 +35,16 @@
                     <div class="row-container">
                         <div class="main-panel">
                             <p>Current First Name:</p>
-                            <input type="text" disabled name="old-user-first-name" th:value="${userForEdit.getFirstName()}">
+                            <input type="text" disabled name="old-user-first-name"
+                                   th:value="${userForEdit.getFirstName()}">
                             <p>Current Last Name:</p>
-                            <input type="text" disabled name="old-user-last-name" th:value="${userForEdit.getLastName()}">
+                            <input type="text" disabled name="old-user-last-name"
+                                   th:value="${userForEdit.getLastName()}">
                             <p>Current Email:</p>
                             <input type="text" disabled name="old-user-email" th:value="${userForEdit.getEmail()}">
                             <p>Current Phone number:</p>
-                            <input type="text" disabled name="old-user-phone-number" th:value="${userForEdit.getPhoneNumber()}">
+                            <input type="text" disabled name="old-user-phone-number"
+                                   th:value="${userForEdit.getPhoneNumber()}">
                             <p>Current Profile image:</p>
                             <img id="avatar-image" th:src="@{${userForEdit.getAvatarImagePath()}}">
                         </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" itemscope itemtype="http://schema.org/Article">
 
 <head>
     <title>MyCinema</title>
@@ -8,6 +8,12 @@
     <link rel="stylesheet" th:href="@{/stylesheets/Login.css}">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- BEGIN Pre-requisites -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+    </script>
+
 </head>
 
 
@@ -53,6 +59,7 @@
             </div>
 
         </form>
+
 
     </div>
 
@@ -142,15 +149,6 @@
     });
 
 </script>
-<!--<script>-->
 
-<!--    $(document).ready(function() {-->
-<!--        $.ajax({-->
-<!--            url: "/messageEmail"-->
-<!--        }).then(function(data) {-->
-<!--            $('.messageEmail').append(data);-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>

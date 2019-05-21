@@ -33,28 +33,30 @@
             <img alt="" class="ico" th:src="@{/icons/icon_setting.svg}">
             Settings
         </a>
-        <a href="/admin-home" th:if="${#strings.equals(user.getUserType(), 'ADMIN')}" th:class="menu-item"><img alt="" class="ico" th:src="@{/icons/icon_home-1.svg}">
+        <a href="/admin-home" th:if="${#strings.equals(user.getUserType(), 'ADMIN')}" th:class="menu-item"><img alt=""
+                                                                                                                class="ico"
+                                                                                                                th:src="@{/icons/icon_home-1.svg}">
             Admin Panel</a>
     </div>
 </div>
 
 <div class="top-bar" th:fragment="top(user)">
-    <form action="#" class="left" id="search" name="search"   >
+    <form action="#" class="left" id="search" name="search">
         <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
         <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
-        <input class="Search" id="input_search" placeholder="Search"  type="text">
+        <input class="Search" id="input_search" placeholder="Search" type="text">
 
     </form>
     <div class="right">
         <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
-        <span th:text="${user.getUsername()}"></span>
+        <span th:text="${user.getUsername()}" class="user-menu"></span>
         <div class="dropdown">
             <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
                 <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
                 <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
-                    <a href="/settings">Settings</a>
-                    <a href="disconnect">Disconnect</a>
+                    <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
+                    <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
                 </div>
             </button>
 

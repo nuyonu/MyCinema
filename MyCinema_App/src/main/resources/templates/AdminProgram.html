@@ -9,9 +9,13 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen" />
-    <link th:href="@{/stylesheets/timingfield.css}" type="text/css" rel="stylesheet" media="screen" />
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminProgram.css" th:href="@{/stylesheets/adminProgram.css}">
+    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet"
+          media="screen"/>
+    <link th:href="@{/stylesheets/timingfield.css}" type="text/css" rel="stylesheet" media="screen"/>
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminProgram.css"
+          th:href="@{/stylesheets/adminProgram.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <title>MyCinema Admin Panel | Program</title>
 </head>
@@ -23,8 +27,8 @@
             <form action="/admin-program" class="left">
                 <a class="toggle-menu topm2" href="#"><i class="material-icons">menu</i></a>
                 <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
-<!--                <input class="Search" id="input_search" th:name="movieTitle"-->
-<!--                       th:placeholder="${!currentMovieTitle.equals('')} ? ${currentMovieTitle} : 'Search'" type="text">-->
+                <!--                <input class="Search" id="input_search" th:name="movieTitle"-->
+                <!--                       th:placeholder="${!currentMovieTitle.equals('')} ? ${currentMovieTitle} : 'Search'" type="text">-->
                 <input class="search" id="input_search" placeholder="search" type="text">
             </form>
             <div class="right">
@@ -63,8 +67,10 @@
                                 <td th:text="${screening.getRoom().getName()}"></td>
                                 <td th:text="${screening.getDate()}"></td>
                                 <td th:text="${screening.getTime()}"></td>
-                                <td><input type="checkbox" class="check-for-delete" th:name="program-ids" th:value="${screening.getId()}"/></td>
-                                <td><a class="button-edit" th:href="@{/admin-edit-program(id=${screening.getId()})}">Edit</a></td>
+                                <td><input type="checkbox" class="check-for-delete" th:name="program-ids"
+                                           th:value="${screening.getId()}"/></td>
+                                <td><a class="button-edit" th:href="@{/admin-edit-program(id=${screening.getId()})}">Edit</a>
+                                </td>
                             </tr>
                         </th:block>
                     </table>
@@ -79,7 +85,7 @@
                                     <p>Movie:</p>
                                     <td>
                                         <select required th:name="movie-id">
-                                            <option value="empty"> -- </option>
+                                            <option value="empty"> --</option>
                                             <option th:each="movie : ${movies}"
                                                     th:value="${movie.getId()}"
                                                     th:utext="${movie.getTitle()}"></option>
@@ -88,7 +94,7 @@
                                     <p>Room:</p>
                                     <td>
                                         <select required th:name="room-id">
-                                            <option value="empty"> -- </option>
+                                            <option value="empty"> --</option>
                                             <option th:each="room : ${rooms}"
                                                     th:value="${room.getId()}"
                                                     th:utext="${room.getName()}"></option>
@@ -118,7 +124,7 @@
 <script th:src="@{/scripts/timingfield.js}"></script>
 <script th:src="@{/scripts/alert.js}"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         $(".timing").timingfield();
     });
 </script>

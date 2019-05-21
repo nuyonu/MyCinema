@@ -9,7 +9,10 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminRooms.css" th:href="@{/stylesheets/adminRooms.css}">
+    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminRooms.css"
+          th:href="@{/stylesheets/adminRooms.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <title>MyCinema Admin Panel | Edit Room</title>
 </head>
@@ -25,7 +28,8 @@
                     <input type="hidden" th:name="room-id" th:value="${room.getId()}"/>
                     <div class="buttons-top">
                         <button class="buttons-room" type="submit">Save</button>
-                        <input class="buttons-room" type="button" onclick="location.href='admin-rooms'" value="Discard"/>
+                        <input class="buttons-room" type="button" onclick="location.href='admin-rooms'"
+                               value="Discard"/>
                     </div>
                     <div class="row-container">
                         <div class="main-panel">
@@ -47,9 +51,12 @@
                         <th:block th:each="image, iterStat :${images}">
                             <tr>
                                 <td th:text="${iterStat.count}">Number</td>
-                                <td><img class="old-image" th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '/' + ${iterStat.count} + '.jpg'}" /></td>
+                                <td><img class="old-image"
+                                         th:src="@{'/images/cinema-rooms/' + ${room.getId()} + '/' + ${iterStat.count} + '.jpg'}"/>
+                                </td>
                                 <td><input type="file" th:name="image-file"></td>
-                                <td><input class="check-for-delete" type="checkbox" th:name="image-checked" th:value="${iterStat.count} + '.jpg'" /></td>
+                                <td><input class="check-for-delete" type="checkbox" th:name="image-checked"
+                                           th:value="${iterStat.count} + '.jpg'"/></td>
                                 <input type="hidden" th:name="image-id" th:value="${iterStat.count}"/>
                             </tr>
                         </th:block>
@@ -57,7 +64,7 @@
                 </form>
                 <form action="#" th:action="@{/admin-rooms-edit-add-image}" method="POST" enctype="multipart/form-data">
                     <button class="buttons-room" type="submit">Add Image</button>
-                    <input type="file" required th:name="room-image" />
+                    <input type="file" required th:name="room-image"/>
                     <input type="hidden" th:name="room-id" th:value="${room.getId()}"/>
                 </form>
             </div>

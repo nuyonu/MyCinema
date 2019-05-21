@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/stylesheets/Statistics/style.css}">
-    <link rel="stylesheet" type="text/css"  th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
     <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
 
@@ -86,16 +88,17 @@
     <div class="l-right">
         <div th:replace="common.html :: top(${user})"></div>
         <div class="main">
-            <h1>Statistics</h1>
-            <div class="row">
-                <div class="column">
-                    <div class="tickets">
-                        <h6>Total Tickets</h6>
-                        <h3>246k</h3>
-                        <h4><i class="arrow down"></i> 13,8%</h4>
-                    </div>
-                    <div class="tickets1">
-                        <p class="sparklist">
+            <h1>Statistics
+                <th:block th:if="${#strings.equals(show,'show')}">
+                    <div class="row" >
+                        <div class="column" >
+                            <div class="tickets" >
+                                <h6>Total Tickets</h6>
+                                <h3 th:text="${tickets}"></h3>
+                                <h4><i class="arrow down"></i> 13,8%</h4>
+                            </div>
+                            <div class="tickets1" >
+                                <p class="sparklist">
                         <span class="sparkline">
                         <span class="index"><span class="count1"
                                                   style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
@@ -124,17 +127,17 @@
                         <span class="index"><span class="count1"
                                                   style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
                        </span>
-                        </p>
-                    </div>
-                </div>
+                                </p>
+                            </div>
+                        </div>
 
-                <div class="column">
-                    <div class="movies">
-                        <h6>Movies played</h6>
-                        <h3>2453</h3>
-                        <h4><i class="arrow up"></i> 13,8%</h4></div>
-                    <div class="movies1">
-                        <p class="sparklist">
+                        <div class="column" >
+                            <div class="movies">
+                                <h6>Movies played</h6>
+                                <h3 th:text="${movies}"></h3>
+                                <h4><i class="arrow up"></i> 13,8%</h4></div>
+                            <div class="movies1">
+                                <p class="sparklist">
                      <span class="sparkline">
                       <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
                       <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
@@ -142,7 +145,7 @@
                       <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
                       <span class="index"><span class="count2" style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
                       <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
-                      <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span> 
+                      <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span>
                       <span class="index"><span class="count2" style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
                       <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
                       <span class="index"><span class="count2" style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
@@ -150,16 +153,16 @@
                       <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
                       <span class="index"><span class="count2" style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
                      </span>
-                        <p>
-                    </div>
-                </div>
+                                <p>
+                            </div>
+                        </div>
 
-                <div class="column">
-                    <div class="earnings">
-                        <h6>Total Earnings</h6>
-                        <h3>$39k</h3>
-                        <h4><i class="arrow down"></i> 13,8%</h4></div>
-                    <div class="earnings1"><p class="sparklist">
+                        <div class="column">
+                            <div class="earnings">
+                                <h6>Total Earnings</h6>
+                                <h3 th:text="'$'+${earnings}">$39k</h3>
+                                <h4><i class="arrow down"></i> 13,8%</h4></div>
+                            <div class="earnings1"><p class="sparklist">
                       <span class="sparkline">
                         <span class="index"><span class="count3"
                                                   style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
@@ -188,10 +191,12 @@
                         <span class="index"><span class="count3"
                                                   style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
                       </span>
-                        <p>
+                                <p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+
+                </th:block>
         </div>
 
         <div class="chart">
