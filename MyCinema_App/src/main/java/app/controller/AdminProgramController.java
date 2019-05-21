@@ -1,7 +1,5 @@
 package app.controller;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
-
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
 import app.database.entities.Movie;
@@ -9,9 +7,12 @@ import app.database.entities.ScreeningHours;
 import app.database.infrastructure.IRepositoryCinemaRoom;
 import app.database.infrastructure.IRepositoryMovie;
 import app.database.infrastructure.IRepositoryScreeningHours;
+import app.database.infrastructure.IRepositoryUser;
 import lombok.Getter;
 import lombok.ToString;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
@@ -27,16 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @ToString
 @Getter
-class ScreeningResult
-{
+class ScreeningResult {
     private String id;
     private String date;
     private String time;
@@ -47,6 +43,14 @@ class ScreeningResult
 
 @Controller
 public class AdminProgramController {
+    private static final String ERROR_MESSAGES = "errorMessages";
+    private static final String SUCCESSFUL_MESSAGES = "successfulMessages";
+    private static final String REDIRECT_TO_ADMIN_PROGRAM = "redirect:/admin-program";
+    private static final String REDIRECT_TO_ADMIN_ADD_PROGRAM = "redirect:/admin-add-program";
+    private static final int ALLOWED_TIME = 3600;
+
+    @Autowired
+    private IRepositoryUser repositoryUser;
 
     @Autowired
     private ICookieService cookieService;
@@ -58,18 +62,15 @@ public class AdminProgramController {
     private IRepositoryCinemaRoom cinemaRoomRepository;
 
     @Autowired
-    private IRepositoryScreeningHours screeningHoursRepository;
+    private IRepositoryScreeningHours repositoryScreeningHours;
 
-    private static final String ERROR_MESSAGES = "errorMessages";
-    private static final String SUCCESSFUL_MESSAGES = "successfulMessages";
-    private static final String REDIRECT_TO_ADMIN_PROGRAM = "redirect:/admin-program";
-
-
-    List<String> errorMessages;
-    List<String> successfulMessages;
+    private List<String> errorMessages;
+    private List<String> successfulMessages;
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    private Logger logger = LoggerFactory.getLogger(AdminProgramController.class);
 
     @GetMapping(value = "/admin-program")
     public String showProgram(HttpServletRequest request,
@@ -78,7 +79,9 @@ public class AdminProgramController {
         cookieService.setConfig(request, response);
 
         if (!cookieService.isConnected())
-            return "error403";
+            return "redirect:/Login";
+
+        deleteScreenings(repositoryScreeningHours.findAll());
 
         LookupOperation lookupMovies = LookupOperation.newLookup()
                 .from("Movies")
@@ -94,10 +97,8 @@ public class AdminProgramController {
 
         Aggregation aggregation = Aggregation.newAggregation(lookupMovies, lookupRooms);
         List<ScreeningResult> screenings = mongoTemplate.aggregate(aggregation, "Screening", ScreeningResult.class).getMappedResults();
-
         model.addAttribute("screenings", screenings);
-        model.addAttribute("movies", movieRepository.findAll());
-        model.addAttribute("rooms", cinemaRoomRepository.findAll());
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
 
         return "AdminProgram";
     }
@@ -108,17 +109,17 @@ public class AdminProgramController {
         errorMessages = new ArrayList<>();
         successfulMessages = new ArrayList<>();
         if (programIds == null) {
-            errorMessages.add("Nu ai selectat niciun program");
+            errorMessages.add("You have not selected any programs");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
             return REDIRECT_TO_ADMIN_PROGRAM;
         } else {
             for (String id : programIds) {
-                Optional<ScreeningHours> screeningHour = screeningHoursRepository.findById(id);
+                Optional<ScreeningHours> screeningHour = repositoryScreeningHours.findById(id);
                 if (!screeningHour.isPresent()) {
                     errorMessages.add("Un program pe care ai incercat sa il elimini nu mai exista.");
                 } else {
 
-                    screeningHoursRepository.deleteById(id);
+                    repositoryScreeningHours.deleteById(id);
                 }
             }
         }
@@ -134,162 +135,88 @@ public class AdminProgramController {
         return REDIRECT_TO_ADMIN_PROGRAM;
     }
 
-    @PostMapping(value = "/admin-add-program")
+    @GetMapping("/admin-add-program")
+    public String redirectToAdminProgramAdd(HttpServletRequest request, HttpServletResponse response, Model model) {
+        cookieService.setConfig(request, response);
+
+        if (!cookieService.isConnected())
+            return "redirect:/Login";
+
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
+        model.addAttribute("movies", movieRepository.findAll());
+        model.addAttribute("rooms", cinemaRoomRepository.findAll());
+        return "AdminProgramAdd";
+    }
+
+    @PostMapping("/admin-add-program-submit")
     public String addMovieInProgram(@RequestParam(name = "movie-id") String movieId,
                                     @RequestParam(name = "room-id") String roomId,
                                     @RequestParam(name = "date") String date,
                                     @RequestParam(name = "time") String time,
-                                    RedirectAttributes redirectAttributes) throws ParseException {
-
-        ScreeningHours screeningHours = new ScreeningHours();
-
+                                    RedirectAttributes redirectAttributes) {
         errorMessages = new ArrayList<>();
         successfulMessages = new ArrayList<>();
 
-        if (movieId.equals("empty")) {
-            errorMessages.add("Trebuie sa selectezi un film.");
+        if (!movieRepository.findById(movieId).isPresent()) {
+            errorMessages.add("The chosen movie does not exist in the database");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-
-            return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
-        if (roomId.equals("empty")) {
-            errorMessages.add("Trebuie sa selectezi o camera.");
+        if (!cinemaRoomRepository.findById(roomId).isPresent()) {
+            errorMessages.add("The chosen room does not exist in the database");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-
-            return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
         if (date.isEmpty()) {
-            errorMessages.add("Trebuie sa selectezi o data.");
+            errorMessages.add("You must select a date");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-
-            return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
         if (time.isEmpty()) {
-            errorMessages.add("Trebuie sa selectezi o ora.");
+            errorMessages.add("You must select an hour");
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-
-            return REDIRECT_TO_ADMIN_PROGRAM;
         }
 
-        screeningHours.setMovieId(new ObjectId(movieId));
-        screeningHours.setRoomId(new ObjectId(roomId));
-
         long diff = 0;
-        long allowedTime = 3600;
+        //seconds
         try {
             Date oldDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date + " " + time);
             diff = oldDate.getTime() - new Date().getTime();
             diff /= 1000; //in seconds
 
         } catch (ParseException e) {
-            e.getStackTrace();
+            String error = "Date parse error " + e;
+            logger.error(error);
         }
 
-        boolean canSave = true;
-
-        if (diff < allowedTime)
-            canSave = false;
-
-        screeningHours.setDate(date);
-        screeningHours.setTime(time);
-
-        if (!canSave) {
-            errorMessages.add("Poti pune filme la ora " + (Date.from(new Date().toInstant().plus(Duration.ofHours(allowedTime / 3600)))));
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-
-            return REDIRECT_TO_ADMIN_PROGRAM;
-        }
-
-        successfulMessages.add("Ai adaugat un film pe data de " + date + " la ora " + time + " cu succes.");
-        redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
-        screeningHoursRepository.save(screeningHours);
-
-        return REDIRECT_TO_ADMIN_PROGRAM;
-    }
-
-    @GetMapping(value = "/admin-edit-program")
-    public String toEditProgramPage(@RequestParam(name = "id") String screeningId, Model model) {
-        Optional<ScreeningHours> screeningHour = screeningHoursRepository.findById(screeningId);
-        errorMessages = new ArrayList<>();
-
-        if (screeningHour.isPresent()) {
-            model.addAttribute("screeningHour", screeningHour.get());
-            return "AdminProgramEdit";
-        } else {
-            errorMessages.add("Programul pe care ai incercat sa il modifici nu mai exista in baza de date");
-            return REDIRECT_TO_ADMIN_PROGRAM;
-        }
-    }
-
-    @PostMapping(value = "/admin-program-submit-edit")
-    public String saveMovie(@RequestParam(name = "new-program-movie-title", required = false) String newMovieTitle,
-                            @RequestParam(name = "new-program-room-name", required = false) String newRoomName,
-                            @RequestParam(name = "new-date", required = false) String newDate,
-                            @RequestParam(name = "new-time", required = false) String newTime,
-                            @RequestParam(name = "program-id") String programId,
-                            RedirectAttributes redirectAttributes) {
-        errorMessages = new ArrayList<>();
-        successfulMessages = new ArrayList<>();
-
-        Optional<ScreeningHours> optionalScreeningHours = screeningHoursRepository.findById(programId);
-
-        if (!optionalScreeningHours.isPresent()) {
-            errorMessages.add("Programul pe care ai incercat sa il elimini nu mai exista in baza de date.");
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-            return REDIRECT_TO_ADMIN_PROGRAM;
-        }
-
-        ScreeningHours screeningHours = optionalScreeningHours.get();
-
-        if (!newMovieTitle.isEmpty()) {
-            //screeningHours.setMovieId(newMovieTitle);      ///////////// Title in loc de Id
-        }
-
-        if (!newRoomName.isEmpty()) {
-            //screeningHours.setRoomId(newRoomName);         ///////////// Name in loc de Id
-        }
-
-        long diff = 0;
-        long allowedTime = 3600;
-        try {
-            Date oldDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(newDate + " " + newTime);
-            diff = oldDate.getTime() - new Date().getTime();
-            diff /= 1000; //in seconds
-
-        } catch (ParseException e) {
-            e.getStackTrace();
-        }
-
-        boolean canSave = true;
-
-        if (diff < allowedTime)
-            canSave = false;
-
-
-        screeningHours.setDate(newDate);
-        screeningHours.setTime(newTime);
+        if (diff < ALLOWED_TIME)
+            errorMessages.add("You can add a movie to the program starting at " + new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date().getTime() + ALLOWED_TIME * 1000));
 
         if (!errorMessages.isEmpty()) {
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
-            return "redirect:/admin-edit-program?id=" + screeningHours.getId();
+            return REDIRECT_TO_ADMIN_ADD_PROGRAM;
         }
 
-        if (!canSave) {
-            errorMessages.add("Poti pune filme la ora " + (Date.from(new Date().toInstant().plus(Duration.ofHours(allowedTime / 3600)))));
-            redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
+        repositoryScreeningHours.save(new ScreeningHours(new ObjectId(movieId), new ObjectId(roomId), date, time));
 
-            return REDIRECT_TO_ADMIN_PROGRAM;
-        }
-
-        screeningHoursRepository.save(screeningHours);
-        successfulMessages.add("Ai modificat programul cu succes");
+        successfulMessages.add("You added a movie on " + date + " at time " + time + " successfully.");
         redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
 
         return REDIRECT_TO_ADMIN_PROGRAM;
     }
 
+    private void deleteScreenings(List<ScreeningHours> screeningHours) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+        for(ScreeningHours screeningHour : screeningHours) {
+            try {
+                if(simpleDateFormat.parse(screeningHour.getDate() + " " + screeningHour.getTime()).before(new Date(new Date().getTime() + ALLOWED_TIME - 600 * 1000))) {
+                    repositoryScreeningHours.delete(screeningHour);
+                }
+            } catch (ParseException e) {
+                String error = "Parse date error " + e;
+                logger.error(error);
+            }
+        }
+    }
 }
