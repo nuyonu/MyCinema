@@ -13,7 +13,8 @@
           th:href="@{/stylesheets/adminRooms.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
           integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <script th:src="@{/scripts/buttonAccount.js}"></script>
     <title>MyCinema Admin Panel | Rooms</title>
 </head>
 <body>
@@ -29,11 +30,18 @@
             </form>
             <div class="right">
                 <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
-                <a class="user-menu" href="/settings">
-            <span th:each="u: ${#httpServletRequest.getCookies()}" th:if="${u.getName().equals('user')}"
-                  th:text="${u.getValue()}"></span>
-                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-                </a>
+
+                <span th:text="${user.getUsername()}" class="user-menu"></span>
+                <div class="dropdown">
+                    <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
+                        <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                        <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
+                            <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
+                            <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
+                        </div>
+                    </button>
+
+                </div>
             </div>
         </div>
         <div class="main">

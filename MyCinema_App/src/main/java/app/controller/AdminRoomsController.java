@@ -61,7 +61,7 @@ public class AdminRoomsController {
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
             return "noAccess";
-
+        model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("cinemaRoom", new CinemaRoom());
         model.addAttribute("rooms", repository.findAllByNameContainingOrderByNameAsc(roomName));
         model.addAttribute("currentRoomName", roomName);
@@ -111,6 +111,7 @@ public class AdminRoomsController {
         Optional<CinemaRoom> optionalRoom = repository.findById(roomId);
 
         if (optionalRoom.isPresent()) {
+            model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
             model.addAttribute("room", optionalRoom.get());
             model.addAttribute("images", getRoomFolderById(roomId).list());
             return "AdminRoomsEdit";

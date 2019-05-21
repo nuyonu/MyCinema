@@ -37,12 +37,22 @@
         <img alt="" class="icon" th:src="@{/icons/icon_search.svg}">
         <input class="Search" id="input_search" placeholder="Search" type="text">
     </form>
-    <div class="right" th:fragment="right(user)">
-        <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
-        <a class="user-menu" href="/settings">
-            <span th:text="${user.getUsername()}"></span>
-            <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-        </a>
+
+        <div class="right"  th:fragment="right(user)">
+            <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+
+            <span th:text="${user.getUsername()}" class="user-menu"></span>
+            <div class="dropdown">
+                <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
+                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                    <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
+                        <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
+                        <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
+                    </div>
+                </button>
+
+            </div>
+
     </div>
 </div>
 </body>
