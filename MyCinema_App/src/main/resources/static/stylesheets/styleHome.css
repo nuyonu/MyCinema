@@ -171,7 +171,7 @@ body {
 
 .card {
     box-shadow: 0 0 3px 0 rgba(150, 150, 150, 0.2);
-    border-radius: 0;
+    border-radius: 5px;
     border: none;
     /* height: 100%; */
 }
@@ -187,9 +187,19 @@ body {
     margin-bottom: 20px;
 }
 
-.main .card-body {
+.main {
     margin-left: 5vw;
     margin-right: 5vw;
+}
+
+.card-body {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+.margin-body {
+    margin-left: 1vw;
+    margin-right: 1vw;
 }
 
 .main h3.title {
@@ -225,19 +235,30 @@ body {
 
 #article1 {
     grid-area: article1;
-
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 40px;
+    padding-right: 40px;
     background: rgb(247, 247, 247);
     border-radius: 15px;
 
 }
 
 #article2 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 40px;
+    padding-right: 40px;
     grid-area: article2;
     background: rgb(247, 247, 247);
     border-radius: 15px;
 }
 
 #article3 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 40px;
+    padding-right: 40px;
     grid-area: article3;
     background: rgb(247, 247, 247);
     border-radius: 15px;
@@ -245,6 +266,8 @@ body {
 
 .slide-image {
     height: 250px;
+    object-fit: cover;
+
     width: 100%;
     vertical-align: middle;
 }
@@ -256,9 +279,11 @@ body {
 /* Slideshow container */
 .cinema-slide-show {
     grid-area: cinema-photos;
-    max-width: 1000px;
+    max-width: 100%;
     position: relative;
-    margin: auto;
+    /*margin: auto;*/
+    margin-left: 0;
+    margin-right: 0;
 }
 
 /* Hide the images by default */
@@ -394,4 +419,15 @@ body {
     .p-text {
         font-size: 1.8vw;
     }
+}
+
+
+.card-body {
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom-width: 20px;
+    padding-bottom: 40px;
 }
