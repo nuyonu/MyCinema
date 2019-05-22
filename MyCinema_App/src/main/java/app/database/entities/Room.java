@@ -37,7 +37,7 @@ public class Room {
         this.noRows = noRows;
         this.name=name;
         this.noColumns = noColumns;
-    places=new ArrayList<>(Collections.nCopies(noRows,new ArrayList<>(Collections.nCopies(noColumns,0))));
+        places=new ArrayList<>(Collections.nCopies(noRows,new ArrayList<>(Collections.nCopies(noColumns,0))));
     }
 
     public Room(String idMovie, String time, int day, String name, int noRows, int noColumns) {

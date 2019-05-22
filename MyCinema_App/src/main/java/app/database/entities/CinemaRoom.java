@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 @EntityScan
@@ -41,11 +42,18 @@ public class CinemaRoom implements Serializable
     @CreatedDate
     private String createdDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
+    private int numberOfRows;
+
+    private int numberOfColumns;
+
+    private List<List<Integer>> seats;
+
     public CinemaRoom() { this.name = ""; }
 
-    public CinemaRoom(String name)
+    public CinemaRoom(String name, List<List<Integer>> seats)
     {
         this.name = name;
+        this.seats = seats;
     }
 
     public long getNumberOfImages() {

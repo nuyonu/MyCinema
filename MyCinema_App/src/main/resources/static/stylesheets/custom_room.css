@@ -3,6 +3,7 @@
 }
 .room-view .room-view-table {
     margin: auto;
+    margin-bottom: 10px;
 }
 .room-view-table .chair {
     width: 33px;
@@ -12,11 +13,11 @@
     border-radius: 5px;
 }
 .room-view-table .chair.free {
-    background: #3c85fd;
+    background: #8f8dae;
     cursor: pointer;
 }
 .room-view-table .chair.booked {
-    background: #968c8d;
+    background: #dedde7;
 }
 .room-view-table .chair.sold {
     background: #ff6567;
@@ -27,64 +28,41 @@
     text-align: center;
 }
 .room-view-table .screen-row .screen-el {
-    background: #e2e2e2;
+    background: var(--color-bg1);
     color: #333;
     font-weight: bold;
     padding: 3px;
 }
-
-.chair {
+.room-view-legend .chair {
     display: inline-block;
     width: 30px;
     height: 30px;
     vertical-align: middle;
-    margin: 1px 3px 3px 3px;
+    margin: 3px;
     border-radius: 5px;
+    margin-top: 1px;
 }
-
-.room-view-legend {
-    display: flex;
-    flex-direction: row;
-    float: left;
-    vertical-align: middle;
-    margin: 1px 3px 3px 3px;
-    border-radius: 5px;
-}
-
 .room-view-legend .chair.free {
-    background: #3c85fd;
+    background: #8f8dae;
 }
 .room-view-legend .chair.booked {
-    background: #968c8d;
+    background: #dedde7;
 }
 .room-view-legend .chair.sold {
     background: #ff6567;
 }
 
-.information-text {
-    text-align: center;
-    margin: 10px 0 10px 0;
-    width: 100%;
-}
 
-.buttons-right {
-    display: flex;
-    flex-direction: row;
-    float: right;
-}
-
-.book-now-button, .pay-now-button {
-    color: white;
-    background-color: #3381ff;
-    border-radius: 5px;
-    padding: 10px 40px;
-    border: none;
-    font-size: 13px;
-}
-
-.pay-now-button{
-    margin-left:2px;
-    margin-right: 50px;
+@media(max-width: 540px) {
+    .room-view-table .chair {
+        width: 25px;
+        height: 25px;
+        margin: 3px;
+    }
+    .room-view-legend .chair {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 .book-now-button:disabled, .pay-now-button:disabled {
@@ -116,8 +94,6 @@
     text-shadow: 0px 0px 0px transparent;
 
 }
-
-
 
 .buttonPlace:hover {
 

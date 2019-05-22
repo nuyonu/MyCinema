@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.controller.dao.CinemaRoomDTO;
 import app.controller.services.CommonFunctions;
 import app.controller.services.ICookieService;
 import app.database.entities.CinemaRoom;
@@ -14,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +39,10 @@ public class AdminRoomsController {
     private static final String REDIRECT_TO_LOGIN = "redirect:/Login";
     private static final String REDIRECT_TO_ADMIN_EDIT_ROOM = "redirect:/admin-edit-room";
     private static final String REDIRECT_TO_ADMIN_ADD_ROOM = "redirect:/admin-add-room";
+    private static final String REDIRECT_TO_HOME = "redirect:/home";
     private static final String ERROR_MESSAGES = "errorMessages";
     private static final String SUCCESSFUL_MESSAGES = "successfulMessages";
+    private static final String PATH_DELIMITER = "/";
 
     @Autowired
     private IRepositoryCinemaRoom repository;
@@ -71,7 +70,7 @@ public class AdminRoomsController {
             return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
-            return "noAccess";
+            return REDIRECT_TO_HOME;
 
         model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
         model.addAttribute("cinemaRoom", new CinemaRoom());
@@ -94,8 +93,8 @@ public class AdminRoomsController {
 
     @GetMapping(value = "/admin-add-room")
     public String adminAddRoom(HttpServletRequest request,
-                                 HttpServletResponse response,
-                                 Model model)
+                               HttpServletResponse response,
+                               Model model)
     {
         cookieService.setConfig(request, response);
 
@@ -103,7 +102,7 @@ public class AdminRoomsController {
             return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
-            return "noAccess";
+            return REDIRECT_TO_HOME;
 
         model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
 
@@ -135,15 +134,20 @@ public class AdminRoomsController {
             return REDIRECT_TO_ADMIN_ADD_ROOM;
         }
 
-        CinemaRoom cinemaRoom = new CinemaRoom(title);
+        int rows = 14;
+        int columns = 13;
+
+        List<List<Integer>> seats = new ArrayList<>(Collections.nCopies(rows, Collections.nCopies(columns, 0)));
+
+        CinemaRoom cinemaRoom = new CinemaRoom(title, seats);
         repository.save(cinemaRoom);
 
         final Path cinemaRoomFolder = cinemaRoomsFolderPath.resolve(cinemaRoom.getId());
 
         if (!saveImage(file1, cinemaRoomFolder, "1.jpg") ||
-            !saveImage(file2, cinemaRoomFolder, "2.jpg") ||
-            !saveImage(file3, cinemaRoomFolder, "3.jpg") ||
-            !saveImage(file4, cinemaRoomFolder, "4.jpg"))
+                !saveImage(file2, cinemaRoomFolder, "2.jpg") ||
+                !saveImage(file3, cinemaRoomFolder, "3.jpg") ||
+                !saveImage(file4, cinemaRoomFolder, "4.jpg"))
         {
             errorMessages.add("The image you entered is not valid. You can store only .jpg/.jpeg, .png, .gif files.");
         }
@@ -173,7 +177,7 @@ public class AdminRoomsController {
             return REDIRECT_TO_LOGIN;
 
         if (!repositoryUser.findByUsername(cookieService.getUser()).getUserType().equals(UserType.ADMIN))
-            return "noAccess";
+            return REDIRECT_TO_HOME;
 
         model.addAttribute("user", repositoryUser.findByUsername(cookieService.getUser()));
 
@@ -259,7 +263,7 @@ public class AdminRoomsController {
         if (!imageId.matches("[a-zA-Z0-9.]++"))
             return new byte[0];
         else {
-            Path path = Paths.get("src/main/resources/static/images/cinema-rooms/" + roomId + "/" + imageId);
+            Path path = Paths.get("src/main/resources/static/images/cinema-rooms/" + roomId + PATH_DELIMITER + imageId);
 
             try {
                 return Files.readAllBytes(path);
@@ -273,21 +277,6 @@ public class AdminRoomsController {
 
     private File getRoomFolderById(String roomId) {
         return cinemaRoomsFolderPath.resolve(roomId).toFile();
-    }
-
-    private void deleteCheckedImages(List<String> checkedImages, File imagesFolder) {
-        File[] imagesInFolder = imagesFolder.listFiles();
-
-        Arrays.stream(imagesInFolder)
-                .filter(image -> checkedImages.contains(image.getName()))
-                .forEach(File::delete);
-
-        imagesInFolder = Arrays.stream(imagesInFolder)
-                .filter(image -> !checkedImages.contains(image.getName()))
-                .toArray(File[]::new);
-
-        for (int index = 0; index < imagesInFolder.length; ++index)
-            renameFile(imagesInFolder[index], (index + 1) + ".jpg");
     }
 
     private boolean saveImagesInFolder(List<MultipartFile> images, Path folderPath) {
@@ -312,8 +301,8 @@ public class AdminRoomsController {
                 throw new IOException("Cannot store file with relative path outside current directory " + inputFilename);
 
             if (!(inputFile.getContentType().equals("image/gif") ||
-                inputFile.getContentType().equals("image/jpeg") ||
-                inputFile.getContentType().equals("image/png")))
+                    inputFile.getContentType().equals("image/jpeg") ||
+                    inputFile.getContentType().equals("image/png")))
             {
                 throw new IOException("You can store only .jpg/.jpeg, .png, .gif files.");
             }
@@ -332,21 +321,9 @@ public class AdminRoomsController {
         return true;
     }
 
-    private void renameFile(File file, String newName) {
-        final Path filePath = file.toPath();
-
-        try {
-            Files.move(filePath, filePath.resolveSibling(newName), REPLACE_EXISTING);
-        } catch (IOException e) {
-            String error = "Couldn't rename a file: " + e;
-            logger.error(error);
-        }
-    }
-
     private void deleteFolder(File folder) {
         try {
             FileUtils.cleanDirectory(folder);
-
             Files.deleteIfExists(folder.toPath());
         } catch (IOException e) {
             String error = "Couldn't delete file: " + e;

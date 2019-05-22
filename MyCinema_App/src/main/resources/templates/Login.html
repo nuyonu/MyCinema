@@ -33,7 +33,7 @@
     <div class="login-container">
 
         <form action="#" id="myform" name="myform" th:object="${LoginInput}" method="post" th:action="@{/goToHome}">
-            <div id="feedback" style="display: none">
+            <div class="alert" id="feedback" style="display: none">
 
                 <div class="pair">
                     <h4 id="error_login">
@@ -172,6 +172,6 @@
     });
 
 </script>
-
+<script th:src="@{/scripts/alert.js}"></script>
 </body>
 </html>

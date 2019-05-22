@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 
 @EntityScan
 @Document(collection = "Screening")
@@ -30,11 +32,14 @@ public class ScreeningHours {
 
     private ObjectId roomId;
 
-    public ScreeningHours(ObjectId movieId, ObjectId roomId, String date, String time) {
+    private List<List<Integer>> seats;
+
+    public ScreeningHours(ObjectId movieId, ObjectId roomId, String date, String time, List<List<Integer>> seats) {
         this.movieId = movieId;
         this.roomId = roomId;
         this.date = date;
         this.time = time;
+        this.seats = seats;
     }
 
     public ScreeningHours() { }

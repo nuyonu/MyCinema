@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="layout">
-    <div th:replace="common.html :: left(${0})"></div>
+    <div th:replace="common.html :: left(${0}, ${user})"></div>
 
     <div class="l-right">
         <div th:replace="common.html :: top(${user})"></div>
@@ -39,93 +39,90 @@
                                 </td>
                             </tr>
 
-                            <th:block th:each="line:${room.getPlaces()}">
+                            <th:block th:each="line : ${seats}">
                                 <tr>
-                                    <th:block th:each="element:${line}" >
+                                    <th:block th:each="element : ${line}">
                                         <td>
-                                            <button onclick="update(1)" class="buttonPlace">
-                                                <div th:class="${room.getType(element)}"></div>
-                                            </button>
+                                            <div class="chair" th:classappend="${element} == 1 ? booked : free"></div>
                                         </td>
                                     </th:block>
                                 </tr>
-
                             </th:block>
                         </table>
-                        <div class="information-text">
-                            <p>No chair selected.</p>
-                        </div>
                         <div class="room-view-legend">
                             <div class="chair free"></div>
                             Free <br>
                             <div class="chair booked"></div>
                             Booked <br>
-                            <div class="chair sold"></div>
-                            Sold <br>
-                        </div>
-                        <div class="buttons-right">
-                            <button class="book-now-button" type="submit">Book now</button>
-                            <button class="pay-now-button" type="submit">Pay now</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="booked-already-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Seat is already booked.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="book-now-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form th:action="@{/book_ticket}" method="post">
+                        <div class="modal-body">
+                            <input type="hidden" name="movie_id" th:value="${screening.getMovie().getId()}">
+                            <input type="hidden" name="room_id" th:value="${screening.getRoom().getId()}">
+                            <input type="hidden" name="screening_id" th:value="${screening.getId()}">
+                            <div class="form-group">
+                                <label>Movie:</label>
+                                <input type="text" name="movie_name" class="form-control"
+                                       th:value="${screening.getMovie().getTitle()}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Room:</label>
+                                <input type="text" name="room_name" class="form-control"
+                                       th:value="${screening.getRoom().getName()}" disabled>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col">
+                                    <label>Row:</label>
+                                    <input type="text" name="seat_row" id="seat_row" class="form-control" disabled>
+                                </div>
+                                <div class="col">
+                                    <label>Column:</label>
+                                    <input type="text" name="seat_col" id="seat_col" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Price:</label>
+                                <input type="text" class="form-control"
+                                       th:value="'LEI' + ${screening.getMovie().getPrice()}" disabled>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Book ticket</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<script>
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toGMTString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
-    function update(id) {
-        var reservation = getCookie("reservation");
-        reservation = reservation + "-" + id;
-        setCookie("reservation", reservation, 1);
-    }
-
-
-</script>
-<script th:src="@{/scripts/buttonAccount.js}"></script>
-
-
 <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
 <script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
 <script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-<script th:src="@{/script.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/room.js}"></script>
+<script th:src="@{/scripts/buttonAccount.js}"></script>
 </body>
 </html>
