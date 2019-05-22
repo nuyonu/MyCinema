@@ -12,9 +12,9 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
     <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/styleHome.css"
           th:href="@{/stylesheets/styleHome.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
 
     <title>MyCinema | Home</title>
@@ -32,7 +32,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <h3 class="title">MyCinema</h3>
+<!--                    <h3 class="title">MyCinema</h3>-->
                     <div class="big-container">
                         <div class="cinema-slide-show">
                             <div class="slide">
@@ -56,7 +56,7 @@
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
                             <br>
-                            <div style="text-align:center">
+                            <div style="text-align:center;width: 100%">
                                 <span class="dot" onclick="currentSlide(1)"></span>
                                 <span class="dot" onclick="currentSlide(2)"></span>
                                 <span class="dot" onclick="currentSlide(3)"></span>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div id="cinema-articles">
-                            <div id="article1">
+                            <div id="article1" style="padding-left: 40px">
                                 <h4 class=title-article>IMAX</h4>
                                 <p class="p-title">IMAX - EXPERIENȚA CINEMATOGRAFICĂ DINCOLO DE LIMITELE IMAGINAȚIEI
 
@@ -77,7 +77,7 @@
                                     cinematografică de neuitat.
                                 </p>
                             </div>
-                            <div id="article2">
+                            <div id="article2" style="padding-left: 40px">
                                 <h4 class=title-article>4DX</h4>
                                 <p class="p-title">
                                     SIMTE PUTEREA CINEMATOGRAFULUI
@@ -91,7 +91,7 @@
                                     parte din film.
                                 </p>
                             </div>
-                            <div id="article3">
+                            <div id="article3" style="padding-left: 40px">
                                 <h4 class=title-article>VIP</h4>
                                 <p class="p-title">
                                     VIP - DIN DRAGOSTE PENTRU CINEMA

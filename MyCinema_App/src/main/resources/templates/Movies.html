@@ -32,7 +32,7 @@
 <div class="layout">
     <div th:replace="common.html :: left(${3}, ${user})"></div>
     <div class="l-right">
-        <!--        <div th:replace="common.html :: top(${user})"></div>-->
+
 
         <div class="top-bar">
             <form action="#" class="left" id="search" name="search">
@@ -60,26 +60,33 @@
         </div>
         <div class="body-main">
             <p id="movies-title">Movies</p>
+
             <div class="movies-body" id="list_movie">
                 <th:block th:each="movie:${listOfMovies}">
                     <form action="#" method="get" th:action="@{/program}">
                         <input type="hidden" name="day" th:value="-1"/>
                         <input type="hidden" name="idMovie" th:value="${movie.getId()}"/>
-                        <div class="movies-data-show"
-                             th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
-                            <div class="movie-name">
-                                <p th:text="${movie.getTitle()}"></p>
-                            </div>
-                            <div class="movie-price">
-
-                                <p th:text="${movie.getPrice()} + ' lei'"></p>
-                            </div>
-
-                            <div class="movie-book-now">
-
-                                <button class="movie-button-book-now" type="submit">Book now</button>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="movies-data-show">
+                                    <!--                                    <div class="movie-image"th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'"></div>-->
+                                    <div class="movie-image"
+                                         th:style="'background-image: url(' + ${movie.getPath()} + ')'"></div>
+                                    <div class="movie-info" style="right: 0px;left: 0px;">
+                                        <div class="movie-name">
+                                            <p style="font-size: 130%" th:text="${movie.getTitle()}">Terminator 3</p>
+                                        </div>
+                                        <div class="movie-price">
+                                            <p th:text="${'LEI ' +movie.getPrice()}"></p>
+                                        </div>
+                                        <div class="movie-book-now">
+                                            <button class="movie-button-book-now" type="submit">Book now</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </form>
                 </th:block>
             </div>
