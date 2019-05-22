@@ -346,7 +346,7 @@ public class AdminRoomsController {
     private void deleteFolder(File folder) {
         try {
             FileUtils.cleanDirectory(folder);
-            folder.delete();
+
             Files.deleteIfExists(folder.toPath());
         } catch (IOException e) {
             String error = "Couldn't delete file: " + e;
