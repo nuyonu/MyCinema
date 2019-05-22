@@ -192,12 +192,16 @@ public class AdminProgramController {
         if (diff < ALLOWED_TIME)
             errorMessages.add("You can add a movie to the program starting at " + new SimpleDateFormat("HH:mm dd-MM-yyyy").format(new Date().getTime() + ALLOWED_TIME * 1000));
 
+        Optional<CinemaRoom> room = cinemaRoomRepository.findById(roomId);
+        if (room.isPresent())
+            repositoryScreeningHours.save(new ScreeningHours(new ObjectId(movieId), new ObjectId(roomId), date, time, room.get().getSeats()));
+        else
+            errorMessages.add("The selected room no longer exists");
+
         if (!errorMessages.isEmpty()) {
             redirectAttributes.addFlashAttribute(ERROR_MESSAGES, errorMessages);
             return REDIRECT_TO_ADMIN_ADD_PROGRAM;
         }
-
-        repositoryScreeningHours.save(new ScreeningHours(new ObjectId(movieId), new ObjectId(roomId), date, time));
 
         successfulMessages.add("You added a movie on " + date + " at time " + time + " successfully.");
         redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
@@ -208,9 +212,9 @@ public class AdminProgramController {
     private void deleteScreenings(List<ScreeningHours> screeningHours) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-        for(ScreeningHours screeningHour : screeningHours) {
+        for (ScreeningHours screeningHour : screeningHours) {
             try {
-                if(simpleDateFormat.parse(screeningHour.getDate() + " " + screeningHour.getTime()).before(new Date(new Date().getTime() + ALLOWED_TIME - 600 * 1000))) {
+                if (simpleDateFormat.parse(screeningHour.getDate() + " " + screeningHour.getTime()).before(new Date(new Date().getTime() + ALLOWED_TIME - 600 * 1000))) {
                     repositoryScreeningHours.delete(screeningHour);
                 }
             } catch (ParseException e) {

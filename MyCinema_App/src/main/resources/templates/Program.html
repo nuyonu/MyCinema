@@ -75,7 +75,7 @@
                         <div class="column-right">
                             <th:block th:each="screening : ${program.getScreenings()}">
                                 <form action="#" method="post"
-                                      th:action="@{/reservationPlace(idMovie=${program.getId()},day=${screening.getDate()},time=${screening.getTime()},place=${screening.getRoomId()})}">
+                                      th:action="@{/reservation(idScreeningHour = ${screening.getId()})}">
                                     <button class="button-hour" th:text="${screening.getTime()}" type="submit">hour
                                     </button>
                                 </form>
