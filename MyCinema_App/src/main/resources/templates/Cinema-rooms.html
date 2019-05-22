@@ -8,6 +8,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <link rel="stylesheet" th:href="@{https://www.w3schools.com/w3css/4/w3.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
     <link rel="stylesheet"
           th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}">
     <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/icon(family=Material+Icons)}">
@@ -35,13 +38,13 @@
             <div class="right">
                 <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
-                <span th:text="${user.getUsername()}"></span>
+                <span th:text="${user.getUsername()}" class="user-menu"></span>
                 <div class="dropdown">
                     <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
                         <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
                         <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
-                            <a href="/settings">Settings</a>
-                            <a href="disconnect">Disconnect</a>
+                            <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
+                            <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
                         </div>
                     </button>
 

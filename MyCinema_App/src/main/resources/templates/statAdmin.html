@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
+</head>
+<body>
+    <div class="row" th:fragment="stat(tickets,movies,earnings)">
+        <div class="column" >
+            <div class="tickets" >
+                <h6>Total Tickets</h6>
+                <h3 th:text="${tickets}"></h3>
+                <h4><i class="arrow down"></i> 13,8%</h4>
+            </div>
+            <div class="tickets1" >
+                <p class="sparklist">
+                        <span class="sparkline">
+                        <span class="index"><span class="count1"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
+                        <span class="index"><span class="count1"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                       </span>
+                </p>
+            </div>
+        </div>
+
+        <div class="column" >
+            <div class="movies">
+                <h6>Movies played</h6>
+                <h3 th:text="${movies}"></h3>
+                <h4><i class="arrow up"></i> 13,8%</h4></div>
+            <div class="movies1">
+                <p class="sparklist">
+                     <span class="sparkline">
+                      <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                      <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
+                      <span class="index"><span class="count2" style="height: 39%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                      <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
+                      <span class="index"><span class="count2" style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
+                      <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
+                      <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span>
+                      <span class="index"><span class="count2" style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                      <span class="index"><span class="count2" style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
+                      <span class="index"><span class="count2" style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
+                      <span class="index"><span class="count2" style="height: 42%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                      <span class="index"><span class="count2" style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
+                      <span class="index"><span class="count2" style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                     </span>
+                <p>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="earnings">
+                <h6>Total Earnings</h6>
+                <h3 th:text="'$'+${earnings}">$39k</h3>
+                <h4><i class="arrow down"></i> 13,8%</h4></div>
+            <div class="earnings1"><p class="sparklist">
+                      <span class="sparkline">
+                        <span class="index"><span class="count3"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">220,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">80,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 95%;border: 1px solid rgb(252, 252, 252)">110,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">90,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">180,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 72%;border: 1px solid rgb(252, 252, 252)">140,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 60%;border: 1px solid rgb(252, 252, 252)">120,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 21%;border: 1px solid rgb(252, 252, 252)">160,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 42%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 67%;border: 1px solid rgb(252, 252, 252)">225,</span> </span>
+                        <span class="index"><span class="count3"
+                                                  style="height: 39%;border: 1px solid rgb(252, 252, 252)">175,</span> </span>
+                      </span>
+                <p>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

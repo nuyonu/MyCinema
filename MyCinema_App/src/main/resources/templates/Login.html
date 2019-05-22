@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" itemscope itemtype="http://schema.org/Article">
 
 <head>
     <title>MyCinema</title>
@@ -8,6 +8,15 @@
     <link rel="stylesheet" th:href="@{/stylesheets/Login.css}">
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- BEGIN Pre-requisites -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+          content="568733693778-dsdcs602d8va4b7u9p5fv0rn2rppddl4.apps.googleusercontent.com">
+
 </head>
 
 
@@ -26,10 +35,14 @@
         <form action="#" id="myform" name="myform" th:object="${LoginInput}" method="post" th:action="@{/goToHome}">
             <div id="feedback" style="display: none">
 
-                <h4 style="color: red">
-                    <i class="fas fa-times" style="color: red;text-shadow: 1px 1px 1px #ccc;font-size: 1.5em;"></i>
-                    Your password or username is wrong
-                </h4>
+                <div class="pair">
+                    <h4 id="error_login">
+                        <!--                    <i class="fas fa-times" style="color: red;text-shadow: 1px 1px 1px #ccc;font-size: 1.5em;"></i>-->
+                        Error:Invalid credentials
+                    </h4>
+                    <i class="fas fa-times" id="symbol" ></i>
+
+                </div>
             </div>
             <input id="username" placeholder="Username" required th:field="*{username}" type="text"/>
             <input id="password" placeholder="Password" required th:field="*{password}" type="password">
@@ -53,6 +66,14 @@
             </div>
 
         </form>
+        <!--        <form action="/connect/google" method="POST">-->
+        <!--            <input type="hidden" name="scope" value="profile" />-->
+        <!--            <div class="formInfo">-->
+        <!--                <p>You aren't connected to Google yet. Click the button to connect this application with your  account.</p>-->
+        <!--            </div>-->
+        <!--            <p><button type="submit">Connect to Google</button></p>-->
+        <!--        </form>-->
+
 
     </div>
 
@@ -71,7 +92,12 @@
         feedback.textContent = "";
     }
 </script>
+<script>
+    function close() {
+        $("#feedback").css('display', 'none');
+    }
 
+</script>
 <script>
     $("#myform").submit(function (event) {
 
@@ -129,6 +155,10 @@
 
     });
 
+    $("#symbol").click(function () {
+        $("#feedback").css('display', 'none');
+    });
+
 
     $("#password").click(function () {
         if ($("#feedback").css('display') == 'block') {
@@ -142,15 +172,6 @@
     });
 
 </script>
-<!--<script>-->
 
-<!--    $(document).ready(function() {-->
-<!--        $.ajax({-->
-<!--            url: "/messageEmail"-->
-<!--        }).then(function(data) {-->
-<!--            $('.messageEmail').append(data);-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>

@@ -9,11 +9,15 @@
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet" media="screen" />
-    <link th:href="@{/stylesheets/timingfield.css}" type="text/css" rel="stylesheet" media="screen" />
+    <link th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css}" type="text/css" rel="stylesheet"
+          media="screen"/>
+    <link th:href="@{/stylesheets/timingfield.css}" type="text/css" rel="stylesheet" media="screen"/>
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}">
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMoviesEdit.css}">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <script th:src="@{/scripts/buttonAccount.js}"></script>
     <title>MyCinema Admin Panel | Edit Movie</title>
 </head>
 <body>
@@ -28,7 +32,8 @@
                 <form action="#" th:action="@{/admin-movies-submit-edit}" method="POST" enctype="multipart/form-data">
                     <div class="buttons-top">
                         <button class="buttons-movie" type="submit">Save</button>
-                        <input class="buttons-movie" type="button" onclick="location.href='admin-movies'" value="Discard"/>
+                        <input class="buttons-movie" type="button" onclick="location.href='admin-movies'"
+                               value="Discard"/>
                     </div>
                     <div class="row-container">
                         <div class="main-panel">
@@ -39,7 +44,7 @@
                             <p>Current Duration:</p>
                             <input type="text" disabled th:name="old-movie-duration" th:value="${movie.getDuration()}">
                             <p class="go-down">Current Image:</p>
-                            <img class="old-image" th:src="@{${movie.getPath()}}" />
+                            <img class="old-image" th:src="@{${movie.getPath()}}"/>
                         </div>
                         <div class="main-panel">
                             <p>New Name:</p>
@@ -67,7 +72,7 @@
 <script th:src="@{//code.jquery.com/jquery-1.11.3.min.js}"></script>
 <script th:src="@{/scripts/timingfield.js}"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         $(".timing").timingfield();
     });
 </script>

@@ -6,6 +6,7 @@ import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,11 +65,16 @@ public class LoginController {
         return ResponseEntity.ok(result);
     }
 
+
+
     @Autowired
     private ICookieService cookieService;
     private static final String REDIRECT_LOGIN = "redirect:/Login";
 
+
     private static boolean matchUser(User user, LoginInput input) {
-        return user.getUsername().equals(input.getUsername()) || user.getPassword().equals(input.getPassword());
+        return user.getUsername().equals(input.getUsername()) && user.getPassword().equals(input.getPassword());
     }
+
+
 }
