@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i" rel="stylesheet">
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -12,7 +14,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" href="../static/stylesheets/movies.css" th:href="@{/stylesheets/movies.css}" type="text/css">
-    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+
     <script src="https://code.jquery.com/jquery-1.12.3.min.js"
             integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
 
@@ -20,7 +22,7 @@
           type="text/css"/>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
     <title>MyCinema | Movies</title>
 
 </head>
@@ -42,13 +44,13 @@
             <div class="right">
                 <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
 
-                <span th:text="${user.getUsername()}"></span>
+                <span th:text="${user.getUsername()}" class="user-menu"></span>
                 <div class="dropdown">
                     <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
                         <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
                         <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
-                            <a href="/settings">Settings</a>
-                            <a href="disconnect">Disconnect</a>
+                            <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
+                            <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
                         </div>
                     </button>
 
@@ -63,7 +65,8 @@
                     <form action="#" method="get" th:action="@{/program}">
                         <input type="hidden" name="day" th:value="-1"/>
                         <input type="hidden" name="idMovie" th:value="${movie.getId()}"/>
-                        <div class="movies-data-show" th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
+                        <div class="movies-data-show"
+                             th:style="'background: url(' + ${movie.getPath()} + '); + background-repeat: no-repeat; background-size: 100% 100%;'">
                             <div class="movie-name">
                                 <p th:text="${movie.getTitle()}"></p>
                             </div>
@@ -88,7 +91,8 @@
         <div class="modal-content">
             <div class="modal-body">
 
-                <iframe id="iframeYoutube" width="560" height="315"  src="https://www.youtube.com/embed/e80BbX05D7Y" frameborder="0" allowfullscreen></iframe>
+                <iframe id="iframeYoutube" width="560" height="315" src="https://www.youtube.com/embed/e80BbX05D7Y"
+                        frameborder="0" allowfullscreen></iframe>
 
             </div>
             <div class="modal-footer">

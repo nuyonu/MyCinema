@@ -15,7 +15,10 @@
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/timingfield.css}">
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}">
     <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMovieAdd.css}">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <script th:src="@{/scripts/buttonAccount.js}"></script>
     <title>MyCinema Admin Panel | Add Movie</title>
 </head>
 <body>
@@ -27,7 +30,8 @@
             <h2 class="title">Admin | Add Movie</h2>
             <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
             <div class="add-movie-div">
-                <form class="add-movie-form" th:action="@{/admin-add-movie-submit}" method="post" enctype="multipart/form-data">
+                <form class="add-movie-form" th:action="@{/admin-add-movie-submit}" method="post"
+                      enctype="multipart/form-data">
                     <p>Movie Name</p>
                     <input type="text" required th:name="movie-title">
                     <p>Movie Price</p>
@@ -52,7 +56,7 @@
 <script th:src="@{/scripts/script.js}"></script>
 <script th:src="@{/scripts/timingfield.js}"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
         $(".timing").timingfield();
     });
 </script>

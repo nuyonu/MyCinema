@@ -193,3 +193,37 @@ label {
     align-items: center;
 
 }
+
+
+#feedback {
+    background: #fbdada;
+
+    border: 1px solid #f9cbcb;
+    border-radius: 5px;
+}
+
+.pair > h4 {
+    text-align: center;
+    color: #8e2424;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 95%;
+}
+#symbol{
+    right: 10px;
+    height: 100%;
+    top: 50%;
+    -ms-transform: translateY(105%);
+    transform: translateY(105%);
+    color: #bd8484;
+    z-index: 99;
+}
+
+#symbol:hover{
+    color: #8e2424;
+}
+
+.pair{
+    display: flex;
+    flex-direction: row;
+}
