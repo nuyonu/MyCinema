@@ -27,7 +27,7 @@
         <div th:replace="common.html :: top(${user})"></div>
         <div class="main">
             <h2 class="title">Room Name</h2>
-
+            <div class="alert alert-danger" th:each="message : ${errorMessages}" th:text="${message}"></div>
             <div class="card">
                 <div class="card-body">
                     <div class="room-view">
@@ -39,11 +39,12 @@
                                 </td>
                             </tr>
 
-                            <th:block th:each="line : ${seats}">
+                            <th:block th:each="row : ${#numbers.sequence(0, seats.size() - 1)}">
                                 <tr>
-                                    <th:block th:each="element : ${line}">
+                                    <th:block th:each="column : ${#numbers.sequence(0, seats.get(1).size() - 1)}">
                                         <td>
-                                            <div class="chair" th:classappend="${element} == 1 ? booked : free"></div>
+                                            <div class="chair" th:classappend="${seats.get(row).get(column)} == 1 ? booked : free"
+                                                 th:data-row="${row}" th:data-col="${column}"></div>
                                         </td>
                                     </th:block>
                                 </tr>
@@ -74,29 +75,27 @@
         <div class="modal fade" id="book-now-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form th:action="@{/book_ticket}" method="post">
+                    <form id="book" th:action="@{/book_ticket}" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
-                            <input type="hidden" name="movie_id" th:value="${screening.getMovie().getId()}">
-                            <input type="hidden" name="room_id" th:value="${screening.getRoom().getId()}">
-                            <input type="hidden" name="screening_id" th:value="${screening.getId()}">
+                            <input type="hidden" th:name="screening-id" th:value="${screening.getId()}">
                             <div class="form-group">
                                 <label>Movie:</label>
-                                <input type="text" name="movie_name" class="form-control"
+                                <input type="text" th:name="movie_name" class="form-control"
                                        th:value="${screening.getMovie().getTitle()}" disabled>
                             </div>
                             <div class="form-group">
                                 <label>Room:</label>
-                                <input type="text" name="room_name" class="form-control"
+                                <input type="text" th:name="room_name" class="form-control"
                                        th:value="${screening.getRoom().getName()}" disabled>
                             </div>
                             <div class="row form-group">
                                 <div class="col">
                                     <label>Row:</label>
-                                    <input type="text" name="seat_row" id="seat_row" class="form-control" disabled>
+                                    <input type="text" th:name="seat-row" id="seat_row" class="form-control" value="5" th:form="book" disabled>
                                 </div>
                                 <div class="col">
                                     <label>Column:</label>
-                                    <input type="text" name="seat_col" id="seat_col" class="form-control" disabled>
+                                    <input type="text" th:name="seat-col" id="seat_col" class="form-control" value="5" th:form="book" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
