@@ -1,5 +1,6 @@
 package app.controller.dao;
 
+import app.controller.constraints.UniqueEmail;
 import app.controller.constraints.UniqueUsername;
 import app.database.constraints.ValidPassword;
 import lombok.Getter;
@@ -12,18 +13,19 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class RegisterModel implements Serializable {
-    @Size(min = 4, max = 30, message = "First Name must contain at least 3 characters and a maximum of 30 characters")
+    @Size(min = 3, max = 30, message = "First Name must contain at least 3 characters and a maximum of 30 characters")
     private String firstName;
-    @Size(min = 4, max = 30, message = "Last Name must contain at least 3 characters and a maximum of 30 characters")
+    @Size(min = 3, max = 30, message = "Last Name must contain at least 3 characters and a maximum of 30 characters")
     private String lastName;
+    @UniqueEmail
     @Email(message = "Email should be valid")
     private String eMail;
     @UniqueUsername
-    @Size(min = 4, max = 30, message = "Username must contain at least 3 characters and a maximum of 30 characters")
+    @Size(min = 3, max = 30, message = "Username must contain at least 3 characters and a maximum of 30 characters")
     private String username;
     @ValidPassword
     private String password;
-    @Size(min = 4, max = 30, message = "Confirm Password must contain at least 3 characters and a maximum of 30 characters")
+    @Size(min = 3, max = 30, message = "Confirm Password must contain at least 3 characters and a maximum of 30 characters")
     private String confirmPassword;
 
 

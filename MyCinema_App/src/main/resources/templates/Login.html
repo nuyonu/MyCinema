@@ -37,10 +37,31 @@
 
                 <div class="pair">
                     <h4 id="error_login">
-                        <!--                    <i class="fas fa-times" style="color: red;text-shadow: 1px 1px 1px #ccc;font-size: 1.5em;"></i>-->
                         Error:Invalid credentials
                     </h4>
-                    <i class="fas fa-times" id="symbol" ></i>
+                    <i class="fas fa-times" id="symbol"></i>
+
+                </div>
+            </div>
+            <div class="alert" id="feedback2" style="display: none">
+
+                <div class="pair">
+                    <h4 id="error_login2">
+                        Error:Email is not verified.Plese go email and verify your email<!doctype html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport"
+                                  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+                            <title>Document</title>
+                        </head>
+                        <body>
+
+                        </body>
+                        </html>
+                    </h4>
+                    <i class="fas fa-times" id="symbol2"></i>
 
                 </div>
             </div>
@@ -126,14 +147,18 @@
                     document.myform.submit();
 
                 } else {
-                    // var json = "<h4>Your password or email is wrong."+data+"</h4>";
-                    // $('#feedback').html(json);
-                    var x = document.getElementById("feedback");
-                    if (x.style.display === "none") {
-                        x.style.display = "block";
+                    if (data.msg == 'email') {
+                        var x = document.getElementById("feedback2");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        }
+                    } else {
+                        var x = document.getElementById("feedback");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                        }
+
                     }
-
-
                 }
                 // JSON.stringify(data, null, 4);
 
@@ -158,16 +183,25 @@
     $("#symbol").click(function () {
         $("#feedback").css('display', 'none');
     });
+    $("#symbol2").click(function () {
+        $("#feedback2").css('display', 'none');
+    });
 
 
     $("#password").click(function () {
         if ($("#feedback").css('display') == 'block') {
             $("#feedback").css('display', 'none');
         }
+        if ($("#feedback2").css('display') == 'block') {
+            $("#feedback2").css('display', 'none');
+        }
     });
     $("#username").click(function () {
         if ($("#feedback").css('display') == 'block') {
             $("#feedback").css('display', 'none');
+        }
+        if ($("#feedback2").css('display') == 'block') {
+            $("#feedback2").css('display', 'none');
         }
     });
 
