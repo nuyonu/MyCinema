@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -36,45 +40,7 @@ class ProgramResult
     private String path;
     private String createdDate;
 
-    private List<ScreeningHours> screenings;
-
-    public List<ScreeningHours> screeningsByDay(String day)
-    {
-        final int dayOfWeek = Integer.parseInt(day) + 1;
-
-        if (dayOfWeek < 1 || dayOfWeek > 7)
-            return screenings;
-
-        List<ScreeningHours> filtered = new ArrayList<>();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d", Locale.ENGLISH);
-
-        for (ScreeningHours screening : screenings)
-        {
-            LocalDate date = LocalDate.parse(screening.getDate(), formatter);
-
-            if (dayOfWeek == date.getDayOfWeek().getValue())
-                filtered.add(screening);
-        }
-
-        return filtered;
-    }
-
-    public List<ScreeningHours> screeningsByMovieId(String movieId)
-    {
-        if (movieId.isEmpty())
-            return screenings;
-
-        List<ScreeningHours> filtered = new ArrayList<>();
-
-        for (ScreeningHours screening : screenings)
-        {
-            if (screening.getMovieId().toString().equals(movieId))
-                filtered.add(screening);
-        }
-
-        return filtered;
-    }
+    private ArrayList<ScreeningHours> screenings;
 }
 
 @Controller
@@ -90,9 +56,21 @@ public class ProgramController {
 
     @GetMapping("/program")
     public String getProgram(HttpServletRequest request, HttpServletResponse response, Model model,
-                             @RequestParam(name = "day", defaultValue = "0") String day,
+                             @RequestParam(name = "date", defaultValue = "") String date,
                              @RequestParam(name = "idMovie", defaultValue = "") String idMovie)
     {
+        List<Pair<String, String>> dates = new ArrayList<>();
+
+        for (int day = 0; day < 7; ++day)
+        {
+            dates.add(Pair.of(
+                LocalDateTime.now().plusDays(day).format(DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH)),
+                LocalDateTime.now().plusDays(day).format(DateTimeFormatter.ofPattern("EEEE, dd MMM", Locale.ENGLISH))
+            ));
+        }
+
+        model.addAttribute("dates", dates);
+
         LookupOperation lookupScreenings = LookupOperation.newLookup()
                 .from("Screening")
                 .localField("_id")
@@ -100,14 +78,22 @@ public class ProgramController {
                 .as("screenings");
 
         Aggregation aggregation = Aggregation.newAggregation(lookupScreenings);
-        List<ProgramResult> programs = mongoTemplate.aggregate(aggregation, "Movies", ProgramResult.class).getMappedResults();
+        ArrayList<ProgramResult> programs = new ArrayList<>(mongoTemplate.aggregate(aggregation, "Movies", ProgramResult.class).getMappedResults());
 
-        programs.stream().forEach(e -> e.setScreenings(e.screeningsByDay(day)));
-        programs.stream().forEach(e -> e.setScreenings(e.screeningsByMovieId(idMovie)));
-        programs = programs.stream().filter(e -> !e.getScreenings().isEmpty()).collect(Collectors.toList());
+        for (ProgramResult programResult : programs)
+        {
+            if (!date.isEmpty())
+                programResult.getScreenings().removeIf(s -> !s.getDate().equals(date));
+            else
+                programResult.getScreenings().removeIf(s -> !s.getDate().equals(dates.get(0).getFirst()));
+
+            if (!idMovie.isEmpty())
+                programResult.getScreenings().removeIf(s -> !s.getMovieId().toString().equals(idMovie));
+        }
+
+        programs.removeIf(e -> e.getScreenings().isEmpty());
 
         model.addAttribute("programs", programs);
-        model.addAttribute("day", day);
 
         return checkForAccess(model, request, response);
     }
