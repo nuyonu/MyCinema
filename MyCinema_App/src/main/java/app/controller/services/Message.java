@@ -15,6 +15,14 @@ public class Message {
         messageEmail.append(code);
     }
 
+    public Message(String  code, boolean value) {
+        messageEmail.append("Hi\n\n");
+        messageEmail.append("Thank you for creating your MyCinema account\n");
+        messageEmail.append("To complete the account creation process please click on the link below to verify your email address:\n");
+        messageEmail.append("http://localhost:8443/activation?code=");
+        messageEmail.append(code);
+    }
+
     @Override
     public String toString() {
         return  messageEmail.toString() ;

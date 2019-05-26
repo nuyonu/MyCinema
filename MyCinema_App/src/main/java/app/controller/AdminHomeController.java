@@ -6,10 +6,7 @@ import app.database.infrastructure.IRepositoryMovie;
 import app.database.infrastructure.IRepositoryStatistics;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.utils.UserType;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,12 +46,13 @@ public class AdminHomeController {
         model.addAttribute("totalUsers", repositoryUser.count());
         model.addAttribute("totalMovies", repositoryMovie.count());
         model.addAttribute("totalRooms", repositoryCinemaRoom.count());
-        model.addAttribute("totalTickets", repositoryStatistics.findAll().get(0).getTotalTickets());
+        if (!repositoryStatistics.findAll().isEmpty())
+            model.addAttribute("totalTickets", repositoryStatistics.findAll().get(0).getTotalTickets());
+        else
+            model.addAttribute("totalTickets", "0");
         model.addAttribute("lastMovie", repositoryMovie.findFirstByOrderByCreatedDateDesc());
         model.addAttribute("lastUser", repositoryUser.findFirstByOrderByCreatedDateDesc());
         model.addAttribute("lastRoom", repositoryCinemaRoom.findFirstByOrderByCreatedDateDesc());
-
-        String hash = new BCryptPasswordEncoder().encode("parola");
 
         return "AdminHome";
     }
