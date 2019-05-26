@@ -36,7 +36,7 @@
         <a href="/admin-home" th:if="${#strings.equals(user.getUserType(), 'ADMIN')}" th:class="menu-item"><img alt=""
                                                                                                                 class="ico"
                                                                                                                 th:src="@{/icons/icon_home-1.svg}">
-            Admin Panel</a>
+            Admin</a>
     </div>
 </div>
 
@@ -48,7 +48,15 @@
 
     </form>
     <div class="right">
-        <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+        <div class="dropdown notif-ico-cnt">
+            <a href="#" data-toggle="dropdown">
+                <img th:src="@{/icons/icon_notification.svg}" alt="" class="notif-ico">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right movies-dropdown" style="width: 240px;">
+                <div class="list-group" id="booked-movies-list">
+                </div>
+            </div>
+        </div>
 
         <span th:text="${user.getUsername()}" class="user-menu"></span>
         <div class="dropdown">

@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/dropDownNotification.css}">
     <link rel="stylesheet" th:href="@{/stylesheets/myCinemaSettings.css}" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
@@ -88,25 +89,34 @@
                             <div class="field">
                                 <input class="formField" id="FName" placeholder="Enter your first name"
                                        type="text" th:name="firstName">
-                                <label th:text="${user.getFirstName()}"></label>
+                                <label>First Name</label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="LName" placeholder="Enter your last name"
                                        type="text" th:name="lastName">
-                                <label th:text="${user.getLastName()}"></label>
+                                <label>Last Name</label>
                             </div>
 
                             <div class="field">
-                                <input class="formField" id="Email" placeholder="Enter your email address"
+                                <input class="formField" id="Email" placeholder="Enter your email address" value=""
                                        type="email" th:name="email">
-                                <label th:text="${user.getEmail()}"></label>
+                                <label>Email Address</label>
                             </div>
 
                             <div class="field">
                                 <input class="formField" id="phone" placeholder="Enter your phone number"
                                        type="text" th:name="phoneNumber">
-                                <label th:text="${user.getPhoneNumber()}"></label>
+                                <label>Phone number</label>
+                            </div>
+                            <div class="field">
+                                <input class="formField" id="birthDate" type="date" th:name="birthDate" value="">
+                                <label>Birthdate</label>
+                            </div>
+                            <div class="field">
+                                <input class="formField" id="new-password" placeholder="Enter your new password" value=""
+                                       type="password" th:name="new-password">
+                                <label>New Password</label>
                             </div>
                             <div class="form-buttons-container">
                                 <button class="discardBtn" type="button">Discard</button>
@@ -119,9 +129,7 @@
         </div>
     </div>
 </div>
-<script crossorigin="anonymous"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
 <script crossorigin="anonymous"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -131,6 +139,7 @@
 <script th:src="@{/scripts/scriptSettings.js}"></script>
 <script th:src="@{/scripts/settings.js}" async></script>
 <script th:src="@{/scripts/alert.js}"></script>
+<script th:src="@{/scripts/dropDownNotification.js}"></script>
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 </body>
 

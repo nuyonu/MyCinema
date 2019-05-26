@@ -14,6 +14,7 @@
           th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}">
     <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}">
     <link rel="stylesheet" th:href="@{/stylesheets/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/dropDownNotification.css}">
     <link rel="stylesheet" href="../static/stylesheets/custom_room.css" th:href="@{/stylesheets/custom_room.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
@@ -43,7 +44,8 @@
                                 <tr>
                                     <th:block th:each="column : ${#numbers.sequence(0, seats.get(1).size() - 1)}">
                                         <td>
-                                            <div class="chair" th:classappend="${seats.get(row).get(column)} == 1 ? booked : free"
+                                            <div class="chair"
+                                                 th:classappend="${seats.get(row).get(column)} == 1 ? booked : free"
                                                  th:data-row="${row}" th:data-col="${column}"></div>
                                         </td>
                                     </th:block>
@@ -91,11 +93,14 @@
                             <div class="row form-group">
                                 <div class="col">
                                     <label>Row:</label>
-                                    <input type="text" th:name="seat-row" id="seat_row" class="form-control" value="5" th:form="book" disabled>
+                                    <input type="number" th:name="seat-row" id="seat_row" class="form-control" disabled>
+                                    <input hidden type="number" th:name="row-value" id="row-value" class="form-control">
                                 </div>
                                 <div class="col">
                                     <label>Column:</label>
-                                    <input type="text" th:name="seat-col" id="seat_col" class="form-control" value="5" th:form="book" disabled>
+                                    <input type="number" th:name="seat-col" id="seat_col" class="form-control" disabled>
+                                    <input hidden type="number" th:name="column-value" id="column-value"
+                                           class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -114,14 +119,12 @@
         </div>
     </div>
 </div>
-<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
-<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
-<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 <script th:src="@{/scripts/script.js}"></script>
 <script th:src="@{/scripts/room.js}"></script>
+<script th:src="@{/scripts/dropDownNotification.js}"></script>
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+.movies-dropdown {
+    padding: 0!important;
+    border: 0!important;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.movies-dropdown .movie_icon_drd {
+    float: left;
+    width: 23px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 9px;
+    margin-top: 8px;
+}

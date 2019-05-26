@@ -38,20 +38,28 @@
         <input class="Search" id="input_search" placeholder="Search" type="text">
     </form>
 
-        <div class="right"  th:fragment="right(user)">
-            <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
-
-            <span th:text="${user.getUsername()}" class="user-menu"></span>
-            <div class="dropdown">
-                <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
-                    <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
-                    <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
-                        <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
-                        <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
-                    </div>
-                </button>
-
+    <div class="right" th:fragment="right(user)">
+        <div class="dropdown notif-ico-cnt">
+            <a href="#" data-toggle="dropdown">
+                <img th:src="@{/icons/icon_notification.svg}" alt="" class="notif-ico">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right movies-dropdown" style="width: 240px;">
+                <div class="list-group" id="booked-movies-list">
+                </div>
             </div>
+        </div>
+
+        <span th:text="${user.getUsername()}" class="user-menu"></span>
+        <div class="dropdown">
+            <button onclick="myFunction('myDropdown')" class="dropbtn dropbtn1">
+                <img alt="" class="arrow" th:src="@{/icons/icon_down-arrow-small.svg}">
+                <div id="myDropdown" class="dropdown-content dropdown-content1" style="right: 0px;">
+                    <a href="/settings"><i class="fas fa-cog" style="color:#42425d "></i>Settings</a>
+                    <a href="disconnect"><i class="fas fa-sign-out-alt" style="color:#42425d "></i>Logout</a>
+                </div>
+            </button>
+
+        </div>
 
     </div>
 </div>

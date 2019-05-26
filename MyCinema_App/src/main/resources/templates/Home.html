@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-
-    <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
-    <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
-    <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}">
+    <link rel="stylesheet" type="text/css" th:href="@{//use.fontawesome.com/releases/v5.8.2/css/all.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}">
+    <link rel="stylesheet" type="text/css" th:href="@{//www.w3schools.com/w3css/4/w3.css}">
     <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/styleHome.css"
           th:href="@{/stylesheets/styleHome.css}">
-
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/dropDownNotification.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
 
     <title>MyCinema | Home</title>
 </head>
@@ -32,7 +32,6 @@
 
             <div class="card">
                 <div class="card-body">
-<!--                    <h3 class="title">MyCinema</h3>-->
                     <div class="big-container">
                         <div class="cinema-slide-show">
                             <div class="slide">
@@ -115,10 +114,11 @@
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 
 
-<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
 <script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
 <script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 <script th:src="@{/scripts/script.js}"></script>
 <script th:src="@{/scripts/home.js}"></script>
+<script th:src="@{/scripts/dropDownNotification.js}"></script>
 </body>
 </html>
