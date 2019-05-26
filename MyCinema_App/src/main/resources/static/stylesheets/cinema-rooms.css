@@ -14,7 +14,7 @@ h3 {
 
 .cinema-rooms-grid-container {
     padding: 0 20px;
-    background: #FFFFFF;
+    background: #F0F0F7;
     display: flex;
     flex-wrap: wrap;
     /*grid-template-columns: auto auto auto;
@@ -29,10 +29,25 @@ h3 {
 
 .cinema-room {
     padding: 20px;
-    /*box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);*/
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease-in-out;
     flex: 33%;
-    max-width: 33%;
+    /*max-width: 33%;*/
+    max-width: 28%;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    background: #FFFFFF;
+}
+
+h2 {
+    text-decoration: none;
+    font-weight: 500;
+}
+
+h5 {
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
 }
 
 h5 > a {
