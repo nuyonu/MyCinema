@@ -207,3 +207,45 @@ body {
     margin-top: 3px;
     margin-bottom: 8px;
 }
+
+.l-right .top-bar .right {
+    padding: 15px;
+}
+
+.l-right .top-bar .right .notif-ico-cnt {
+    display: inline-block;
+}
+.l-right .top-bar .right .notif-ico-cnt > a {
+    display: inline-block;
+    height: 24px;
+    padding-right: 1px;
+}
+.l-right .top-bar .right .notif-ico {
+    vertical-align: top;
+    margin-bottom: 2px;
+    height: 23px;
+}
+
+.l-right .top-bar .right .user-menu {
+    display: inline-block;
+}
+.l-right .top-bar .right .user-menu > a {
+    display: inline-block;
+    vertical-align: bottom;
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 10px;
+    padding-left: 15px;
+    margin-left: 10px;
+    border-left: 1px solid #ddd;
+}
+.l-right .top-bar .right .user-menu .arrow {
+    margin: 0 5px;
+    margin-left: 12px;
+}
+
+.l-right .top-bar .right .user-menu .dropdown-menu .dropdown-item i {
+    color: #43425d;
+}

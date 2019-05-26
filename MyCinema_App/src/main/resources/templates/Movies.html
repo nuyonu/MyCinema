@@ -5,24 +5,16 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i" rel="stylesheet">
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" type="text/css">
+    <link rel="stylesheet"
+          th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}">
+    <link rel="stylesheet" th:href="@{//use.fontawesome.com/releases/v5.8.2/css/all.css}">
     <link rel="stylesheet" href="../static/stylesheets/movies.css" th:href="@{/stylesheets/movies.css}" type="text/css">
-
-    <script src="https://code.jquery.com/jquery-1.12.3.min.js"
-            integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-          type="text/css"/>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/stylesheets/style.css" th:href="@{/stylesheets/style.css}" type="text/css">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/dropDownNotification.css}">
     <title>MyCinema | Movies</title>
 
 </head>
@@ -42,7 +34,15 @@
 
             </form>
             <div class="right">
-                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+                <div class="dropdown notif-ico-cnt">
+                    <a href="#" data-toggle="dropdown">
+                        <img th:src="@{/icons/icon_notification.svg}" alt="" class="notif-ico">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right movies-dropdown" style="width: 240px;">
+                        <div class="list-group" id="booked-movies-list">
+                        </div>
+                    </div>
+                </div>
 
                 <span th:text="${user.getUsername()}" class="user-menu"></span>
                 <div class="dropdown">
@@ -110,18 +110,12 @@
 </div>
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 
-<script crossorigin="anonymous"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="/scripts/script.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
+<script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}"></script>
+<script th:src="@{/scripts/dropDownNotification.js}"></script>
 <script th:src="@{/scripts/searchMovie.js}"></script>
 
 </body>

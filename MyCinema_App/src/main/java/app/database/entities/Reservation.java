@@ -19,8 +19,14 @@ public class Reservation {
 
     private ObjectId screeningId;
 
-    public Reservation(ObjectId userId, ObjectId screeningId) {
+    private int row;
+
+    private int column;
+
+    public Reservation(ObjectId userId, ObjectId screeningId, int row, int column) {
         this.userId = userId;
         this.screeningId = screeningId;
+        this.row = row;
+        this.column = column;
     }
 }

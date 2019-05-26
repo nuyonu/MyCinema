@@ -8,16 +8,12 @@
     <link th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}" rel="stylesheet">
     <link th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{//use.fontawesome.com/releases/v5.8.2/css/all.css}">
     <link th:href="@{//www.w3schools.com/w3css/4/w3.css}" rel="stylesheet">
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminMenu.css"
-          th:href="@{/stylesheets/adminMenu.css}">
-    <link media="screen" rel="stylesheet" type="text/css" href="../static/stylesheets/adminRooms.css"
-                                                          th:href="@{/stylesheets/adminRooms.css}">
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminMenu.css}"/>
+    <link media="screen" rel="stylesheet" type="text/css" th:href="@{/stylesheets/adminRooms.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
-    <script th:src="@{/scripts/buttonAccount.js}"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/dropDownNotification.css}">
 
     <title>MyCinema Admin Panel | Rooms</title>
 </head>
@@ -34,7 +30,8 @@
                 <form th:action="@{/admin-delete-rooms}" method="POST">
                     <div class="buttons-top">
                         <button class="buttons-room" id="button-add" type="button"
-                                onclick="location.href='/admin-add-room'">Add Room</button>
+                                onclick="location.href='/admin-add-room'">Add Room
+                        </button>
                         <button class="buttons-room" id="button-delete" type="submit">Delete Room</button>
                     </div>
                     <table class="table-of-rooms">
@@ -64,10 +61,12 @@
 </div>
 
 
-<script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
 <script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
 <script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{/scripts/buttonAccount.js}"></script>
 <script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/dropDownNotification.js}"></script>
 <script th:src="@{/scripts/adminRooms.js}"></script>
 </body>
 </html>

@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +37,9 @@ public class SettingsController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ICookieService cookieService;
 
     private Logger logger = LoggerFactory.getLogger(SettingsController.class);
 
@@ -57,6 +62,8 @@ public class SettingsController {
                                     @RequestParam(value = "lastName", required = false) String lastName,
                                     @RequestParam(value = "email", required = false) String email,
                                     @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+                                    @RequestParam(value = "birthDate", required = false) String birthDate,
+                                    @RequestParam(value = "new-password", required = false) String newPassword,
                                     HttpServletRequest request,
                                     HttpServletResponse response,
                                     RedirectAttributes redirectAttributes) {
@@ -66,25 +73,16 @@ public class SettingsController {
         cookieService.setConfig(request, response);
         if (!cookieService.isConnected()) return "error403";
 
-        User user = repositoryUser.findByUsername(getUsernameFromCookie(request));
+        User user = repositoryUser.findByUsername(cookieService.getUser());
 
         if (user == null) {
-            String error = "Invalid user: " + getUsernameFromCookie(request);
+            String error = "Invalid user: " + cookieService.getUser();
             logger.error(error);
             return "redirect:/Login";
         }
 
-        if (!firstName.isEmpty()) {
-            if (!CommonFunctions.lengthBetween(firstName, 2, 30))
-                errorMessages.add("firstName trebuie sa contina minim 3 caractere si maxim 30");
-            user.setFirstName(firstName);
-        }
-
-        if (!lastName.isEmpty()) {
-            if (!CommonFunctions.lengthBetween(lastName, 2, 30))
-                errorMessages.add("FirstName trebuie sa contina minim 3 caractere si maxim 30");
-            user.setLastName(lastName);
-        }
+        user.setFirstName(checkFirstName(firstName, user.getFirstName()));
+        user.setLastName(checkLastName(lastName, user.getLastName()));
 
         if (!email.isEmpty()) {
             if (!EmailValidator.getInstance().isValid(email))
@@ -98,17 +96,70 @@ public class SettingsController {
             user.setPhoneNumber(phoneNumber);
         }
 
+        if (!birthDate.isEmpty()) {
+            try {
+                user.setBirthDate(new SimpleDateFormat("dd-mm-yyyy").parse(birthDate));
+            } catch (ParseException e) {
+                String error = "Error parse date " + e;
+                errorMessages.add("Invalid date format. Contact the administrator");
+                logger.error(error);
+            }
+        }
+
+        if (!newPassword.isEmpty() && checkPassword(newPassword))
+            user.setPassword(newPassword);
+
         if (!errorMessages.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
             return REDIRECT_TO_SETTINGS;
         }
 
         repositoryUser.save(user);
-        successfulMessages.add("Ai modificat cu succes datele tale");
+        successfulMessages.add("You have successfully modified your data");
         redirectAttributes.addFlashAttribute("successfulMessages", successfulMessages);
 
         return REDIRECT_TO_SETTINGS;
 
+    }
+
+    private boolean checkPassword(String newPassword) {
+        if (newPassword.length() < 8 || newPassword.length() > 30) {
+            errorMessages.add("The password must be between 8 and 30 characters");
+            return false;
+        }
+        if (newPassword.contains(" ")) {
+            errorMessages.add("The password can not have white space");
+            return false;
+        }
+
+        String specialChars = "~`!@#$%^&*()-_=+\\|[{]};:'\",<.>/?";
+        char currentCharacter;
+        boolean numberPresent = false;
+        boolean upperCasePresent = false;
+        boolean lowerCasePresent = false;
+        boolean specialCharacterPresent = false;
+
+        for (int index = 0; index < newPassword.length(); index++) {
+            currentCharacter = newPassword.charAt(index);
+            if (Character.isDigit(currentCharacter))
+                numberPresent = true;
+            else if (Character.isUpperCase(currentCharacter))
+                upperCasePresent = true;
+            else if (Character.isLowerCase(currentCharacter))
+                lowerCasePresent = true;
+            else if (specialChars.contains(String.valueOf(currentCharacter)))
+                specialCharacterPresent = true;
+        }
+        if(!numberPresent)
+            errorMessages.add("The password must contain at least one digit");
+        if(!upperCasePresent)
+            errorMessages.add("The password must contain at least one big letter");
+        if(!lowerCasePresent)
+            errorMessages.add("The password must contain at least one small letter");
+        if(!specialCharacterPresent)
+            errorMessages.add("The password must contain at least one special character");
+
+        return numberPresent && upperCasePresent && lowerCasePresent && specialCharacterPresent;
     }
 
     @PostMapping("/changeAvatar")
@@ -130,12 +181,12 @@ public class SettingsController {
             user.setAvatarImagePath("/images/userAvatarImages/" + user.getId() + ".jpg");
             repositoryUser.save(user);
 
-            successfulMessages.add("Ai modificat cu succes poza de profil.");
+            successfulMessages.add("You have successfully modified your profile photo");
             redirectAttributes.addFlashAttribute("successfulMessages", successfulMessages);
 
             return REDIRECT_TO_SETTINGS;
         } else {
-            errorMessages.add("Poți încărca doar imagini cu extensia .jpg/.jpeg, .png, .gif");
+            errorMessages.add("You can only upload images with the .jpg / .jpeg, .png, .gif extension");
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
             return REDIRECT_TO_SETTINGS;
         }
@@ -155,6 +206,25 @@ public class SettingsController {
 
     }
 
+    private String checkFirstName(String newFirstName, String userFirstName) {
+        if (!newFirstName.isEmpty()) {
+            if (!CommonFunctions.lengthBetween(newFirstName, 2, 30))
+                errorMessages.add("First Name must contain a minimum of 3 characters and a maximum of 30 characters");
+            return newFirstName;
+        }
+        return userFirstName;
+    }
+
+    private String checkLastName(String newLastName, String userLastName) {
+        if (!newLastName.isEmpty()) {
+            if (!CommonFunctions.lengthBetween(newLastName, 2, 30))
+                errorMessages.add("Last Name must contain a minimum of 3 characters and a maximum of 30 characters");
+            return newLastName;
+        }
+
+        return userLastName;
+    }
+
     private String getUsernameFromCookie(HttpServletRequest request) {
         return Arrays.stream(request.getCookies())
                 .filter(c -> c.getName().equals("user"))
@@ -162,7 +232,4 @@ public class SettingsController {
                 .map(Cookie::getValue)
                 .orElse(null);
     }
-
-    @Autowired
-    private ICookieService cookieService;
 }

@@ -7,18 +7,17 @@
     <title>My Cinema | Cinema Rooms</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" type="text/css"
+          th:href="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{https://www.w3schools.com/w3css/4/w3.css}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
     <link rel="stylesheet"
           th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,500,600,700,700i}">
-    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/icon(family=Material+Icons)}">
-    <script th:src="@{http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}"></script>
-    <script th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js}"></script>
-    <script th:src="@{/scripts/cinema-rooms.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{//fonts.googleapis.com/icon?family=Material+Icons}">
+    <link rel="stylesheet" th:href="@{//use.fontawesome.com/releases/v5.8.2/css/all.css}">
     <link media="screen" rel="stylesheet" th:href="@{/stylesheets/cinema-rooms.css}" type="text/css">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/comm.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/stylesheets/dropDownNotification.css}">
 
 </head>
 
@@ -36,7 +35,15 @@
 
             </form>
             <div class="right">
-                <img alt="" class="notif-ico" th:src="@{/icons/icon_notification.svg}">
+                <div class="dropdown notif-ico-cnt">
+                    <a href="#" data-toggle="dropdown">
+                        <img th:src="@{/icons/icon_notification.svg}" alt="" class="notif-ico">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right movies-dropdown" style="width: 240px;">
+                        <div class="list-group" id="booked-movies-list">
+                        </div>
+                    </div>
+                </div>
 
                 <span th:text="${user.getUsername()}" class="user-menu"></span>
                 <div class="dropdown">
@@ -72,10 +79,14 @@
         </div>
     </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</body>
+<script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}"></script>
+<script th:src="@{//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script th:src="@{//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/scripts/script.js}"></script>
+<script th:src="@{/scripts/cinema-rooms.js}"></script>
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 <script th:src="@{/scripts/searchCinema.js}"></script>
-</body>
-
+<script th:src="@{/scripts/dropDownNotification.js}"></script>
 </html>

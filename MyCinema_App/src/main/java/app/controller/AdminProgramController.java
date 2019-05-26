@@ -81,7 +81,7 @@ public class AdminProgramController {
         if (!cookieService.isConnected())
             return "redirect:/Login";
 
-        deleteScreenings(repositoryScreeningHours.findAll());
+//        deleteScreenings(repositoryScreeningHours.findAll());
 
         LookupOperation lookupMovies = LookupOperation.newLookup()
                 .from("Movies")

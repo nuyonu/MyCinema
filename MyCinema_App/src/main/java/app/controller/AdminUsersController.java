@@ -6,7 +6,6 @@ import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.service.UserService;
 import app.database.utils.UserType;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,16 +149,6 @@ public class AdminUsersController {
         }
 
         User user = temp.get();
-
-        for (int index = 0; index < 20; index++) {
-            repositoryUser.save(new User(
-                    RandomStringUtils.random(10, true, true),
-                    RandomStringUtils.random(10, true, true),
-                    RandomStringUtils.random(10, true, true),
-                    RandomStringUtils.random(10, true, true) + "@gmail.com",
-                    RandomStringUtils.random(10, true, true)
-            ));
-        }
 
         user.setFirstName(verifyFirstName(newFirstName, user));
         user.setLastName(verifyLastName(newLastName, user));

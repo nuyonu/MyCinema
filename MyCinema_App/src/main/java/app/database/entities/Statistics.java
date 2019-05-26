@@ -15,6 +15,7 @@ import javax.persistence.Column;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Statistics {
     @Id
     private String id;
@@ -26,11 +27,11 @@ public class Statistics {
     private Integer moviePlayed;
 
     @Column(name = "Total Earnings")
-    private Float totalEarnings;
+    private Double totalEarnings;
 
-    public Statistics() {
-        totalTickets = 0;
-        moviePlayed = 0;
-        totalEarnings = 0.0f;
+    public Statistics(Integer totalTickets, Integer moviePlayed, Double totalEarnings) {
+        this.totalTickets = totalTickets;
+        this.moviePlayed = moviePlayed;
+        this.totalEarnings = totalEarnings;
     }
 }

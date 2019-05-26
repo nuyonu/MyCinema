@@ -59,7 +59,9 @@ public class User implements Serializable {
 
     private UserType userType = UserType.MEMBER;
 
-    private String phoneNumber = "No phone number";
+    private String phoneNumber = "-";
+
+    private Date birthDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate

@@ -9,8 +9,11 @@ $(".room-view-table .chair").on('click', function(e){
     var row = $(this).data('row');
     var col = $(this).data('col');
 
-    $('#book-now-modal input[name=seat_row]').val(row)
-    $('#book-now-modal input[name=seat_col]').val(col)
+    $('#book-now-modal input[name=seat-row]').val(row)
+    $('#book-now-modal input[name=seat-col]').val(col)
+
+    $('#book-now-modal input[name=row-value]').val(row)
+    $('#book-now-modal input[name=column-value]').val(col)
 
     $('#book-now-modal').modal('show')
 })

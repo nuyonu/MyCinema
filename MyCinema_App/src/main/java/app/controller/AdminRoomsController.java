@@ -283,8 +283,7 @@ public class AdminRoomsController {
         for (int index = 0; index < images.size(); ++index) {
             MultipartFile image = images.get(index);
 
-            if (!image.isEmpty())
-                if (!saveImage(image, folderPath, (index + 1) + ".jpg"))
+            if (!image.isEmpty() && !saveImage(image, folderPath, (index + 1) + ".jpg"))
                     return false;
         }
 

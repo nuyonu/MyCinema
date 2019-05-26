@@ -2,6 +2,7 @@ package app.controller;
 
 import app.controller.services.CommonFunctions;
 import app.controller.services.ICookieService;
+import app.database.service.StatisticsService;
 import app.database.entities.Movie;
 import app.database.infrastructure.IRepositoryMovie;
 import app.database.infrastructure.IRepositoryUser;
@@ -37,6 +38,9 @@ public class AdminMoviesController {
 
     @Autowired
     private IRepositoryUser repositoryUser;
+
+    @Autowired
+    private StatisticsService statisticsService;
 
     @Autowired
     private ICookieService cookieService;
@@ -153,7 +157,10 @@ public class AdminMoviesController {
 
         //Success
         repositoryMovie.save(movie);
-        successfulMessages.add("Ai adaugat filmul: " + movieTitle + " cu succes.");
+
+        statisticsService.increaseTotalMovies();
+
+        successfulMessages.add("You added the movie: " + movieTitle + " successfully.");
         redirectAttributes.addFlashAttribute(SUCCESSFUL_MESSAGES, successfulMessages);
         return REDIRECT_TO_ADMIN_MOVIES;
     }
