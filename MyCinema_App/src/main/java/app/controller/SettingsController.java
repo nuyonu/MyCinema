@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.controller.services.CommonFunctions;
+import app.controller.services.CryptoService;
 import app.controller.services.ICookieService;
 import app.database.entities.User;
 import app.database.infrastructure.IRepositoryUser;
@@ -25,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -98,7 +100,9 @@ public class SettingsController {
 
         if (!birthDate.isEmpty()) {
             try {
-                user.setBirthDate(new SimpleDateFormat("dd-mm-yyyy").parse(birthDate));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+                String date = simpleDateFormat.format(new SimpleDateFormat("yyyy-mm-dd").parse(birthDate));
+                user.setBirthDate(simpleDateFormat.parse(date));
             } catch (ParseException e) {
                 String error = "Error parse date " + e;
                 errorMessages.add("Invalid date format. Contact the administrator");
@@ -107,7 +111,7 @@ public class SettingsController {
         }
 
         if (!newPassword.isEmpty() && checkPassword(newPassword))
-            user.setPassword(newPassword);
+            user.setPassword(new CryptoService().encrypt(newPassword));
 
         if (!errorMessages.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessages", errorMessages);

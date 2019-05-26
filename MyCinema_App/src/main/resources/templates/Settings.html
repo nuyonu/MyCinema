@@ -80,6 +80,11 @@
                                 <p th:text="${user.getPhoneNumber()}"></p>
                             </div>
 
+                            <div class="details">
+                                <h5>BirthDate</h5>
+                                <p th:text="${user.getBirthDate()} != null ? ${user.getFormatedBirthDate()} : '-'"></p>
+                            </div>
+
                         </div>
 
                     </div>

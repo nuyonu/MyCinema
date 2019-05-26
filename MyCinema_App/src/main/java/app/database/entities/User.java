@@ -32,12 +32,12 @@ public class User implements Serializable {
     private String id;
 
     @NotNull
-    @Size(min = 4, max = 200)
+    @Size(min = 3, max = 200)
     @Column(name = "First Name")
     private String firstName;
 
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 3, max = 50)
     @Column(name = "Last Name")
     private String lastName;
 
@@ -51,7 +51,7 @@ public class User implements Serializable {
 
     @NotNull()
     @Indexed(unique = true)
-    @Size(min = 5, max = 30)
+    @Size(min = 3, max = 30)
     @Column(name = "username")
     private String username;
 
@@ -83,8 +83,9 @@ public class User implements Serializable {
             password=" ";
     }
 
-
-
+    public String getFormatedBirthDate() {
+        return new SimpleDateFormat("d/m/yyyy").format(this.birthDate);
+    }
 
     @Override
     public String toString() {
