@@ -64,7 +64,7 @@
             <div class="movies-body" id="list_movie">
                 <th:block th:each="movie:${listOfMovies}">
                     <form action="#" method="get" th:action="@{/program}">
-                        <input type="hidden" name="day" th:value="-1"/>
+                        <input type="hidden" name="date" />
                         <input type="hidden" name="idMovie" th:value="${movie.getId()}"/>
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
