@@ -1,8 +1,10 @@
 package app.controller;
 
 import app.controller.services.ICookieService;
+import app.database.entities.Movie;
 import app.database.entities.Statistics;
 import app.database.entities.User;
+import app.database.infrastructure.IRepositoryMovie;
 import app.database.infrastructure.IRepositoryStatistics;
 import app.database.infrastructure.IRepositoryUser;
 import app.database.utils.UserType;
@@ -30,6 +32,8 @@ public class StatisticsController {
     @Autowired
     ICookieService cookieService;
 
+    @Autowired
+    IRepositoryMovie repositoryMovie;
 
     @GetMapping("statistics")
     public String statistics(HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -61,15 +65,28 @@ public class StatisticsController {
         for (User user : list) {
             age = Period.between(user.getBirthDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now()).getYears();
             if (age < 7) ageUnder7++;
-            else {
-                if (age < 14) age7B14++;
-                else {
-                    if (age < 18) age14b18++;
-                    else age18++;
-                }
-
-            }
+            else if (age < 14) age7B14++;
+            else if (age < 18) age14b18++;
+            else age18++;
         }
+
+
+        List<Movie> movieList = repositoryMovie.findAll();
+        long val10 = movieList.stream().filter(e->e.getPrice() <= 10).count();
+        long val15 = movieList.stream().filter(e->e.getPrice() <= 15 && e.getPrice() > 10).count();
+        long val20 = movieList.stream().filter(e->e.getPrice() <= 20 && e.getPrice() > 15).count();
+        long val25 = movieList.stream().filter(e->e.getPrice() <= 25 && e.getPrice() > 20).count();
+        long val30 = movieList.stream().filter(e->e.getPrice() <= 30 && e.getPrice() > 25).count();
+        long val31 = movieList.stream().filter(e->e.getPrice() > 30).count();
+
+        model.addAttribute("val1", val10);
+        model.addAttribute("val2", val15);
+        model.addAttribute("val3", val20);
+        model.addAttribute("val4", val25);
+        model.addAttribute("val5", val30);
+        model.addAttribute("val6", val31);
+
+
         model.addAttribute("ageUnder7", ageUnder7);
         model.addAttribute("age7_14", age7B14);
         model.addAttribute("age14_18", age14b18);

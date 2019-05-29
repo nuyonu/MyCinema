@@ -54,18 +54,21 @@
         // Draw the chart and set the chart values
         function drawMovieDistributionChart() {
             var data = google.visualization.arrayToDataTable([
-                ['Gender', 'Number of Movies'],
-                ['Action', parseInt(document.getElementById("age1").value)],
-                ['Comedy', parseInt(document.getElementById("age2").value)],
-                ['Drama', parseInt(document.getElementById("age3").value)],
-                ['Animation', parseInt(document.getElementById("age4").value)],
+                ['Price', 'Distribution of price'],
+                ['0-10', parseInt(document.getElementById("var1").value)],
+                ['10-15', parseInt(document.getElementById("var2").value)],
+                ['15-20', parseInt(document.getElementById("var3").value)],
+                ['20-25', parseInt(document.getElementById("var4").value)],
+                ['25-30', parseInt(document.getElementById("var5").value)],
+                ['30+', parseInt(document.getElementById("var6").value)],
+
             ]);
 
             console.log(document.getElementById("age4").value);
 
             // Optional; add a title and set the width and height of the chart
             var options = {
-                'title': 'Movie Distribution',
+                'title': 'Distribution of price',
                 titleTextStyle: {fontSize: 15, fontName: 'Source Sans Pro', regular: true},
                 pieHole: 0.58,
                 'width': 400,
@@ -237,6 +240,14 @@
 <input th:value="${age7_14}" hidden id="age2">
 <input th:value="${age14_18}" hidden id="age3">
 <input th:value="${age18}" hidden id="age4">
+
+<input th:value="${val1}" hidden id="var1">
+<input th:value="${val2}" hidden id="var2">
+<input th:value="${val3}" hidden id="var3">
+<input th:value="${val4}" hidden id="var4">
+<input th:value="${val5}" hidden id="var5">
+<input th:value="${val6}" hidden id="var6">
+
 
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 
