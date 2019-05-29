@@ -28,11 +28,12 @@
         function drawAgeDistributionChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Age', 'Number of People'],
-                ['under 7', 4260],
-                ['7-14', 3970],
-                ['14-18', 3454],
-                ['18+', 2390],
+                ['under 7', parseInt(document.getElementById("age1").value)],
+                ['7-14', parseInt(document.getElementById("age2").value)],
+                ['14-18', parseInt(document.getElementById("age3").value)],
+                ['18+', parseInt(document.getElementById("age4").value)],
             ]);
+            console.log(data);
 
             // Optional; add a title and set the width and height of the chart
             var options = {
@@ -54,11 +55,13 @@
         function drawMovieDistributionChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Gender', 'Number of Movies'],
-                ['Action', 4260],
-                ['Comedy', 3970],
-                ['Drama', 3454],
-                ['Animation', 2390],
+                ['Action', parseInt(document.getElementById("age1").value)],
+                ['Comedy', parseInt(document.getElementById("age2").value)],
+                ['Drama', parseInt(document.getElementById("age3").value)],
+                ['Animation', parseInt(document.getElementById("age4").value)],
             ]);
+
+            console.log(document.getElementById("age4").value);
 
             // Optional; add a title and set the width and height of the chart
             var options = {
@@ -92,14 +95,14 @@
         <div class="main">
             <h1>Statistics
                 <th:block th:if="${#strings.equals(show,'show')}">
-                    <div class="row" >
-                        <div class="column" >
-                            <div class="tickets" >
+                    <div class="row">
+                        <div class="column">
+                            <div class="tickets">
                                 <h6>Total Tickets</h6>
                                 <h3 th:text="${tickets}"></h3>
                                 <h4><i class="arrow down"></i> 13,8%</h4>
                             </div>
-                            <div class="tickets1" >
+                            <div class="tickets1">
                                 <p class="sparklist">
                         <span class="sparkline">
                         <span class="index"><span class="count1"
@@ -133,7 +136,7 @@
                             </div>
                         </div>
 
-                        <div class="column" >
+                        <div class="column">
                             <div class="movies">
                                 <h6>Movies played</h6>
                                 <h3 th:text="${movies}"></h3>
@@ -230,6 +233,11 @@
         </div>
     </div>
 </div>
+<input th:value="${ageUnder7}" hidden id="age1">
+<input th:value="${age7_14}" hidden id="age2">
+<input th:value="${age14_18}" hidden id="age3">
+<input th:value="${age18}" hidden id="age4">
+
 <script th:src="@{/scripts/buttonAccount.js}"></script>
 
 <script th:src="@{//code.jquery.com/jquery-3.3.1.min.js}"></script>
@@ -241,5 +249,6 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script th:src="@{/scripts/script.js}"></script>
 <script th:src="@{/scripts/dropDownNotification.js}"></script>
+
 </body>
 </html>
