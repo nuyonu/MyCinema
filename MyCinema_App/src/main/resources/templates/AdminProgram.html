@@ -42,7 +42,7 @@
                             <th>Delete</th>
                         </tr>
                         <th:block th:each="screening, iterStat :${screenings}">
-                            <tr>
+                            <tr th:if="${screening.getMovie() != null} && ${screening.getRoom() != null}">
                                 <td th:text="${iterStat.count}"></td>
                                 <td th:text="${screening.getMovie().getTitle()}"></td>
                                 <td th:text="${screening.getRoom().getName()}"></td>
